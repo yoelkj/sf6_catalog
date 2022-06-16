@@ -26,7 +26,7 @@
     {% for row in rows %}
 
 
-        <li {{stimulus_controller('product')}} class="data-item">
+        <li {{stimulus_controller('product', {url: path('app_ajax_produc_detail', {id: loop.index})})}} class="data-item">
             <a href="#" {{stimulus_action('product', 'showDeail')}}>{{row.name}} - {{row.desc}}</a> 
         </li>
 
