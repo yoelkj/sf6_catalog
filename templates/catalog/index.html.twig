@@ -5,6 +5,20 @@
 
 
     <hr>
+
+    <div>
+    
+        <a href="{{path('app_homepage')}}" class="btn btn-sm btn-primary">Hompage</a>
+    </div>
+
+    <hr>
+
+    <div>
+        <a href="{{path('app_browse', {slug: 'Category 1'})}}" class="btn btn-sm btn-primary">Category 1</a>
+        <a href="{{path('app_browse', {slug: 'Category 2'})}}" class="btn btn-sm btn-primary">Category 2</a>
+        <a href="{{path('app_browse', {slug: 'Category 3'})}}" class="btn btn-sm btn-primary">Category 3</a>
+    </div>
+
     <ul>
     {% for row in rows %}
 
