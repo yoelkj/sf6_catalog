@@ -1,0 +1,15 @@
+{% extends "base.html.twig" %}
+{% block title %} Homepage | {{parent()}} {% endblock %}
+{% block body %}
+    <h1>{{title}}</h1>
+
+
+    <hr>
+    <ul>
+    {% for row in rows %}
+
+        <li>{{row.name}} - {{row.desc}}</li>
+
+    {% endfor %}
+    </ul>
+{% endblock %}
