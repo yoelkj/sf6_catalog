@@ -30,7 +30,7 @@ class LoginFormAuthenticator extends AbstractAuthenticator
 
     public function supports(Request $request): ?bool
     {
-        return $request->getPathInfo() === '/login' && $request->isMethod('POST');
+        return $request->getPathInfo() === '/'.$request->getLocale().'/login' && $request->isMethod('POST');
     }
 
     public function authenticate(Request $request): Passport
@@ -44,10 +44,12 @@ class LoginFormAuthenticator extends AbstractAuthenticator
                     'email' => $user_ident
                 ]);
 
+                
                 if(!$user){
                     throw new UserNotFoundException();
                 }
 
+                
                 return $user;
             }),
             new CustomCredentials(function($credentials, User $user){

@@ -9,11 +9,17 @@ use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
 {
-    #[Route('/login', name: 'app_login')]
+    #[Route('/{_locale}/login', name: 'app_login')]
     public function login(AuthenticationUtils $auth_utils): Response
     {
         return $this->render('security/login.html.twig', [
             'error' => $auth_utils->getLastAuthenticationError(),
         ]);
+    }
+
+    #[Route("/logout", name: 'app_logout')]
+    public function logout()
+    {
+        throw new \Exception('logout() should never be reached');
     }
 }
