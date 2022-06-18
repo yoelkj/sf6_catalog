@@ -7,7 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class CatalogController extends AbstractController
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+//use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+#class CatalogController extends AbstractController
+class CatalogController extends BaseController
 {
 
     #[Route("/", name: 'app_homepage_redir', requirements: ['_locale' => 'en|es'])]
@@ -35,9 +39,22 @@ class CatalogController extends AbstractController
         ]);
     }
 
-    #[Route('/browse/{slug}', name: 'app_browse')]
+    
+    #[Route('/{_locale}/browse/{slug}', name: 'app_browse')]
     public function browse(string $slug = null): Response
     {
+     
+        /*
+            #[Security("is_granted('ROLE_ADMIN') and is_granted('ROLE_FRIENDLY_USER')")]
+            #[IsGranted('ROLE_ADMIN')]   
+        */
+
+        //$this->denyAccessUnlessGranted('ROLE_USER');
+        //if (!$this->isGranted('ROLE_ADMIN')) {
+        //    throw $this->createAccessDeniedException('No access for you!');
+        //}
+
+
         $title = ($slug) ? 'Category: '.ucwords(str_replace('-', ' ', $slug)): 'All Categories';
 
         return $this->render('catalog/browse.html.twig', [
