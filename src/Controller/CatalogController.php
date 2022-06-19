@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -40,7 +39,7 @@ class CatalogController extends BaseController
     }
 
     
-    #[Route('/{_locale}/browse/{slug}', name: 'app_browse')]
+    #[Route('/{_locale}/browse/{slug}', name: 'app_browse', requirements: ['_locale' => 'en|es'])]
     public function browse(string $slug = null): Response
     {
      
