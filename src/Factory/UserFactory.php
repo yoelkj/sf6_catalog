@@ -49,6 +49,7 @@ final class UserFactory extends ModelFactory
             'plainPassword' => 'Tada',
             'isVerified' => true,
             'avatar' => 'default.png',
+            'roles' =>  ['ROLE_USER']
         ];
     }
 

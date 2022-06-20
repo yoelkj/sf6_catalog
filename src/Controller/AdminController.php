@@ -11,7 +11,7 @@ use Symfony\UX\Chartjs\Model\Chart;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin_dashboard")
+     * @Route("/admin2", name="admin_dashboard_2")
      */
     public function dashboard(ChartBuilderInterface $chartBuilder)
     {

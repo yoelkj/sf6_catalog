@@ -50,6 +50,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $avatar;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isActive = false;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -215,6 +218,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setAvatar(?string $avatar): void
     {
         $this->avatar = $avatar;
+    }
+
+    public function isIsActive(): ?bool
+    {
+        return $this->isActive;
+    }
+
+    public function setIsActive(?bool $isActive): self
+    {
+        $this->isActive = $isActive;
+
+        return $this;
     }
     
 
