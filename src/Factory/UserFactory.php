@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Zenstruck\Foundry\RepositoryProxy;
 use Zenstruck\Foundry\ModelFactory;
@@ -45,8 +46,9 @@ final class UserFactory extends ModelFactory
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
             'email' => self::faker()->email(),
             'name' => self::faker()->name(),
-            'plainPassword' => 'tada',
+            'plainPassword' => 'Tada',
             'isVerified' => true,
+            'avatar' => 'default.png',
         ];
     }
 
@@ -55,11 +57,22 @@ final class UserFactory extends ModelFactory
         // see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#initialization
         return $this
             ->afterInstantiate(function(User $user) {
+
                 if ($user->getPlainPassword()) {
                     $user->setPassword(
                         $this->passwordHasher->hashPassword($user, $user->getPlainPassword())
                     );
                 }
+
+                $fs = new Filesystem();
+                $newAvatarFilename = self::faker()->slug(2).'.png';
+
+                $fs->copy(
+                    __DIR__.'/../../assets/images/'.$user->getAvatar(),
+                    __DIR__.'/../../public/uploads/avatars/'.$newAvatarFilename
+                );
+                $user->setAvatar($newAvatarFilename);
+
             })
         ;
     }

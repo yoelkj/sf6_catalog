@@ -47,6 +47,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $avatar;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -189,6 +192,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     {
         $this->totpSecret = $totpSecret;
         return $this;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function getAvatarUrl(): ?string
+    {
+        if (!$this->avatar) {
+            return null;
+        }
+
+        if (strpos($this->avatar, '/') !== false) {
+            return $this->avatar;
+        }
+
+        return sprintf('/uploads/avatars/%s', $this->avatar);
+    }
+
+    public function setAvatar(?string $avatar): void
+    {
+        $this->avatar = $avatar;
     }
     
 
