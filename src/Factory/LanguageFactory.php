@@ -43,6 +43,8 @@ final class LanguageFactory extends ModelFactory
             'code' => 'en',
             'orderRow' => 0,
             'isActive' => 1,
+            'created' => self::faker()->dateTimeBetween('-1 year'),
+            'updated' => self::faker()->dateTimeBetween('-1 year'),
         ];
     }
 

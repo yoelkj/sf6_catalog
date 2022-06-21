@@ -8,6 +8,10 @@ use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 
 class LanguageCrudController extends AbstractCrudController
 {
@@ -22,14 +26,24 @@ class LanguageCrudController extends AbstractCrudController
             ->disable(Action::DETAIL);
     }
 
-    /*
+    
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+
+        yield IdField::new('id')
+            ->onlyOnIndex();
+        yield Field::new('name');
+        yield Field::new('code');
+        yield Field::new('orderRow')->onlyOnForms();
+        yield Field::new('isActive');
+
+        yield AssociationField::new('countries')
+            ->autocomplete()
+            ->setFormTypeOption('by_reference', false);
+
+        yield DateField::new('created')->hideOnForm();
+        yield DateField::new('updated')->onlyOnForms()->hideOnForm();
+        
     }
-    */
+    
 }

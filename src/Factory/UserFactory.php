@@ -49,7 +49,9 @@ final class UserFactory extends ModelFactory
             'plainPassword' => 'Tada',
             'isVerified' => true,
             'avatar' => 'default.png',
-            'roles' =>  ['ROLE_USER']
+            'roles' =>  ['ROLE_USER'],
+            'created' => self::faker()->dateTimeBetween('-1 year'),
+            'updated' => self::faker()->dateTimeBetween('-1 year'),
         ];
     }
 

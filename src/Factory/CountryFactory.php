@@ -42,7 +42,9 @@ final class CountryFactory extends ModelFactory
             'name' => self::faker()->text(),
             'code' => 'en',
             'isActive' => true,
-            'language' => LanguageFactory::random()
+            'language' => LanguageFactory::random(),
+            'created' => self::faker()->dateTimeBetween('-1 year'),
+            'updated' => self::faker()->dateTimeBetween('-1 year'),
         ];
     }
 

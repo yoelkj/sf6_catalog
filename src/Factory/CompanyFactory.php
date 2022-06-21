@@ -42,6 +42,8 @@ final class CompanyFactory extends ModelFactory
             'name' => self::faker()->text(),
             'country' => CountryFactory::random(),
             'language' => LanguageFactory::random(),
+            'created' => self::faker()->dateTimeBetween('-1 year'),
+            'updated' => self::faker()->dateTimeBetween('-1 year'),
         ];
     }
 

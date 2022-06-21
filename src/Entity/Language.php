@@ -7,6 +7,9 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
+use Doctrine\DBAL\Types\Types;
+use Gedmo\Mapping\Annotation as Gedmo;
+
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
 class Language
 {
@@ -27,16 +30,37 @@ class Language
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
 
-    #[ORM\OneToMany(mappedBy: 'language', targetEntity: Company::class)]
+    /**
+     * @var \DateTime
+     */
+    #[Gedmo\Timestampable(on: 'create')]
+    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
+    private $created;
+
+    /**
+     * @var \DateTime
+     */
+    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
+    #[Gedmo\Timestampable]
+    private $updated;
+
+    #[ORM\OneToMany(mappedBy: 'language', targetEntity: Company::class, orphanRemoval: true)]
     private $companies;
 
-    #[ORM\OneToMany(mappedBy: 'language', targetEntity: Country::class)]
+    #[ORM\OneToMany(mappedBy: 'language', targetEntity: Country::class, orphanRemoval: true)]
     private $countries;
+
+    
 
     public function __construct()
     {
         $this->companies = new ArrayCollection();
         $this->countries = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -89,6 +113,28 @@ class Language
     {
         $this->orderRow = $orderRow;
 
+        return $this;
+    }
+
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function setCreated(?\DateTimeInterface $created): self
+    {
+        $this->created = $created;
+        return $this;
+    }
+
+    public function getUpdated()
+    {
+        return $this->updated;
+    }
+
+    public function setUpdated(?\DateTimeInterface $updated): self
+    {
+        $this->updated = $updated;
         return $this;
     }
 
