@@ -59,6 +59,21 @@ class CompanyCrudController extends AbstractCrudController
             */
         ;
 
+        /*
+        
+        yield Field::new('slug')
+            ->hideOnIndex();
+            ->setFormTypeOption(
+                'disabled',
+                $pageName !== Crud::PAGE_NEW
+            );
+
+        yield TextField::new('answer')
+            ->setTemplatePath('admin/field/integer.html.twig');
+            ->setMaxLength(50);
+
+        */
+
         yield Field::new('isActive')
             ;
 
