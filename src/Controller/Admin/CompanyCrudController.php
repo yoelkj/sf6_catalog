@@ -72,6 +72,21 @@ class CompanyCrudController extends AbstractCrudController
             ->setTemplatePath('admin/field/integer.html.twig');
             ->setMaxLength(50);
 
+        yield TextEditorField::new('question')
+        yield TextareaField::new('question')
+        yield TextareaField::new('question')
+            ->hideOnIndex()
+            ->setHelp('Preview:');
+            ->setFormTypeOptions([
+                'row_attr' => [
+                    'data-controller' => 'snarkdown',
+                ],
+                'attr' => [
+                    'data-snarkdown-target' => 'input',
+                    'data-action' => 'snarkdown#render',
+                ],
+            ]);
+
         */
 
         yield Field::new('isActive')

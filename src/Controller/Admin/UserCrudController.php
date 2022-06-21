@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\User;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
@@ -90,6 +91,17 @@ class UserCrudController extends AbstractCrudController
             TextField::new('name'),
         ];
         */
+    }
+
+    public function configureCrud(Crud $crud): Crud
+    {
+        //'language.isActive' => 'DESC',
+        return parent::configureCrud($crud)
+            ->setDefaultSort([
+                
+                'isActive' => 'DESC',
+                'created' => 'DESC',
+            ]);
     }
     
 }

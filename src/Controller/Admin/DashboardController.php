@@ -26,20 +26,28 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
 
 use Symfony\Component\Security\Core\User\UserInterface;
 
-/*
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
 use Symfony\UX\Chartjs\Model\Chart;
-;
-*/
 
 
 class DashboardController extends AbstractDashboardController
 {
+    /*
+    private ChartBuilderInterface $chartBuilder;
+
+    public function __construct(ChartBuilderInterface $chartBuilder)
+    {
+        $this->chartBuilder = $chartBuilder;
+    }
+    */
+
+
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/admin', name: 'admin')]
-    //public function index(ChartBuilderInterface $chartBuilder): Response
-    public function index(): Response
+    public function index(ChartBuilderInterface $chartBuilder = null): Response
     {
+
+        assert(null !== $chartBuilder);
         //return parent::index();
 
         // Option 1. You can make your dashboard redirect to some common page of your backend
@@ -57,7 +65,7 @@ class DashboardController extends AbstractDashboardController
         // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
         //
 
-        /*
+        
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -93,12 +101,10 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         return $this->render('admin/dashboard/index.html.twig', [
-            'chart' => $chart,
-            'chart2' => $chart2,
+            'chart' => $this->createChart($chartBuilder),
+            'chart2' => $chart,
+            'chart3' => $chart2,
         ]);
-        */
-        return $this->render('admin/dashboard/index.html.twig', []);
-        
 
     }
 
@@ -218,6 +224,43 @@ class DashboardController extends AbstractDashboardController
     {
         return parent::configureAssets()
             ->addWebpackEncoreEntry('admin');
+    }
+
+    public function configureCrud(): Crud
+    {
+        return parent::configureCrud()
+            ->overrideTemplate('crud/field/id', 'admin/field/id_with_icon.html.twig')
+            ->setDefaultSort([
+                    'id' => 'DESC',
+            ]);
+    }
+
+
+
+    private function createChart($chartBuilder): Chart
+    {
+        $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
+        $chart->setData([
+            'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            'datasets' => [
+                [
+                    'label' => 'My First dataset',
+                    'backgroundColor' => 'rgb(255, 99, 132)',
+                    'borderColor' => 'rgb(255, 99, 132)',
+                    'data' => [0, 10, 5, 2, 20, 30, 45],
+                ],
+            ],
+        ]);
+        $chart->setOptions([
+            'scales' => [
+                'y' => [
+                   'suggestedMin' => 0,
+                   'suggestedMax' => 100,
+                ],
+            ],
+        ]);
+
+        return $chart;
     }
 
 }

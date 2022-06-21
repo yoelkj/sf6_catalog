@@ -7,10 +7,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FieldTrait;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Contracts\Translation\TranslatableInterface;
 
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
 /**
  * @author Yoel Velasquez Valencia <yoel.velasquez.valenca@gmail.com>
  */
-final class IntegerField implements FieldInterface
+final class VotesField implements FieldInterface
 {
     use FieldTrait;
 
@@ -28,6 +30,7 @@ final class IntegerField implements FieldInterface
             ->setCustomOption(self::OPTION_NUMBER_FORMAT, null);
     }
 
+    /*
     // this format is passed directly to the first argument of `sprintf()` to format the integer before displaying it
     public function setNumberFormat(string $sprintfFormat): self
     {
@@ -35,4 +38,5 @@ final class IntegerField implements FieldInterface
 
         return $this;
     }
+    */
 }
