@@ -23,7 +23,14 @@ class LanguageCrudController extends AbstractCrudController
     public function configureActions(Actions $actions): Actions
     {
         return parent::configureActions($actions)
-            ->disable(Action::DETAIL);
+            ->disable(Action::DETAIL)
+            //->setPermission(Action::INDEX, 'ROLE_MODERATOR')
+            //->setPermission(Action::DETAIL, 'ROLE_MODERATOR')
+            //->setPermission(Action::EDIT, 'ROLE_MODERATOR');
+            //->setPermission(Action::NEW, 'ROLE_SUPER_ADMIN')
+            //->setPermission(Action::DELETE, 'ROLE_SUPER_ADMIN');
+            //->setPermission(Action::BATCH_DELETE, 'ROLE_SUPER_ADMIN');
+            ;
     }
 
     

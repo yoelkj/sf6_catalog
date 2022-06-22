@@ -161,9 +161,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::section('Localization');
         yield MenuItem::linkToCrud('Countries', 'fas fa-list', Country::class);
         yield MenuItem::linkToCrud('Languages', 'fas fa-list', Language::class);
-        yield MenuItem::section('Users');
-        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class);
-
+        
+        yield MenuItem::section('Users')
+            //->setPermission('ROLE_SUPERADMIN')
+            ;
+        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
+            //->setPermission('ROLE_SUPERADMIN')
+            ;
         yield MenuItem::section('public');
         yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'app_homepage');
         //yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
