@@ -48,23 +48,17 @@ class DashboardController extends AbstractDashboardController
     {
 
         assert(null !== $chartBuilder);
+
         //return parent::index();
 
-        // Option 1. You can make your dashboard redirect to some common page of your backend
-        //
+        // Redirect to some common page of your backend
         // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
         // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
 
-        // Option 2. You can make your dashboard redirect to different pages depending on the user
-        //
+        // redirect to different pages depending on the user
         // if ('jane' === $this->getUser()->getUsername()) {
         //     return $this->redirect('...');
         // }
-
-        // Option 3. You can render some custom template to display a proper dashboard with widgets, etc.
-        // (tip: it's easier if your template extends from @EasyAdmin/page/content.html.twig)
-        //
-
         
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
@@ -101,7 +95,7 @@ class DashboardController extends AbstractDashboardController
         ]);
 
         return $this->render('admin/dashboard/index.html.twig', [
-            'chart' => $this->createChart($chartBuilder),
+            //'chart' => $this->createChart($chartBuilder),
             'chart2' => $chart,
             'chart3' => $chart2,
         ]);
@@ -125,7 +119,7 @@ class DashboardController extends AbstractDashboardController
             //->setFaviconPath('favicon.svg')
 
             // the domain used by default is 'messages'
-            //->setTranslationDomain('my-custom-domain')
+            ->setTranslationDomain('admin')
 
             // there's no need to define the "text direction" explicitly because
             // its default value is inferred dynamically from the user locale

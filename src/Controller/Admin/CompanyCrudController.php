@@ -7,6 +7,7 @@ use App\Entity\Country;
 use Doctrine\DBAL\Query\QueryBuilder;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
@@ -91,7 +92,7 @@ class CompanyCrudController extends AbstractCrudController
 
         */
 
-        yield Field::new('isActive')
+        yield BooleanField::new('isActive')
             ;
 
         yield DateField::new('created')->hideOnForm();
