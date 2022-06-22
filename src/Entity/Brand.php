@@ -2,17 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\CountryRepository;
+use App\Repository\BrandRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\DBAL\Types\Types;
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
-#[ORM\Entity(repositoryClass: CountryRepository::class)]
-class Country
+#[ORM\Entity(repositoryClass: BrandRepository::class)]
+class Brand
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,23 +22,21 @@ class Country
     private $locale;
 
     #[Gedmo\Translatable]
-    #[ORM\Column(type: 'string', length: 140, nullable: true)]
+    #[ORM\Column(type: 'string', length: 140)]
     private $name;
 
-    #[ORM\Column(type: 'string', length: 10, nullable: true)]
-    private $code;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $slug;
 
-    #[ORM\Column(type: 'string', length: 140, nullable: true)]
-    private $flag;
+    #[Gedmo\Translatable]
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $body;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Company::class, orphanRemoval: true)]
-    private $companies;
-
-    #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'countries')]
-    private $language;
+    #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Product::class)]
+    private $products;
 
     /**
      * @var \DateTime
@@ -57,12 +54,7 @@ class Country
 
     public function __construct()
     {
-        $this->companies = new ArrayCollection();
-    }
-
-    public function __toString(): string
-    {
-        return $this->name;
+        $this->products = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -75,33 +67,21 @@ class Country
         return $this->name;
     }
 
-    public function setName(?string $name): self
+    public function setName(string $name): self
     {
         $this->name = $name;
 
         return $this;
     }
 
-    public function getCode(): ?string
+    public function getBody(): ?string
     {
-        return $this->code;
+        return $this->body;
     }
 
-    public function setCode(?string $code): self
+    public function setBody(?string $body): self
     {
-        $this->code = $code;
-
-        return $this;
-    }
-
-    public function getFlag(): ?string
-    {
-        return $this->flag;
-    }
-
-    public function setFlag(?string $flag): self
-    {
-        $this->flag = $flag;
+        $this->body = $body;
 
         return $this;
     }
@@ -119,48 +99,48 @@ class Country
     }
 
     /**
-     * @return Collection<int, Company>
+     * @return Collection<int, Product>
      */
-    public function getCompanies(): Collection
+    public function getProducts(): Collection
     {
-        return $this->companies;
+        return $this->products;
     }
 
-    public function addCompany(Company $company): self
+    public function addProduct(Product $product): self
     {
-        if (!$this->companies->contains($company)) {
-            $this->companies[] = $company;
-            $company->setCountry($this);
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setBrand($this);
         }
 
         return $this;
     }
 
-    public function removeCompany(Company $company): self
+    public function removeProduct(Product $product): self
     {
-        if ($this->companies->removeElement($company)) {
+        if ($this->products->removeElement($product)) {
             // set the owning side to null (unless already changed)
-            if ($company->getCountry() === $this) {
-                $company->setCountry(null);
+            if ($product->getBrand() === $this) {
+                $product->setBrand(null);
             }
         }
 
         return $this;
     }
 
-    public function getLanguage(): ?Language
+    public function getSlug(): ?string
     {
-        return $this->language;
+        return $this->slug;
     }
 
-    public function setLanguage(?Language $language): self
+    public function setSlug(string $slug): self
     {
-        $this->language = $language;
+        $this->slug = $slug;
 
         return $this;
     }
 
-    public function getCreated()
+    public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
     }
@@ -168,10 +148,11 @@ class Country
     public function setCreated(?\DateTimeInterface $created): self
     {
         $this->created = $created;
+
         return $this;
     }
 
-    public function getUpdated()
+    public function getUpdated(): ?\DateTimeInterface
     {
         return $this->updated;
     }
@@ -179,6 +160,7 @@ class Country
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
         return $this;
     }
 
@@ -186,5 +168,4 @@ class Country
     {
         $this->locale = $locale;
     }
-
 }

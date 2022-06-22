@@ -19,10 +19,6 @@ class Language
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     */
     #[Gedmo\Locale]
     private $locale;
 
@@ -59,10 +55,14 @@ class Language
     #[ORM\OneToMany(mappedBy: 'language', targetEntity: Country::class, orphanRemoval: true)]
     private $countries;
 
+    #[ORM\OneToMany(mappedBy: 'language', targetEntity: GalleryImages::class)]
+    private $galleryImages;
+
     public function __construct()
     {
         $this->companies = new ArrayCollection();
         $this->countries = new ArrayCollection();
+        $this->galleryImages = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -203,5 +203,40 @@ class Language
         }
 
         return $this;
+    }
+
+    /**
+     * @return Collection<int, GalleryImages>
+     */
+    public function getGalleryImages(): Collection
+    {
+        return $this->galleryImages;
+    }
+
+    public function addGalleryImage(GalleryImages $galleryImage): self
+    {
+        if (!$this->galleryImages->contains($galleryImage)) {
+            $this->galleryImages[] = $galleryImage;
+            $galleryImage->setLanguage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeGalleryImage(GalleryImages $galleryImage): self
+    {
+        if ($this->galleryImages->removeElement($galleryImage)) {
+            // set the owning side to null (unless already changed)
+            if ($galleryImage->getLanguage() === $this) {
+                $galleryImage->setLanguage(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }
