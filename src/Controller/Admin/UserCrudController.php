@@ -139,9 +139,7 @@ class UserCrudController extends AbstractCrudController
         //FormField::addPanel('Basic Data')->addCssClass('col-md-9')
 
 
-        //yield FormField::addTab('Basic Data')->setIcon('info')
-
-        
+        //yield FormField::addTab('Basic Data')->setIcon('info')        
 
         yield IdField::new('id')
             ->onlyOnForms()

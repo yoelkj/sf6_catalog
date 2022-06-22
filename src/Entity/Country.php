@@ -8,7 +8,9 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\DBAL\Types\Types;
+
 use Gedmo\Mapping\Annotation as Gedmo;
+use Gedmo\Translatable\Translatable;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -18,6 +20,14 @@ class Country
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /**
+     * Used locale to override Translation listener`s locale
+     * this is not a mapped field of entity metadata, just a simple property
+     */
+    #[Gedmo\Locale]
+    private $locale;
+
+    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 140, nullable: true)]
     private $name;
 
@@ -176,4 +186,10 @@ class Country
         $this->updated = $updated;
         return $this;
     }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
+    }
+
 }

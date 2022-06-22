@@ -39,7 +39,7 @@ final class CountryFactory extends ModelFactory
     {
         return [
             // TODO add your default values here (https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#model-factories)
-            'name' => self::faker()->text(),
+            'name' => null,
             'code' => 'en',
             'isActive' => true,
             'language' => LanguageFactory::random(),
