@@ -110,9 +110,11 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
-        return Dashboard::new()
+        $dashboard = Dashboard::new();
+        
+        
             // the name visible to end users
-            ->setTitle('Sf6 Catalog')
+            $dashboard->setTitle('Sf6 Catalog')
             // you can include HTML contents too (e.g. to link to an image)
             //->setTitle('<img src="..."> ACME <span class="text-small">Corp.</span>')
 
@@ -147,13 +149,15 @@ class DashboardController extends AbstractDashboardController
             //->generateRelativeUrls()
 
         ;
+
+        //$dashboard->getAsDto()->setContentWidth(Crud::LAYOUT_CONTENT_FULL);
+        
+        return $dashboard;
     }
 
     public function configureMenuItems(): iterable
     {
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
-
-        
 
         yield MenuItem::section('General');
 
@@ -167,8 +171,12 @@ class DashboardController extends AbstractDashboardController
             ;
         yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
             //->setPermission('ROLE_SUPERADMIN')
+            ->setController(UserCrudController::class);
             ;
-        yield MenuItem::section('public');
+        yield MenuItem::linkToCrud('Active Users', 'fa fa-users', User::class)
+            ->setController(UserIsActiveCrudController::class);
+
+        yield MenuItem::section();
         yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'app_homepage');
         //yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
 
@@ -221,7 +229,19 @@ class DashboardController extends AbstractDashboardController
     public function configureActions(): Actions
     {
         return parent::configureActions()
-            ->add(Crud::PAGE_INDEX, Action::DETAIL);
+            ->add(Crud::PAGE_INDEX, Action::DETAIL)
+            
+            /*
+            ->update(Crud::PAGE_INDEX, Action::DELETE, static function(Action $action) {
+                $action->displayIf(static function (User $user) {
+                    return !$user->getIsActive();
+                });
+
+                return $action;
+            })
+            */
+            
+            ;
     }
 
     public function configureAssets(): Assets

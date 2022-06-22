@@ -22,8 +22,29 @@ class LanguageCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        /*
+        $viewAction = Action::new('view')
+            ->linkToUrl(function(Language $language) {
+                return $this->generateUrl('app_language_show', [
+                    'name' => $language->getName(),
+                ]);
+            })
+            ->setIcon('fa fa-eye')
+            ->setLabel('View on site')
+            ;
+        */
+
+
+        
+
         return parent::configureActions($actions)
             ->disable(Action::DETAIL)
+            
+            ;
+
+            //->add(Crud::PAGE_DETAIL, $viewAction->addCssClass('btn btn-success'))
+            //->add(Crud::PAGE_INDEX, $viewAction);
+
             //->setPermission(Action::INDEX, 'ROLE_MODERATOR')
             //->setPermission(Action::DETAIL, 'ROLE_MODERATOR')
             //->setPermission(Action::EDIT, 'ROLE_MODERATOR');
@@ -40,7 +61,11 @@ class LanguageCrudController extends AbstractCrudController
         yield IdField::new('id')
             ->onlyOnIndex();
         yield Field::new('name');
-        yield Field::new('code');
+        
+        yield Field::new('code')
+            //->setPermission('ROLE_SUPER_ADMIN')
+        
+        ;
         yield Field::new('orderRow')->onlyOnForms();
         yield Field::new('isActive');
 

@@ -46,8 +46,10 @@ class CompanyCrudController extends AbstractCrudController
         yield AssociationField::new('country')
             /*
             ->autocomplete()
-            ->formatValue(static function ($value, Company $company): ?string {
-                if (!$user = $company->getUser()) {
+            //->setCrudController(CountryCrudController::class)
+
+            ->formatValue(static function ($value, ?Company $company): ?string {
+                if (!$user = $company?->getUser()) {
                     return null;
                 }
                 return sprintf('%s&nbsp;(%s)', $user->getEmail(), $user->getQuestions()->count());  
