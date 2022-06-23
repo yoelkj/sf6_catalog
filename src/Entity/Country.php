@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\DBAL\Types\Types;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
 #[ORM\Entity(repositoryClass: CountryRepository::class)]
 class Country
@@ -19,10 +17,6 @@ class Country
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Gedmo\Locale]
-    private $locale;
-
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 140, nullable: true)]
     private $name;
 
@@ -41,18 +35,10 @@ class Country
     #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'countries')]
     private $language;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     public function __construct()
@@ -180,11 +166,6 @@ class Country
     {
         $this->updated = $updated;
         return $this;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
     }
 
 }

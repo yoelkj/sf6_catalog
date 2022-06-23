@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
@@ -16,21 +15,15 @@ class Product
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Gedmo\Locale]
-    private $locale;
-
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
     #[ORM\Column(type: 'string', length: 140)]
     private $code;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
@@ -61,18 +54,10 @@ class Product
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     public function getId(): ?int
@@ -258,11 +243,6 @@ class Product
         $this->updated = $updated;
 
         return $this;
-    }
-
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
     }
     
 }

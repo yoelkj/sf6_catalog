@@ -2,11 +2,18 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Brand;
+use App\Entity\Category;
 use App\Entity\Company;
 use App\Entity\Country;
+use App\Entity\Gallery;
+use App\Entity\GalleryImages;
 use App\Entity\Language;
+use App\Entity\Page;
+use App\Entity\Presentation;
+use App\Entity\Product;
 use App\Entity\User;
-
+use App\Entity\Widget;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -154,11 +161,25 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
 
         yield MenuItem::section('General');
+            yield MenuItem::linkToCrud('Companies', 'fas fa-list', Company::class);
+        
+        yield MenuItem::section('Products');
+            yield MenuItem::linkToCrud('Products', 'fas fa-list', Product::class);
+            yield MenuItem::linkToCrud('Presentations', 'fas fa-list', Presentation::class);
+            yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class);
+            yield MenuItem::linkToCrud('Brand', 'fas fa-list', Brand::class);
 
-        yield MenuItem::linkToCrud('Companies', 'fas fa-list', Company::class);
+        yield MenuItem::section('Pages');
+            yield MenuItem::linkToCrud('Pages', 'fas fa-list', Page::class);
+            yield MenuItem::linkToCrud('Widgets', 'fas fa-list', Widget::class);
+        
+        yield MenuItem::section('Gallery');
+            yield MenuItem::linkToCrud('Gallery', 'fas fa-list', Gallery::class);
+            yield MenuItem::linkToCrud('Galery images', 'fas fa-list', GalleryImages::class);
+            
         yield MenuItem::section('Localization');
-        yield MenuItem::linkToCrud('Countries', 'fas fa-list', Country::class);
-        yield MenuItem::linkToCrud('Languages', 'fas fa-list', Language::class);
+            yield MenuItem::linkToCrud('Countries', 'fas fa-list', Country::class);
+            yield MenuItem::linkToCrud('Languages', 'fas fa-list', Language::class);
         
         yield MenuItem::section('Users')
             //->setPermission('ROLE_SUPERADMIN')
@@ -174,14 +195,11 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'app_homepage');
         //yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
 
-            /*
-            MenuItem::subMenu('Users', 'fa fa-list')->setSubItems([
-                MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
-            ]),
-            */
-
-        
-
+        /*
+        MenuItem::subMenu('Users', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Users', 'fa fa-users', User::class),
+        ]),
+        */
     }
 
     /**

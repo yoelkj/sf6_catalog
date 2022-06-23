@@ -3,12 +3,11 @@
 namespace App\Entity;
 
 use App\Repository\PageRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
-
-use Gedmo\Translatable\Translatable;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
 class Page
@@ -18,24 +17,19 @@ class Page
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Gedmo\Locale]
-    private $locale;
-
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 140)]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $bgImage;
 
-    #[ORM\Column(type: 'string', length: 255)]
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $body_image;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
@@ -50,19 +44,19 @@ class Page
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
+
+    #[ORM\ManyToMany(targetEntity: Gallery::class, inversedBy: 'pages')]
+    private $galleries;
+
+    public function __construct()
+    {
+        $this->galleries = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -165,7 +159,7 @@ class Page
         return $this;
     }
 
-    public function getCreated(): ?\DateTimeInterface
+    public function getCreated()
     {
         return $this->created;
     }
@@ -173,11 +167,10 @@ class Page
     public function setCreated(?\DateTimeInterface $created): self
     {
         $this->created = $created;
-
         return $this;
     }
 
-    public function getUpdated(): ?\DateTimeInterface
+    public function getUpdated()
     {
         return $this->updated;
     }
@@ -185,7 +178,6 @@ class Page
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
-
         return $this;
     }
 
@@ -201,8 +193,27 @@ class Page
         return $this;
     }
 
-    public function setTranslatableLocale($locale)
+    /**
+     * @return Collection<int, Gallery>
+     */
+    public function getGalleries(): Collection
     {
-        $this->locale = $locale;
+        return $this->galleries;
+    }
+
+    public function addGallery(Gallery $gallery): self
+    {
+        if (!$this->galleries->contains($gallery)) {
+            $this->galleries[] = $gallery;
+        }
+
+        return $this;
+    }
+
+    public function removeGallery(Gallery $gallery): self
+    {
+        $this->galleries->removeElement($gallery);
+
+        return $this;
     }
 }

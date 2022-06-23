@@ -6,7 +6,6 @@ use App\Repository\CompanyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\DBAL\Types\Types;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
 class Company
@@ -79,18 +78,10 @@ class Company
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     public function __toString(): string

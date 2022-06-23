@@ -13,6 +13,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class LanguageCrudController extends AbstractCrudController
 {
@@ -67,7 +68,7 @@ class LanguageCrudController extends AbstractCrudController
             //->setPermission('ROLE_SUPER_ADMIN')
         
         ;
-        yield Field::new('orderRow')->onlyOnForms();
+        yield IntegerField::new('orderRow')->onlyOnForms();
         yield BooleanField::new('isActive');
 
         yield AssociationField::new('countries')

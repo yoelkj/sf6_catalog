@@ -150,6 +150,7 @@ class UserCrudController extends AbstractCrudController
                 return $user?->getAvatarUrl();
             })
             ->hideOnForm();
+        
         yield ImageField::new('avatar')
             ->setBasePath('uploads/avatars')
             ->setUploadDir('public/uploads/avatars')

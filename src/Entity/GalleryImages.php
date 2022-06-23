@@ -5,7 +5,6 @@ namespace App\Entity;
 use App\Repository\GalleryImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: GalleryImagesRepository::class)]
@@ -31,18 +30,10 @@ class GalleryImages
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     public function getId(): ?int

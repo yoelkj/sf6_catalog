@@ -12,7 +12,6 @@
         "doctrine/orm": "^2.12",
         "easycorp/easyadmin-bundle": "^4.3",
         "endroid/qr-code": "^4.4",
-        "gedmo/doctrine-extensions": "^3.7",
         "handcraftedinthealps/goodby-csv": "^1.4",
         "scheb/2fa-bundle": "^6.0",
         "scheb/2fa-totp": "^6.0",

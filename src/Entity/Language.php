@@ -8,8 +8,6 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Doctrine\DBAL\Types\Types;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Translatable\Translatable;
 
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
 class Language
@@ -19,10 +17,6 @@ class Language
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Gedmo\Locale]
-    private $locale;
-
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 140, nullable: true)]
     private $name;
 
@@ -35,18 +29,10 @@ class Language
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     #[ORM\OneToMany(mappedBy: 'language', targetEntity: Company::class, orphanRemoval: true)]

@@ -7,7 +7,6 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
 
 #[ORM\Entity(repositoryClass: GalleryRepository::class)]
@@ -27,23 +26,19 @@ class Gallery
     #[ORM\OneToMany(mappedBy: 'Gallery', targetEntity: GalleryImages::class)]
     private $galleryImages;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
+
+    #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'galleries')]
+    private $pages;
 
     public function __construct()
     {
         $this->galleryImages = new ArrayCollection();
+        $this->pages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -125,6 +120,33 @@ class Gallery
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Page>
+     */
+    public function getPages(): Collection
+    {
+        return $this->pages;
+    }
+
+    public function addPage(Page $page): self
+    {
+        if (!$this->pages->contains($page)) {
+            $this->pages[] = $page;
+            $page->addGallery($this);
+        }
+
+        return $this;
+    }
+
+    public function removePage(Page $page): self
+    {
+        if ($this->pages->removeElement($page)) {
+            $page->removeGallery($this);
+        }
 
         return $this;
     }

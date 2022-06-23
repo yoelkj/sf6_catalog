@@ -7,10 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\DBAL\Types\Types;
 
-use Gedmo\Translatable\Translatable;
 
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category
@@ -20,17 +18,12 @@ class Category
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[Gedmo\Locale]
-    private $locale;
-    
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'string', length: 140)]
     private $name;
 
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    #[Gedmo\Translatable]
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
@@ -40,18 +33,10 @@ class Category
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private $products;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
     private $created;
 
-    /**
-     * @var \DateTime
-     */
     #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
     private $updated;
 
     public function __construct()
