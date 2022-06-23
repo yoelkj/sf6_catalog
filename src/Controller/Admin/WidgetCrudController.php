@@ -4,6 +4,7 @@ namespace App\Controller\Admin;
 
 use App\Entity\Widget;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
@@ -37,6 +38,9 @@ class WidgetCrudController extends AbstractCrudController
         yield FormField::addRow();
         yield TextEditorField::new('body')->setColumns(12);
         
+        yield AssociationField::new('gallery')
+                ->setCrudController(GalleryCrudController::class)
+                ->setColumns(6);
 
         yield FormField::addRow();
         yield IntegerField::new('orderRow')->setColumns(6)->onlyOnForms();
