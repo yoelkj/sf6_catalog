@@ -4,6 +4,12 @@ namespace App\Controller\Admin;
 
 use App\Entity\Gallery;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 
 class GalleryCrudController extends AbstractCrudController
 {
@@ -12,15 +18,28 @@ class GalleryCrudController extends AbstractCrudController
         return Gallery::class;
     }
 
-    /*
     public function configureFields(string $pageName): iterable
     {
-        return [
-            IdField::new('id'),
-            TextField::new('title'),
-            TextEditorField::new('description'),
-        ];
+        yield IdField::new('id')->onlyOnIndex();
+        yield Field::new('name');
+        yield BooleanField::new('isActive');
+        
+        yield CollectionField::new('galleryImages')
+            ->useEntryCrudForm()
+            //->renderExpanded()
+            ->setEntryIsComplex()
+            
+            ->formatValue(static function ($value, ?Gallery $gallery): ?string {
+                $num_images = $gallery?->getGalleryImages()->count();
+                return sprintf('%s Image(s)', $num_images);
+            })
+            ;
+
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
+
+
     }
-    */
+    
     
 }

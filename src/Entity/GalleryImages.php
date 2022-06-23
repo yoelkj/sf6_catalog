@@ -22,7 +22,7 @@ class GalleryImages implements TimestampableInterface
     private $language;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'galleryImages')]
-    private $Gallery;
+    private $gallery;
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
@@ -36,6 +36,11 @@ class GalleryImages implements TimestampableInterface
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function __toString(): string
+    {
+        return $this->getImage().' - '.$this->language->getName();
     }
 
     public function getLanguage(): ?Language
@@ -52,12 +57,12 @@ class GalleryImages implements TimestampableInterface
 
     public function getGallery(): ?Gallery
     {
-        return $this->Gallery;
+        return $this->gallery;
     }
 
-    public function setGallery(?Gallery $Gallery): self
+    public function setGallery(?Gallery $gallery): self
     {
-        $this->Gallery = $Gallery;
+        $this->gallery = $gallery;
 
         return $this;
     }

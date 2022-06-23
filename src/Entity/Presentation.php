@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PresentationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -29,6 +31,19 @@ class Presentation implements TimestampableInterface
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
+
+    #[ORM\OneToMany(mappedBy: 'presentation', targetEntity: Product::class)]
+    private $products;
+
+    public function __construct()
+    {
+        $this->products = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
 
     public function getId(): ?int
     {
@@ -103,6 +118,36 @@ class Presentation implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setPresentation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getPresentation() === $this) {
+                $product->setPresentation(null);
+            }
+        }
 
         return $this;
     }

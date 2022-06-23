@@ -26,16 +26,25 @@ class Gallery implements TimestampableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    #[ORM\OneToMany(mappedBy: 'Gallery', targetEntity: GalleryImages::class)]
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: GalleryImages::class, cascade: ["persist", "remove"])]
     private $galleryImages;
 
-    #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'galleries')]
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Page::class)]
     private $pages;
+
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Widget::class)]
+    private $widgets;
 
     public function __construct()
     {
         $this->galleryImages = new ArrayCollection();
         $this->pages = new ArrayCollection();
+        $this->widgets = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -133,7 +142,7 @@ class Gallery implements TimestampableInterface
     {
         if (!$this->pages->contains($page)) {
             $this->pages[] = $page;
-            $page->addGallery($this);
+            $page->setGallery($this);
         }
 
         return $this;
@@ -142,9 +151,43 @@ class Gallery implements TimestampableInterface
     public function removePage(Page $page): self
     {
         if ($this->pages->removeElement($page)) {
-            $page->removeGallery($this);
+            // set the owning side to null (unless already changed)
+            if ($page->getGallery() === $this) {
+                $page->setGallery(null);
+            }
         }
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Widget>
+     */
+    public function getWidgets(): Collection
+    {
+        return $this->widgets;
+    }
+
+    public function addWidget(Widget $widget): self
+    {
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets[] = $widget;
+            $widget->setGallery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeWidget(Widget $widget): self
+    {
+        if ($this->widgets->removeElement($widget)) {
+            // set the owning side to null (unless already changed)
+            if ($widget->getGallery() === $this) {
+                $widget->setGallery(null);
+            }
+        }
+
+        return $this;
+    }
+
 }

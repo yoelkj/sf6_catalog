@@ -47,12 +47,20 @@ class Page implements TimestampableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    #[ORM\ManyToMany(targetEntity: Gallery::class, inversedBy: 'pages')]
-    private $galleries;
+    #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'pages')]
+    private $gallery;
+
+    #[ORM\ManyToMany(targetEntity: Widget::class, inversedBy: 'pages')]
+    private $widgets;
 
     public function __construct()
     {
-        $this->galleries = new ArrayCollection();
+        $this->widgets = new ArrayCollection();
+    }
+
+    public function __toString(): string
+    {
+        return $this->name;
     }
 
     public function getId(): ?int
@@ -190,26 +198,38 @@ class Page implements TimestampableInterface
         return $this;
     }
 
-    /**
-     * @return Collection<int, Gallery>
-     */
-    public function getGalleries(): Collection
+    public function getGallery(): ?Gallery
     {
-        return $this->galleries;
+        return $this->gallery;
     }
 
-    public function addGallery(Gallery $gallery): self
+    public function setGallery(?Gallery $gallery): self
     {
-        if (!$this->galleries->contains($gallery)) {
-            $this->galleries[] = $gallery;
+        $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Widget>
+     */
+    public function getWidgets(): Collection
+    {
+        return $this->widgets;
+    }
+
+    public function addWidget(Widget $widget): self
+    {
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets[] = $widget;
         }
 
         return $this;
     }
 
-    public function removeGallery(Gallery $gallery): self
+    public function removeWidget(Widget $widget): self
     {
-        $this->galleries->removeElement($gallery);
+        $this->widgets->removeElement($widget);
 
         return $this;
     }

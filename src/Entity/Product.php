@@ -57,6 +57,14 @@ class Product implements TimestampableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
+    #[ORM\ManyToOne(targetEntity: Presentation::class, inversedBy: 'products')]
+    private $presentation;
+
+    public function __toString(): string
+    {
+        return $this->name;
+    }
+    
     public function getId(): ?int
     {
         return $this->id;
@@ -238,6 +246,18 @@ class Product implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getPresentation(): ?Presentation
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?Presentation $presentation): self
+    {
+        $this->presentation = $presentation;
 
         return $this;
     }

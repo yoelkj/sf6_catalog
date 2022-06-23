@@ -6,6 +6,7 @@ use App\Entity\Page;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
@@ -26,18 +27,20 @@ class PageCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-        yield IdField::new('id')
-            ->onlyOnForms()
-            ->hideOnForm();
-
+        yield IdField::new('id')->onlyOnIndex();
+            //->hideOnForm();
+            
         yield FormField::addTab('General')->setIcon('cog');    
             yield Field::new('name')->setColumns(6);
-            yield SlugField::new('slug')->setTargetFieldName('name')->setColumns(6);
+            yield SlugField::new('slug')->onlyOnForms()->setTargetFieldName('name')->setColumns(6);
 
             yield FormField::addRow();
-            yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);; 
+            yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
+            yield TextEditorField::new('body')->onlyOnIndex(); 
             yield BooleanField::new('isActive');
-            yield BooleanField::new('isCore');
+            yield BooleanField::new('isCore')->onlyOnForms();
+
+        //yield CollectionField::new('galleries')->useEntryCrudForm()->renderExpanded()->setEntryIsComplex();
 
         yield FormField::addTab('Content')->setIcon('cogs');
             yield ImageField::new('bgImage')
@@ -55,12 +58,14 @@ class PageCrudController extends AbstractCrudController
                 ->onlyOnForms()
                 ->setColumns(6);
             
-            yield UrlField::new('bodyVideo')->setColumns(12);
+            yield UrlField::new('bodyVideo')->onlyOnForms()->setColumns(12);
 
             yield FormField::addRow();
+            yield TextEditorField::new('body')->onlyOnForms()->setColumns(12);
 
-            yield TextEditorField::new('body')->setColumns(12);
-        
+            yield AssociationField::new('gallery')
+                ->setCrudController(GalleryCrudController::class)
+                ->setColumns(6);
 
         /*
         yield AssociationField::new('galleries')

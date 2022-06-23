@@ -9,3 +9,7 @@ body {
     border: 2px dashed #da3735;
     padding: 5px;
 }
+
+.accordion-body .custom-file-label.form-control-label{
+    width: 100%!important;
+}
