@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: LanguageRepository::class)]
-class Language
+class Language implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -28,12 +31,6 @@ class Language
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     #[ORM\OneToMany(mappedBy: 'language', targetEntity: Company::class, orphanRemoval: true)]
     private $companies;
@@ -221,8 +218,5 @@ class Language
         return $this;
     }
 
-    public function setTranslatableLocale($locale)
-    {
-        $this->locale = $locale;
-    }
+    
 }

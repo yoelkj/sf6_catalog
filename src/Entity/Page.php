@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: PageRepository::class)]
-class Page
+class Page implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -43,12 +46,6 @@ class Page
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     #[ORM\ManyToMany(targetEntity: Gallery::class, inversedBy: 'pages')]
     private $galleries;

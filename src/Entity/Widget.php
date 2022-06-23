@@ -5,12 +5,14 @@ namespace App\Entity;
 use App\Repository\WidgetRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: WidgetRepository::class)]
-class Widget
+class Widget implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -37,19 +39,6 @@ class Widget
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
-    /**
-     * @var \DateTime
-     */
-    #[Gedmo\Timestampable(on: 'create')]
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    /**
-     * @var \DateTime
-     */
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    #[Gedmo\Timestampable]
-    private $updated;
 
     public function getId(): ?int
     {
@@ -140,27 +129,4 @@ class Widget
         return $this;
     }
 
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(?\DateTimeInterface $created): self
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
 }

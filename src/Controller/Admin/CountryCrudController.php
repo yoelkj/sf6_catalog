@@ -21,7 +21,7 @@ class CountryCrudController extends AbstractCrudController
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
-            ->add('created')
+            ->add('createdAt')
             ->add('name')
             ->add('isActive')
             ;
@@ -46,8 +46,8 @@ class CountryCrudController extends AbstractCrudController
         yield BooleanField::new('isActive')
             ;
 
-        yield DateField::new('created')->hideOnForm();
-        yield DateField::new('updated')->onlyOnForms()->hideOnForm();
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
 
     }
     

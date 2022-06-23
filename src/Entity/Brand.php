@@ -7,11 +7,14 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: BrandRepository::class)]
-class Brand
+class Brand implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -31,12 +34,6 @@ class Brand
 
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Product::class)]
     private $products;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-    
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     public function __construct()
     {

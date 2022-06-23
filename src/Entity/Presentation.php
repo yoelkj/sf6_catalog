@@ -4,11 +4,15 @@ namespace App\Entity;
 
 use App\Repository\PresentationRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\DBAL\Types\Types;
+
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: PresentationRepository::class)]
-class Presentation
+class Presentation implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -25,12 +29,6 @@ class Presentation
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     public function getId(): ?int
     {

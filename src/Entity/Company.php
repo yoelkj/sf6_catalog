@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\CompanyRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: CompanyRepository::class)]
-class Company
+class Company implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -77,12 +80,6 @@ class Company
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     public function __toString(): string
     {

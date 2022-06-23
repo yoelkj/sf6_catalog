@@ -68,8 +68,8 @@ class PageCrudController extends AbstractCrudController
             ->setFormTypeOption('by_reference', false);
         */
           
-        yield DateField::new('created')->hideOnForm();
-        yield DateField::new('updated')->onlyOnForms()->hideOnForm();
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
     }
     
 }

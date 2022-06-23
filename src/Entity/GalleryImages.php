@@ -5,11 +5,14 @@ namespace App\Entity;
 use App\Repository\GalleryImagesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-use Doctrine\DBAL\Types\Types;
+use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
+use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
 #[ORM\Entity(repositoryClass: GalleryImagesRepository::class)]
-class GalleryImages
+class GalleryImages implements TimestampableInterface
 {
+    use TimestampableTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
@@ -29,12 +32,6 @@ class GalleryImages
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
-
-    #[ORM\Column(name: 'created', type: Types::DATE_MUTABLE)]
-    private $created;
-
-    #[ORM\Column(name: 'updated', type: Types::DATETIME_MUTABLE)]
-    private $updated;
 
     public function getId(): ?int
     {

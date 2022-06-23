@@ -135,8 +135,8 @@ class CompanyCrudController extends AbstractCrudController
 
         
 
-        yield DateField::new('created')->hideOnForm();
-        yield DateField::new('updated')->onlyOnForms()->hideOnForm();
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
     }
     
 }

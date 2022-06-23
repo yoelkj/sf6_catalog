@@ -200,8 +200,8 @@ class UserCrudController extends AbstractCrudController
         yield BooleanField::new('isVerified');
         yield BooleanField::new('isActive');
 
-        yield DateField::new('created')->hideOnForm();
-        yield DateField::new('updated')->onlyOnForms()->hideOnForm();
+        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
 
 
         /*
@@ -226,7 +226,7 @@ class UserCrudController extends AbstractCrudController
             ->setDefaultSort([
                 
                 'isActive' => 'DESC',
-                'created' => 'DESC',
+                'createdAt' => 'DESC',
             ])
             //->setEntityPermission('ADMIN_USER_EDIT');
             ;
