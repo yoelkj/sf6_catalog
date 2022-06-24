@@ -42,7 +42,16 @@ class CatalogController extends BaseController
     #[Route('/{_locale}/browse/{slug}', name: 'app_browse', requirements: ['_locale' => 'en|es'])]
     public function browse(string $slug = null): Response
     {
-     
+        //HttpClientInterface $httpClient: install composer require symfony/http-client 
+        //CacheInterface $cache
+        /*
+        $mixes = $cache->get('mixes_data', function(CacheItemInterface $cacheItem) use ($httpClient) {
+            $cacheItem->expiresAfter(5);
+            $response = $httpClient->request('GET', 'https://raw.githubusercontent.com/SymfonyCasts/vinyl-mixes/main/mixes.json');
+            return $response->toArray();
+        });
+        */
+
         /*
             #[Security("is_granted('ROLE_ADMIN') and is_granted('ROLE_FRIENDLY_USER')")]
             #[IsGranted('ROLE_ADMIN')]   

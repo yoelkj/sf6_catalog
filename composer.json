@@ -12,6 +12,7 @@
         "doctrine/orm": "^2.12",
         "easycorp/easyadmin-bundle": "^4.3",
         "endroid/qr-code": "^4.4",
+        "geoip2/geoip2": "^2.12",
         "handcraftedinthealps/goodby-csv": "^1.4",
         "knplabs/doctrine-behaviors": "^2.6",
         "knplabs/knp-time-bundle": "^1.19",

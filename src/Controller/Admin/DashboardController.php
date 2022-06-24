@@ -50,7 +50,7 @@ class DashboardController extends AbstractDashboardController
 
 
     #[IsGranted('ROLE_ADMIN')]
-    #[Route('/admin', name: 'admin')]
+    #[Route('/{_locale}/admin', name: 'admin', requirements: ['_locale' => 'en|es',],)]
     public function index(ChartBuilderInterface $chartBuilder = null): Response
     {
 
@@ -158,41 +158,50 @@ class DashboardController extends AbstractDashboardController
 
     public function configureMenuItems(): iterable
     {
+
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
-
+        yield MenuItem::linkToRoute('Got to homepage', 'fas fa-home', 'app_homepage');
+        
         yield MenuItem::section('General');
-            yield MenuItem::linkToCrud('Companies', 'fas fa-list', Company::class);
-        
-        yield MenuItem::section('Products');
-            yield MenuItem::linkToCrud('Products', 'fas fa-list', Product::class);
-            yield MenuItem::linkToCrud('Presentations', 'fas fa-list', Presentation::class);
-            yield MenuItem::linkToCrud('Category', 'fas fa-list', Category::class);
-            yield MenuItem::linkToCrud('Brand', 'fas fa-list', Brand::class);
-
-        yield MenuItem::section('Pages');
-            yield MenuItem::linkToCrud('Pages', 'fas fa-list', Page::class);
-            yield MenuItem::linkToCrud('Widgets', 'fas fa-list', Widget::class);
-        
-        yield MenuItem::section('Gallery');
-            yield MenuItem::linkToCrud('Gallery', 'fas fa-list', Gallery::class);
-            yield MenuItem::linkToCrud('Galery images', 'fas fa-list', GalleryImages::class);
             
-        yield MenuItem::section('Localization');
-            yield MenuItem::linkToCrud('Countries', 'fas fa-list', Country::class);
-            yield MenuItem::linkToCrud('Languages', 'fas fa-list', Language::class);
-        
-        yield MenuItem::section('Users')
-            //->setPermission('ROLE_SUPERADMIN')
-            ;
-        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
-            //->setPermission('ROLE_SUPERADMIN')
-            ->setController(UserCrudController::class);
-            ;
-        yield MenuItem::linkToCrud('Active Users', 'fa fa-users', User::class)
-            ->setController(UserIsActiveCrudController::class);
+        yield MenuItem::subMenu('Products', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Products', 'fas fa-cubes', Product::class),
+            MenuItem::linkToCrud('Presentations', 'fas fa-envelope-open', Presentation::class),
+            MenuItem::linkToCrud('Category', 'fas fa-table', Category::class),
+            MenuItem::linkToCrud('Brand', 'fas fa-font-awesome', Brand::class),
+        ]);
 
-        yield MenuItem::section();
-        yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'app_homepage');
+        yield MenuItem::subMenu('Pages', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Pages', 'fas fa-clipboard', Page::class),
+            MenuItem::linkToCrud('Widgets', 'fas fa-diamond', Widget::class),
+        ]); 
+
+        yield MenuItem::subMenu('Gallery', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Gallery', 'fas fa-folder', Gallery::class),
+            MenuItem::linkToCrud('Galery images', 'fas fa-image', GalleryImages::class)
+        ]);
+
+        //yield MenuItem::section('Localization');
+        yield MenuItem::subMenu('Localization', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Countries', 'fas fa-globe-americas', Country::class),
+            MenuItem::linkToCrud('Languages', 'fas fa-globe', Language::class)
+        ]);
+
+        yield MenuItem::linkToCrud('Companies', 'fas fa-building', Company::class);
+
+        yield MenuItem::section('Security');
+        yield MenuItem::subMenu('Users', 'fa fa-list')->setSubItems([
+            MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
+                //->setPermission('ROLE_SUPERADMIN')
+                ->setController(UserCrudController::class)
+            ,
+            //MenuItem::linkToCrud('Active Users', 'fa fa-users', User::class)->setController(UserIsActiveCrudController::class)
+        ]);
+        
+        //yield MenuItem::section('Users')
+            //->setPermission('ROLE_SUPERADMIN')
+        //    ;
+        
         //yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
 
         /*
