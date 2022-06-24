@@ -59,6 +59,9 @@
     "knplabs/doctrine-behaviors": {
         "version": "2.6.1"
     },
+    "knplabs/knp-time-bundle": {
+        "version": "v1.19.0"
+    },
     "scheb/2fa-bundle": {
         "version": "6.0",
         "recipe": {
