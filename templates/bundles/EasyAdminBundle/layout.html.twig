@@ -1,8 +1,14 @@
 {% extends '@!EasyAdmin/layout.html.twig' %}
 
-{% block content_footer %}
-    Made with 🤍 by the guys and gals at Bucky
-{% endblock content_footer %}
+{% block content_footer_wrapper %}
+    
+    <section class="content-footer">
+        <div class="m-3 text-center">
+            ©  {{app.session.get('app_param').name}} {{"now"|date("Y")}}. {{'All rights reserved'| trans }}
+        </div>
+    </section>
+    
+{% endblock content_footer_wrapper %}
 
 {#
 {% block content_top_header %}
