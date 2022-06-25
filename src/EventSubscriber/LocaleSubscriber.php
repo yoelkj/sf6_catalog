@@ -49,7 +49,7 @@ class LocaleSubscriber implements EventSubscriberInterface
 
       if($request->attributes->get('_locale')) return;
       
-      if ($routeName != 'app_homepage' || $request->isXmlHttpRequest() || !$request->hasPreviousSession()) return;
+      if ($routeName != 'app_homepage' || !$event->isMainRequest() || $request->isXmlHttpRequest() || !$request->hasPreviousSession()) return;
       
       if($routeName == 'app_homepage'){
 

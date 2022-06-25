@@ -30,7 +30,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
-
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -47,6 +48,13 @@ class DashboardController extends AbstractDashboardController
         $this->chartBuilder = $chartBuilder;
     }
     */
+
+    private RequestStack $requestStack;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->requestStack = $requestStack;
+    }
 
 
     #[IsGranted('ROLE_ADMIN')]
@@ -111,11 +119,13 @@ class DashboardController extends AbstractDashboardController
 
     public function configureDashboard(): Dashboard
     {
+
+        $appParam = $this->requestStack->getSession()->get('appParam');
+
         $dashboard = Dashboard::new();
         
-        
             // the name visible to end users
-            $dashboard->setTitle('Sf6 Catalog')
+            $dashboard->setTitle($appParam->getName())
             // you can include HTML contents too (e.g. to link to an image)
             //->setTitle('<img src="..."> ACME <span class="text-small">Corp.</span>')
 
@@ -143,7 +153,7 @@ class DashboardController extends AbstractDashboardController
             // by default, users can select between a "light" and "dark" mode for the
             // backend interface. Call this method if you prefer to disable the "dark"
             // mode for any reason (e.g. if your interface customizations are not ready for it)
-            //->disableDarkMode()
+            ->disableDarkMode()
 
             // by default, all backend URLs are generated as absolute URLs. If you
             // need to generate relative URLs instead, call this method
@@ -160,29 +170,29 @@ class DashboardController extends AbstractDashboardController
     {
 
         yield MenuItem::linkToDashboard('Dashboard', 'fa fa-dashboard');
-        yield MenuItem::linkToRoute('Got to homepage', 'fas fa-home', 'app_homepage');
+        yield MenuItem::linkToRoute('Homepage', 'fas fa-home', 'app_homepage');
         
         yield MenuItem::section('General');
             
-        yield MenuItem::subMenu('Products', 'fa fa-list')->setSubItems([
+        yield MenuItem::subMenu('Products', 'fas fa-cubes')->setSubItems([
             MenuItem::linkToCrud('Products', 'fas fa-cubes', Product::class),
             MenuItem::linkToCrud('Presentations', 'fas fa-envelope-open', Presentation::class),
             MenuItem::linkToCrud('Category', 'fas fa-table', Category::class),
             MenuItem::linkToCrud('Brand', 'fas fa-font-awesome', Brand::class),
         ]);
 
-        yield MenuItem::subMenu('Pages', 'fa fa-list')->setSubItems([
+        yield MenuItem::subMenu('Pages', 'fas fa-clipboard')->setSubItems([
             MenuItem::linkToCrud('Pages', 'fas fa-clipboard', Page::class),
             MenuItem::linkToCrud('Widgets', 'fas fa-diamond', Widget::class),
         ]); 
 
-        yield MenuItem::subMenu('Gallery', 'fa fa-list')->setSubItems([
+        yield MenuItem::subMenu('Gallery', 'fa fa-folder')->setSubItems([
             MenuItem::linkToCrud('Gallery', 'fas fa-folder', Gallery::class),
-            MenuItem::linkToCrud('Galery images', 'fas fa-image', GalleryImages::class)
+            MenuItem::linkToCrud('Gallery Images', 'fas fa-image', GalleryImages::class)
         ]);
 
         //yield MenuItem::section('Localization');
-        yield MenuItem::subMenu('Localization', 'fa fa-list')->setSubItems([
+        yield MenuItem::subMenu('Localization', 'fa fa-globe-americas')->setSubItems([
             MenuItem::linkToCrud('Countries', 'fas fa-globe-americas', Country::class),
             MenuItem::linkToCrud('Languages', 'fas fa-globe', Language::class)
         ]);
@@ -190,18 +200,13 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::linkToCrud('Companies', 'fas fa-building', Company::class);
 
         yield MenuItem::section('Security');
-        yield MenuItem::subMenu('Users', 'fa fa-list')->setSubItems([
-            MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
+        
+        
+        yield MenuItem::linkToCrud('Users', 'fa fa-users', User::class)
                 //->setPermission('ROLE_SUPERADMIN')
-                ->setController(UserCrudController::class)
-            ,
-            //MenuItem::linkToCrud('Active Users', 'fa fa-users', User::class)->setController(UserIsActiveCrudController::class)
-        ]);
-        
-        //yield MenuItem::section('Users')
-            //->setPermission('ROLE_SUPERADMIN')
-        //    ;
-        
+                ->setController(UserCrudController::class);
+
+        //yield MenuItem::section('Users')->setPermission('ROLE_SUPERADMIN');
         //yield MenuItem::linkToUrl('Homepage', 'fas fa-home', $this->generateUrl('app_homepage'));
 
         /*
