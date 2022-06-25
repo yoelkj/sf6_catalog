@@ -60,6 +60,9 @@ class Product implements TimestampableInterface
     #[ORM\ManyToOne(targetEntity: Presentation::class, inversedBy: 'products')]
     private $presentation;
 
+    #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'products')]
+    private $gallery;
+
     public function __toString(): string
     {
         return $this->name;
@@ -258,6 +261,18 @@ class Product implements TimestampableInterface
     public function setPresentation(?Presentation $presentation): self
     {
         $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getGallery(): ?Gallery
+    {
+        return $this->gallery;
+    }
+
+    public function setGallery(?Gallery $gallery): self
+    {
+        $this->gallery = $gallery;
 
         return $this;
     }

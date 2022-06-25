@@ -40,7 +40,10 @@ class LanguageCrudController extends AbstractCrudController
         
 
         return parent::configureActions($actions)
-            ->disable(Action::DETAIL)
+            //->disable(Action::DETAIL)
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->remove(Crud::PAGE_DETAIL, Action::DELETE)
             
             ;
 

@@ -35,6 +35,7 @@ use Symfony\Component\HttpFoundation\RequestStack;
 #[IsGranted('ROLE_ADMIN')]
 class UserCrudController extends AbstractCrudController
 {
+    /*
     private AdminUrlGenerator $adminUrlGenerator;
     private RequestStack $requestStack;
     
@@ -43,6 +44,7 @@ class UserCrudController extends AbstractCrudController
         $this->adminUrlGenerator = $adminUrlGenerator;
         $this->requestStack = $requestStack;
     }
+    */
 
     public static function getEntityFqcn(): string
     {
@@ -51,6 +53,7 @@ class UserCrudController extends AbstractCrudController
 
     public function configureActions(Actions $actions): Actions
     {
+        /*
         $activeAction = Action::new('active')
             ->addCssClass('btn btn-success')
             ->setIcon('fa fa-check-circle')
@@ -73,10 +76,11 @@ class UserCrudController extends AbstractCrudController
             ->addCssClass('btn btn-success')
             ->setIcon('fa fa-download')
             ->createAsGlobalAction();
+            */
 
         return parent::configureActions($actions)
-            ->add(Crud::PAGE_DETAIL, $activeAction)
-            ->add(Crud::PAGE_INDEX, $exportAction)
+            //->add(Crud::PAGE_DETAIL, $activeAction)
+            //->add(Crud::PAGE_INDEX, $exportAction)
             
             /*
             ->update(Crud::PAGE_DETAIL, Action::EDIT, static function (Action $action) {
@@ -99,6 +103,7 @@ class UserCrudController extends AbstractCrudController
             
     }
 
+    /*
     public function configureFilters(Filters $filters): Filters
     {
         return parent::configureFilters($filters)
@@ -108,6 +113,7 @@ class UserCrudController extends AbstractCrudController
             
             ;
     }
+    */
 
     /*
     public function createIndexQueryBuilder(SearchDto $searchDto, EntityDto $entityDto, FieldCollection $fields, FilterCollection $filters): QueryBuilder
@@ -224,7 +230,6 @@ class UserCrudController extends AbstractCrudController
         //'language.isActive' => 'DESC',
         return parent::configureCrud($crud)
             ->setDefaultSort([
-                
                 'isActive' => 'DESC',
                 'createdAt' => 'DESC',
             ])
@@ -261,6 +266,7 @@ class UserCrudController extends AbstractCrudController
 
     //Custom methods
 
+        /*
     public function active(AdminContext $adminContext, EntityManagerInterface $em, AdminUrlGenerator $adminUrlGenerator)
     {
         $user = $adminContext->getEntity()->getInstance();
@@ -294,5 +300,6 @@ class UserCrudController extends AbstractCrudController
         return $csvExporter->createResponseFromQueryBuilder($queryBuilder, $fields, 'users.csv');
     }
     
+    */
     
 }

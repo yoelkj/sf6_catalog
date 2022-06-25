@@ -10,16 +10,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
-class Category implements TimestampableInterface
+class Category implements TimestampableInterface,  TranslatableInterface
 {
     use TimestampableTrait;
+    use TranslatableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    /*
     #[ORM\Column(type: 'string', length: 140)]
     private $name;
 
@@ -28,6 +33,7 @@ class Category implements TimestampableInterface
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
+    */
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
@@ -42,7 +48,7 @@ class Category implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->name;
+        return $this->id.'- test product name';
     }
 
     public function getId(): ?int
@@ -50,6 +56,7 @@ class Category implements TimestampableInterface
         return $this->id;
     }
 
+    /*
     public function getName(): ?string
     {
         return $this->name;
@@ -73,6 +80,7 @@ class Category implements TimestampableInterface
 
         return $this;
     }
+    */
 
     public function isIsActive(): ?bool
     {

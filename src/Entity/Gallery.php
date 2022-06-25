@@ -35,11 +35,15 @@ class Gallery implements TimestampableInterface
     #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Widget::class)]
     private $widgets;
 
+    #[ORM\OneToMany(mappedBy: 'gallery', targetEntity: Product::class)]
+    private $products;
+
     public function __construct()
     {
         $this->galleryImages = new ArrayCollection();
         $this->pages = new ArrayCollection();
         $this->widgets = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -184,6 +188,36 @@ class Gallery implements TimestampableInterface
             // set the owning side to null (unless already changed)
             if ($widget->getGallery() === $this) {
                 $widget->setGallery(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->setGallery($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            // set the owning side to null (unless already changed)
+            if ($product->getGallery() === $this) {
+                $product->setGallery(null);
             }
         }
 

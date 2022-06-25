@@ -3,6 +3,7 @@
 namespace App\Controller\Admin;
 
 use App\Entity\GalleryImages;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -11,6 +12,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
+use EasyCorp\Bundle\EasyAdminBundle\Filter\BooleanFilter;
 
 class GalleryImagesCrudController extends AbstractCrudController
 {
@@ -41,10 +43,19 @@ class GalleryImagesCrudController extends AbstractCrudController
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
 
-        
+    }
 
-        
-
+    public function configureFilters(Filters $filters): Filters
+    {
+        return parent::configureFilters($filters)
+            ->add('createdAt')
+            ->add('gallery')
+            ->add('language')
+            
+            ->add(BooleanFilter::new('isActive'))
+            //->add(BooleanFilter::new('enabled')->setFormTypeOption('expanded', false));
+            
+            ;
     }
 
 }

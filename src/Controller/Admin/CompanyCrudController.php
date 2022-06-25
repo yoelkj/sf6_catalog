@@ -5,6 +5,9 @@ namespace App\Controller\Admin;
 use App\Entity\Company;
 use App\Entity\Country;
 use Doctrine\DBAL\Query\QueryBuilder;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
+use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
@@ -137,6 +140,15 @@ class CompanyCrudController extends AbstractCrudController
 
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
+    }
+
+    public function configureActions(Actions $actions): Actions
+    {
+        return parent::configureActions($actions)
+            ->remove(Crud::PAGE_INDEX, Action::NEW)
+            ->remove(Crud::PAGE_INDEX, Action::DELETE)
+            ->remove(Crud::PAGE_DETAIL, Action::DELETE)             
+            ;       
     }
     
 }
