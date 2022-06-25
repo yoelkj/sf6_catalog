@@ -1,0 +1,18 @@
+
+    <div class="widget-language-toggle" {{stimulus_controller('language', {
+                                            primaryColor: primaryColor, 
+                                            secondaryColor: secondaryColor,
+                                            locale: app.request.locale
+                                            }) }}>
+
+        <a href="javascript:void(0);" 
+            data-action="click->language#onCLick" 
+            language="en" 
+            class="btn btn-link {{ (app.request.locale == 'en') ? 'disabled': 'active' }}">En</a>
+
+        <a href="javascript:void(0);" 
+            data-action="click->language#onCLick" 
+            language="es" 
+            class="btn btn-link {{ (app.request.locale == 'es') ? 'disabled': 'active' }}">Es</a>
+
+    </div>

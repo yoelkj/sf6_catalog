@@ -39,6 +39,19 @@ class LanguageRepository extends ServiceEntityRepository
         }
     }
 
+    /**
+     * @return Language[] Returns an array of Language objects
+     */
+    public function getRows($is_active = null): array
+    {
+        $query = $this->createQueryBuilder('l');
+            
+        if(!is_null($is_active)) $query->andWhere('l.isActive = :isActive')->setParameter('isActive', $is_active);
+        
+        return $query->orderBy('l.code', 'ASC')->getQuery()->getResult();
+    }
+
+
 //    /**
 //     * @return Language[] Returns an array of Language objects
 //     */

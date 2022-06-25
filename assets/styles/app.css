@@ -24,3 +24,39 @@ body {
     background-color: #00B6AC!important;
 }
     */
+
+
+/*widget-language-toggle*/
+.widget-language-toggle{
+    
+    padding: 0.2em;
+    border-radius:  10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.widget-language-toggle a.btn-link{
+    text-decoration: none;
+    color: rgba(0, 0, 0, 0.55);
+}
+
+.widget-language-toggle a.active{
+    background: #000;
+    color: #fcfcfc;
+}
+
+.widget-language-toggle a:nth-child(1){
+    border-radius:  5px 0px 0px 5px;
+    border: solid 2px #fff;
+    border-right: 0; 
+}
+
+.widget-language-toggle a:nth-child(2){
+    border-radius:  0px 5px 5px 0px;
+    border: solid 2px #fff;
+    border-left: 0;
+}
+
+

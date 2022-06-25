@@ -13,13 +13,16 @@ use Symfony\Component\Routing\Annotation\Route;
 class CatalogController extends BaseController
 {
 
+    /*
     #[Route("/", name: 'app_homepage_redir', requirements: ['_locale' => 'en|es'])]
     public function index(): Response
     {
         return $this->redirect($this->generateUrl('app_homepage'));
     }
-
-    #[Route("/{_locale}/", name: 'app_homepage', requirements: ['_locale' => 'en|es'])]
+    */
+    
+    #[Route("/", name: 'app_homepage')]
+    #[Route("/{_locale}/", name: 'app_homepage_local', requirements: ['_locale' => 'en|es'])]
     public function homepage(): Response
     {
 

@@ -44,8 +44,11 @@
                             <a class="nav-link" href="{{ path('app_browse') }}">Browse</a>
                         </li>
                     </ul>
+        
+                    {{ include('widget/_language.html.twig', {primaryColor: '#000', secondaryColor: '#fff'}) }}
 
                     {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                      
                        
                        <div class="dropdown">
                             <button
