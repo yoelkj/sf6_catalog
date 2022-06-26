@@ -22,6 +22,23 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('admin', './assets/admin.js')
+
+
+    .copyFiles({
+        from: 'node_modules/tinymce/skins',
+        to: 'skins/[path]/[name].[ext]'
+    })
+
+    .copyFiles({
+        from: 'node_modules/tinymce/icons',
+        to: 'icons/[path]/[name].[ext]'
+    })
+
+    .copyFiles({
+        from: 'node_modules/tinymce/models',
+        to: 'models/[path]/[name].[ext]'
+    })
+
     //.addStyleEntry('admin', './assets/styles/admin.css')
     
 

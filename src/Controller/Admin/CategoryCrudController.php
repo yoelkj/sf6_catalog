@@ -30,17 +30,22 @@ class CategoryCrudController extends AbstractCrudController
         yield CollectionField::new('translations')
             ->useEntryCrudForm()
             
-            ->allowAdd()
-            ->allowDelete()
-            
             //->renderExpanded()
-            //->setEntryIsComplex()
+            
             ->setColumns(12)
             
             ->formatValue(static function ($value, ?Category $category): ?string {
                 $num_translations = $category?->getTranslations()->count();
                 return sprintf('%s translation(s)', $num_translations);
             })
+
+            /*
+            ->setFormTypeOptions([
+                'row_attr' => [
+                    'data-controller' => 'translations',
+                ],
+            ])
+            */
             
             ;
         
