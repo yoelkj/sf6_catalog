@@ -34,7 +34,7 @@ class InitialDataSubscriber implements EventSubscriberInterface
       //---------------Set initial values------------------------------------------------------------------------------
       if(!$request->getSession()->get('appParam')) $request->getSession()->set('appParam', $this->repoCompany->find(12));
       //---------------------------------------------------------------------------------------------------------------
-      
+
       $this->saveTargetPath($request->getSession(), 'main', $request->getUri());
     }
 

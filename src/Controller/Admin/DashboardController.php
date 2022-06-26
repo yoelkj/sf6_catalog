@@ -125,15 +125,17 @@ class DashboardController extends AbstractDashboardController
         $dashboard = Dashboard::new();
         
             // the name visible to end users
-            $dashboard->setTitle($appParam->getName())
+            $dashboard
+            //->setTitle('<img src="...">', $appParam->getName())
             // you can include HTML contents too (e.g. to link to an image)
-            //->setTitle('<img src="..."> ACME <span class="text-small">Corp.</span>')
-
+            //$appParam->getName()
+            ->setTitle((($appParam->getLogo())?'<img src="/uploads/logo/'.$appParam->getLogo().'"> ':''))
+            
             // by default EasyAdmin displays a black square as its default favicon;
             // use this method to display a custom favicon: the given path is passed
             // "as is" to the Twig asset() function:
             // <link rel="shortcut icon" href="{{ asset('...') }}">
-            //->setFaviconPath('favicon.svg')
+            ->setFaviconPath('/uploads/favicon/'.$appParam->getFavicon())
 
             // the domain used by default is 'messages'
             ->setTranslationDomain('admin')
