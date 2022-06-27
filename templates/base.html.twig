@@ -4,7 +4,6 @@
         <meta charset="UTF-8">
         <title>{% block title %}Catalog{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
         
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -14,11 +13,17 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
 
-         <style>
-
-        </style>   
+        <style>
+            .bg_color_main{background: {{app.session.get('appParam').bgColorMain}}}
+            .bg_color_secondary{background: {{app.session.get('appParam').bgColorSecondary}}}
+            .primary_color{background: {{app.session.get('appParam').primaryColor}}}
+            .secondary_color{background: {{app.session.get('appParam').secondaryColor}}}
+            .tertiary_color{background: {{app.session.get('appParam').tertiaryColor}}}
+        </style>
+   
     </head>
-    <body
+    <body class="bg_color_secondary"
+        
         {#
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ stimulus_controller('user-api', {
@@ -27,7 +32,6 @@
         {% endif %}
         #}
     >
-        
         {#
         <nav 
             class="navbar navbar-expand-lg navbar-light bg-light px-1"
@@ -111,7 +115,7 @@
         </nav>
         #}
 
-        <header class="site-header sticky-top py-1">
+        <header class="site-header sticky-top py-1 bg_color_main">
             <nav class="container d-flex flex-column flex-md-row justify-content-between">
                 <a class="py-2" href="#" aria-label="Product">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>

@@ -8,9 +8,6 @@ import 'owl.carousel';
 export default class extends Controller{
 
     connect(){
-        
-        console.log('Load owl caroucel');
-
         $('#owlCaroucel').owlCarousel({
             loop:true,
             margin:10,
