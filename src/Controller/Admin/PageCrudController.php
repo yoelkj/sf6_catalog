@@ -36,7 +36,7 @@ class PageCrudController extends AbstractCrudController
 
             yield FormField::addRow();
             yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
-            yield TextEditorField::new('body')->onlyOnIndex(); 
+            //yield TextEditorField::new('body')->onlyOnIndex(); 
             yield BooleanField::new('isActive');
             yield BooleanField::new('isCore')->onlyOnForms();
 
@@ -65,13 +65,15 @@ class PageCrudController extends AbstractCrudController
 
             yield AssociationField::new('gallery')
                 ->setCrudController(GalleryCrudController::class)
+                ->onlyOnForms()
                 ->setColumns(6);
 
-        /*
-        yield AssociationField::new('galleries')
-            ->autocomplete()
-            ->setFormTypeOption('by_reference', false);
-        */
+            
+            yield AssociationField::new('widgets')
+                ->autocomplete()
+                //->setFormTypeOption('by_reference', false)
+                ;
+            
           
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

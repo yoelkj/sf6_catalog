@@ -55,13 +55,6 @@ class CompanyCrudController extends AbstractCrudController
                 ->setUploadedFileNamePattern('logo-[timestamp].[extension]')
                 //->setFormTypeOption('upload_new', function(){})
                 ->onlyOnForms();
-            yield ColorField::new('bgColorMain')
-                ->setColumns(6)
-                ->onlyOnForms()
-                //->showSample()
-                //->showValue()
-                ;
-            
             yield ImageField::new('favicon')
                 ->setColumns(6)
                 ->setBasePath('uploads/favicon')
@@ -70,13 +63,16 @@ class CompanyCrudController extends AbstractCrudController
                 //->setFormTypeOption('upload_new', function(){})
                 ->onlyOnForms();
             
-            yield ColorField::new('bgColorSecondary')
-                ->setColumns(6)
-                ->onlyOnForms()
-                //->showSample()
-                //->showValue()
-                ;
-    
+            yield FormField::addRow();
+            yield ColorField::new('primaryColor')->setColumns(4)->onlyOnForms();
+            yield ColorField::new('secondaryColor')->setColumns(4)->onlyOnForms(); 
+            yield ColorField::new('tertiaryColor')->setColumns(4)->onlyOnForms();
+            yield FormField::addRow();
+            yield ColorField::new('bgColorMain')->setColumns(4)->onlyOnForms();
+            yield ColorField::new('bgColorSecondary')->setColumns(4)->onlyOnForms();
+
+            //->showSample()->showValue()
+
         yield FormField::addTab('Localization')->setIcon('media');
             yield AssociationField::new('country')->setColumns(6);
             /*

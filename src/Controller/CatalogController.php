@@ -26,7 +26,10 @@ class CatalogController extends BaseController
     public function homepage(): Response
     {
 
-        $rows = [
+        $obj_page = 'findpage';
+        $obj_widgets = 'obj_page->getWidgets()'; 
+        
+        $slides = [
             ['name' => 'Gangsta\'s Paradise', 'desc' => 'Coolio'],
             ['name' => 'Waterfalls', 'desc' => 'TLC'],
             ['name' => 'Creep', 'desc' => 'Radiohead'],
@@ -36,8 +39,7 @@ class CatalogController extends BaseController
         ];
 
         return $this->render('catalog/index.html.twig', [
-            'title' => 'Catalog home page',
-            'rows' => $rows
+            'slides' => $slides
         ]);
     }
 

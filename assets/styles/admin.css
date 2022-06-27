@@ -11,6 +11,7 @@ body {
 }
 
 /*Collection fields*/
+
 .accordion-body .custom-file-label.form-control-label{
     width: 100%!important;
 }

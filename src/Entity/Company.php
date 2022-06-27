@@ -81,6 +81,15 @@ class Company implements TimestampableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $primaryColor;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $secondaryColor;
+
+    #[ORM\Column(type: 'string', length: 50, nullable: true)]
+    private $tertiaryColor;
+
     public function __toString(): string
     {
         return $this->name;
@@ -362,6 +371,42 @@ class Company implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+        return $this;
+    }
+
+    public function getPrimaryColor(): ?string
+    {
+        return $this->primaryColor;
+    }
+
+    public function setPrimaryColor(?string $primaryColor): self
+    {
+        $this->primaryColor = $primaryColor;
+
+        return $this;
+    }
+
+    public function getSecondaryColor(): ?string
+    {
+        return $this->secondaryColor;
+    }
+
+    public function setSecondaryColor(?string $secondaryColor): self
+    {
+        $this->secondaryColor = $secondaryColor;
+
+        return $this;
+    }
+
+    public function getTertiaryColor(): ?string
+    {
+        return $this->tertiaryColor;
+    }
+
+    public function setTertiaryColor(?string $tertiaryColor): self
+    {
+        $this->tertiaryColor = $tertiaryColor;
+
         return $this;
     }
 }

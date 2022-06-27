@@ -45,8 +45,9 @@ class WidgetCrudController extends AbstractCrudController
         yield FormField::addRow();
         yield IntegerField::new('orderRow')->setColumns(6)->onlyOnForms();
         yield ChoiceField::new('template')->setColumns(6)->onlyOnForms()->setChoices([
-            'TEMPLATE_SLIDERS' => 'Slider',
             'TEMPLATE_CAROUCEL' => 'Caroucel',
+            'TEMPLATE_SLIDERS' => 'Slider',
+            'TEMPLATE_SUBSCRIPTION' => 'Subscription',
         ]);
         
         yield FormField::addRow();

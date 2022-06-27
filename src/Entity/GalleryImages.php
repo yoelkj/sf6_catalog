@@ -40,7 +40,7 @@ class GalleryImages implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->getImage().' - '.$this->language->getName();
+        return $this->getImage().' - '.($this->language) ?? $this->language->getName();
     }
 
     public function getLanguage(): ?Language
