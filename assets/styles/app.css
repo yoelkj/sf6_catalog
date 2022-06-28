@@ -3,26 +3,9 @@
 @import '~@fontsource/roboto-condensed';
 
 body {
-    background-color: lightgray;
+    background-color: #fcfcfc;
     font-family: 'Roboto Condensed', sans-serif;
 }
-
-/*
-.et_pb_section_1.section_has_divider.et_pb_bottom_divider .et_pb_bottom_inside_divider {
-    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDBweCIgdmlld0JveD0iMCAwIDEyODAgMTQwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGZpbGw9IiNGRkZGRkYiPjxwYXRoIGQ9Ik03MjUuMjkgMTAxLjJDMzI1LjIyIDEyMi40OCAwIDAgMCAwdjE0MGgxMjgwVjBzLTE1NC42NCA3OS45Mi01NTQuNzEgMTAxLjJ6IiBmaWxsLW9wYWNpdHk9Ii4zIi8+PHBhdGggZD0iTTU1Ni40NSAxMTkuNzRDOTUzLjQxIDE0MCAxMjgwIDE0IDEyODAgMTR2MTI2SDBWMHMxNTkuNSA5OS40OCA1NTYuNDUgMTE5Ljc0eiIgZmlsbC1vcGFjaXR5PSIuNSIvPjxwYXRoIGQ9Ik02NDAgMTQwYzM1My40NiAwIDY0MC0xNDAgNjQwLTEzOXYxNDBIMFYwczI4Ni41NCAxNDAgNjQwIDE0MHoiLz48L2c+PC9zdmc+);
-    background-size: 100% 100px;
-    bottom: 0;
-    height: 100px;
-    z-index: 1;
-    transform: scale(1,1);
-
-.et_pb_section_1.et_pb_section {
-    padding-top: 80px;
-    padding-bottom: 14px;
-    background-color: #00B6AC!important;
-}
-*/
-
 
 .container {
     max-width: 960px;
@@ -185,3 +168,21 @@ white-space: nowrap;
       flex: 1;
     }
 }
+
+
+/*
+background-color: lightgray;
+.et_pb_section_1.section_has_divider.et_pb_bottom_divider .et_pb_bottom_inside_divider {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDBweCIgdmlld0JveD0iMCAwIDEyODAgMTQwIiBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxnIGZpbGw9IiNGRkZGRkYiPjxwYXRoIGQ9Ik03MjUuMjkgMTAxLjJDMzI1LjIyIDEyMi40OCAwIDAgMCAwdjE0MGgxMjgwVjBzLTE1NC42NCA3OS45Mi01NTQuNzEgMTAxLjJ6IiBmaWxsLW9wYWNpdHk9Ii4zIi8+PHBhdGggZD0iTTU1Ni40NSAxMTkuNzRDOTUzLjQxIDE0MCAxMjgwIDE0IDEyODAgMTR2MTI2SDBWMHMxNTkuNSA5OS40OCA1NTYuNDUgMTE5Ljc0eiIgZmlsbC1vcGFjaXR5PSIuNSIvPjxwYXRoIGQ9Ik02NDAgMTQwYzM1My40NiAwIDY0MC0xNDAgNjQwLTEzOXYxNDBIMFYwczI4Ni41NCAxNDAgNjQwIDE0MHoiLz48L2c+PC9zdmc+);
+    background-size: 100% 100px;
+    bottom: 0;
+    height: 100px;
+    z-index: 1;
+    transform: scale(1,1);
+
+.et_pb_section_1.et_pb_section {
+    padding-top: 80px;
+    padding-bottom: 14px;
+    background-color: #00B6AC!important;
+}
+*/
