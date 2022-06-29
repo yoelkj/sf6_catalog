@@ -10,33 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Intl\Locale;
+
 #[ORM\Entity(repositoryClass: PageRepository::class)]
-class Page implements TimestampableInterface
+class Page implements TimestampableInterface,  TranslatableInterface
 {
     use TimestampableTrait;
+    use TranslatableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 140)]
-    private $name;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $slug;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $body;
-
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $bgImage;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $body_image;
-
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $bodyVideo;
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
@@ -51,6 +41,7 @@ class Page implements TimestampableInterface
     private $gallery;
 
     #[ORM\ManyToMany(targetEntity: Widget::class, inversedBy: 'pages')]
+    #[ORM\OrderBy(['orderRow'=> "ASC"])]
     private $widgets;
 
     public function __construct()
@@ -60,24 +51,18 @@ class Page implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->name;
+       return $this->getTranslateName();
+    }
+    
+    public function getTranslateName(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getBgImage(): ?string
@@ -88,42 +73,6 @@ class Page implements TimestampableInterface
     public function setBgImage(?string $bgImage): self
     {
         $this->bgImage = $bgImage;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
-    public function getBodyImage(): ?string
-    {
-        return $this->body_image;
-    }
-
-    public function setBodyImage(string $body_image): self
-    {
-        $this->body_image = $body_image;
-
-        return $this;
-    }
-
-    public function getBodyVideo(): ?string
-    {
-        return $this->bodyVideo;
-    }
-
-    public function setBodyVideo(?string $bodyVideo): self
-    {
-        $this->bodyVideo = $bodyVideo;
 
         return $this;
     }
@@ -183,18 +132,6 @@ class Page implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
         return $this;
     }
 

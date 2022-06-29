@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Repository\PageRepository;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,12 +24,18 @@ class CatalogController extends BaseController
     
     #[Route("/", name: 'app_homepage')]
     #[Route("/{_locale}/", name: 'app_homepage_local', requirements: ['_locale' => 'en|es'])]
-    public function homepage(): Response
+    public function homepage(PageRepository $repo_page): Response
     {
-
-        $obj_page = 'findpage';
-        $obj_widgets = 'obj_page->getWidgets()'; 
+        $obj_page = $repo_page->find(1);//Load homepage configuration
         
+        $obj_widgets = $obj_page->getWidgets(); 
+        
+        foreach ($obj_widgets as $obj_widget) {
+            echo $obj_widget->getTranslateName().'<br>';
+        }
+
+        exit();
+
         $slides = [
             ['name' => 'Gangsta\'s Paradise', 'desc' => 'Coolio'],
             ['name' => 'Waterfalls', 'desc' => 'TLC'],

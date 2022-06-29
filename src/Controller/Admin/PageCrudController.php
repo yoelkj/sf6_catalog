@@ -8,17 +8,15 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
-use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\UrlField;
 
 class PageCrudController extends AbstractCrudController
 {
+
     public static function getEntityFqcn(): string
     {
         return Page::class;
@@ -31,8 +29,17 @@ class PageCrudController extends AbstractCrudController
             //->hideOnForm();
             
         yield FormField::addTab('General')->setIcon('cog');    
-            yield Field::new('name')->setColumns(6);
-            yield SlugField::new('slug')->onlyOnForms()->setTargetFieldName('name')->setColumns(6);
+            
+            yield CollectionField::new('translations')
+                ->useEntryCrudForm()
+                ->setColumns(12)
+                ->formatValue(static function ($value, ?Page $page): ?string {
+
+                    $name = $page?->getTranslateName();
+                    $num_translations = $page?->getTranslations()->count();
+                    return sprintf('%s - %s translation(s)', $name, $num_translations);
+                
+                });
 
             yield FormField::addRow();
             yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
@@ -40,7 +47,6 @@ class PageCrudController extends AbstractCrudController
             yield BooleanField::new('isActive');
             yield BooleanField::new('isCore')->onlyOnForms();
 
-        //yield CollectionField::new('galleries')->useEntryCrudForm()->renderExpanded()->setEntryIsComplex();
 
         yield FormField::addTab('Content')->setIcon('cogs');
             yield ImageField::new('bgImage')
@@ -50,19 +56,8 @@ class PageCrudController extends AbstractCrudController
                 //->setFormTypeOption('upload_new', function(){})
                 ->onlyOnForms()
                 ->setColumns(6);
-            yield ImageField::new('bodyImage')
-                ->setBasePath('uploads/pages/body')
-                ->setUploadDir('public/uploads/pages/body')
-                ->setUploadedFileNamePattern('[slug]-body-[timestamp].[extension]')
-                //->setFormTypeOption('upload_new', function(){})
-                ->onlyOnForms()
-                ->setColumns(6);
-            
-            yield UrlField::new('bodyVideo')->onlyOnForms()->setColumns(12);
 
             yield FormField::addRow();
-            yield TextEditorField::new('body')->onlyOnForms()->setColumns(12);
-
             yield AssociationField::new('gallery')
                 ->setCrudController(GalleryCrudController::class)
                 ->onlyOnForms()

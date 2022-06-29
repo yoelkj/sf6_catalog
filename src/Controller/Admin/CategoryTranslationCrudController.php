@@ -35,6 +35,29 @@ class CategoryTranslationCrudController extends AbstractCrudController
 
         yield IdField::new('id')->onlyOnIndex();
 
+        $obj_languages = $this->em->getRepository(Language::class)->getRows($is_active = 1);
+        $arr_langs = [];
+        foreach($obj_languages as $row) $arr_langs[$row->getCode()] = $row->getCode();
+        
+        yield ChoiceField::new('locale')->setColumns(6)->onlyOnForms()->setChoices(
+            $arr_langs
+        )->setFormTypeOptions([
+            'attr' => [
+                'required' => true,
+            ],
+        ])->renderAsNativeWidget()->setColumns(12);
+
+        yield Field::new('name')->setColumns(12)->setFormTypeOptions([
+            'attr' => [
+                'required' => true,
+            ],
+        ]);
+        yield SlugField::new('slug')->setFormTypeOptions([
+            'attr' => [
+                'required' => true,
+            ],
+        ])->setColumns(12)->onlyOnForms()->setTargetFieldName('name');
+
         yield TextareaField::new('body')
             ->setFormTypeOptions([
                 'row_attr' => [
@@ -48,16 +71,6 @@ class CategoryTranslationCrudController extends AbstractCrudController
             ->setColumns(12)
             ;
         
-
-        $obj_languages = $this->em->getRepository(Language::class)->getRows($is_active = 1);
-        $arr_langs = [];
-        foreach($obj_languages as $row) $arr_langs[$row->getCode()] = $row->getCode();
-        
-        yield ChoiceField::new('locale')->setColumns(6)->onlyOnForms()->setChoices(
-            $arr_langs
-        )
-        ->renderAsNativeWidget()
-        
         /*
         ->setFormTypeOptions([
             'attr' => [
@@ -66,11 +79,7 @@ class CategoryTranslationCrudController extends AbstractCrudController
             ],
         ])
         */
-        ->setColumns(12);
 
-
-        yield Field::new('name')->setColumns(12);
-        yield SlugField::new('slug')->setColumns(12)->onlyOnForms()->setTargetFieldName('name');
         
     }
     

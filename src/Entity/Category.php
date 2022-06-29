@@ -13,6 +13,8 @@ use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
+use Symfony\Component\Intl\Locale;
+
 #[ORM\Entity(repositoryClass: CategoryRepository::class)]
 class Category implements TimestampableInterface,  TranslatableInterface
 {
@@ -48,39 +50,19 @@ class Category implements TimestampableInterface,  TranslatableInterface
 
     public function __toString(): string
     {
-        return $this->id.'- test product name';
+       return $this->getTranslateName();
+    }
+    
+    public function getTranslateName(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
     public function getId(): ?int
     {
         return $this->id;
     }
-
-    /*
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-    */
 
     public function isIsActive(): ?bool
     {

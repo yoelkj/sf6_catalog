@@ -2,38 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Page;
+use App\Entity\PageTranslation;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Page>
+ * @extends ServiceEntityRepository<PageTranslation>
  *
- * @method Page|null find($id, $lockMode = null, $lockVersion = null)
- * @method Page|null findOneBy(array $criteria, array $orderBy = null)
- * @method Page[]    findAll()
- * @method Page[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method PageTranslation|null find($id, $lockMode = null, $lockVersion = null)
+ * @method PageTranslation|null findOneBy(array $criteria, array $orderBy = null)
+ * @method PageTranslation[]    findAll()
+ * @method PageTranslation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class PageRepository extends ServiceEntityRepository
+class PageTranslationRepository extends ServiceEntityRepository
 {
-
-    static public $arr_positions = array(
-        1 => 'Carousel', //Customer
-        2 => 'Top', //Commercial
-        3 => 'Side', //Commercial
-        4 => 'content', //Commercial
-    );
-
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Page::class);
+        parent::__construct($registry, PageTranslation::class);
     }
 
-    public function getAboutPages() {
-        return self::$arr_about_pages;
-    }
-
-    public function add(Page $entity, bool $flush = false): void
+    public function add(PageTranslation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -42,7 +30,7 @@ class PageRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Page $entity, bool $flush = false): void
+    public function remove(PageTranslation $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -52,7 +40,7 @@ class PageRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Page[] Returns an array of Page objects
+//     * @return PageTranslation[] Returns an array of PageTranslation objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -66,7 +54,7 @@ class PageRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Page
+//    public function findOneBySomeField($value): ?PageTranslation
 //    {
 //        return $this->createQueryBuilder('p')
 //            ->andWhere('p.exampleField = :val')

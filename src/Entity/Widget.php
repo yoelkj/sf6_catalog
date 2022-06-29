@@ -10,21 +10,21 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+
+use Symfony\Component\Intl\Locale;
+
 #[ORM\Entity(repositoryClass: WidgetRepository::class)]
-class Widget implements TimestampableInterface
+class Widget implements TimestampableInterface,  TranslatableInterface
 {
     use TimestampableTrait;
+    use TranslatableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
-
-    #[ORM\Column(type: 'string', length: 140, nullable: true)]
-    private $name;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $body;
 
     #[ORM\Column(type: 'string', length: 140, nullable: true)]
     private $bgColor;
@@ -41,11 +41,17 @@ class Widget implements TimestampableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $bgImage;
+
     #[ORM\ManyToMany(targetEntity: Page::class, mappedBy: 'widgets')]
+    #[ORM\OrderBy(['orderRow'=> "ASC"])]
     private $pages;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'widgets')]
     private $gallery;
+
+    private $translateName;
 
     public function __construct()
     {
@@ -54,36 +60,18 @@ class Widget implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->name;
+       return $this->getTranslateName();
+    }
+    
+    public function getTranslateName(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(?string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
     }
 
     public function getBgColor(): ?string
@@ -181,6 +169,18 @@ class Widget implements TimestampableInterface
     public function setGallery(?Gallery $gallery): self
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getBgImage(): ?string
+    {
+        return $this->bgImage;
+    }
+
+    public function setBgImage(string $bgImage): self
+    {
+        $this->bgImage = $bgImage;
 
         return $this;
     }
