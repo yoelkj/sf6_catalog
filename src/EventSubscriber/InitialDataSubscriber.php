@@ -32,10 +32,12 @@ class InitialDataSubscriber implements EventSubscriberInterface
       if ($request->isXmlHttpRequest()) return;
       
       //---------------Set initial values------------------------------------------------------------------------------
-      if(!$request->getSession()->get('appParam')) $request->getSession()->set('appParam', $this->repoCompany->find(1));
+      //if(!$request->getSession()->get('appParam')) 
+      $request->getSession()->set('appParam', $this->repoCompany->find(1));
       //---------------------------------------------------------------------------------------------------------------
 
       $this->saveTargetPath($request->getSession(), 'main', $request->getUri());
+    
     }
 
     public static function getSubscribedEvents()

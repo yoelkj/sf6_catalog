@@ -21,8 +21,8 @@ class GalleryCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
-        yield Field::new('name');
         yield BooleanField::new('isActive');
+        yield Field::new('name')->setColumns(12);
         
         yield CollectionField::new('galleryImages')
             ->useEntryCrudForm()
@@ -33,7 +33,7 @@ class GalleryCrudController extends AbstractCrudController
                 $num_images = $gallery?->getGalleryImages()->count();
                 return sprintf('%s Image(s)', $num_images);
             })
-            ;
+            ->setColumns(12);
 
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

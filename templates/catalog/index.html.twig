@@ -2,20 +2,30 @@
 {% block title %} Homepage | {{parent()}} {% endblock %}
 {% block body %}
 
-    {#
-    <h1>{{title}}</h1>
-    <hr>
+<main>
 
-    <div>
-        <a href="{{path('app_homepage')}}" class="btn btn-sm btn-primary">Hompage</a>
-    </div>
-    <hr>
-    <div>
-        <a href="{{path('app_browse', {slug: 'Category 1'})}}" class="btn btn-sm btn-primary">Category 1</a>
-        <a href="{{path('app_browse', {slug: 'Category 2'})}}" class="btn btn-sm btn-primary">Category 2</a>
-        <a href="{{path('app_browse', {slug: 'Category 3'})}}" class="btn btn-sm btn-primary">Category 3</a>
-    </div>
+  {% for obj_widget in obj_widgets %}
 
+
+    {{dump(obj_widget)}}
+
+
+    {% if obj_widget.template == 'TEMPLATE_MAIN_CAROUCEL' %}
+      {{ include('widget/_mainCaroucel.html.twig', {obj_widget: obj_widget}) }}  
+    {% elseif obj_widget.template == 'TEMPLATE_CONTENT_CAROUCEL' %}
+      {{ include('widget/_owlCaroucel.html.twig', {obj_widget: obj_widget}) }}  
+    {% elseif obj_widget.template == 'TEMPLATE_SUBSCRIPTION' %}
+      {{ include('widget/_video.html.twig', {obj_widget: obj_widget}) }}
+    {% elseif obj_widget.template == 'TEMPLATE_VIDEO' %}
+      {{ include('widget/_subscribe.html.twig', {obj_widget: obj_widget}) }}
+    {% endif %}
+  {% endfor %}
+
+</main>
+
+ {#
+  <a href="{{path('app_homepage')}}" class="btn btn-sm btn-primary">Hompage</a>
+  <a href="{{path('app_browse', {slug: 'Category 1'})}}" class="btn btn-sm btn-primary">Category 1</a>
     <ul class="data-list">
     {% for row in rows %}
         <li {{stimulus_controller('product', {url: path('app_ajax_produc_detail', {id: loop.index})})}} class="data-item">
@@ -23,32 +33,7 @@
         </li>
     {% endfor %}
     </ul>
-    #}
+#}
 
-<main>
-  
-  {#
-  <div class="position-relative overflow-hidden p-3 p-md-5 m-md-3 text-center bg-light">
-    <div class="col-md-5 p-lg-5 mx-auto my-5">
-      <h1 class="display-4 fw-normal">Punny headline</h1>
-      <p class="lead fw-normal">And an even wittier subheading to boot. Jumpstart your marketing efforts with this example based on Apple’s marketing pages.</p>
-      <a class="btn btn-outline-secondary" href="#">Coming soon</a>
-    </div>
-    <div class="product-device shadow-sm d-none d-md-block"></div>
-    <div class="product-device product-device-2 shadow-sm d-none d-md-block"></div>
-  </div>
-  #}
-
-  {{ include('widget/_mainCaroucel.html.twig', {slides: slides}) }}
-  
-  <hr> 
-  {{ include('widget/_owlCaroucel.html.twig', {slides: slides}) }}
-  <hr>
-  {{ include('widget/_video.html.twig') }}
-  <hr> 
-  {{ include('widget/_subscribe.html.twig') }}
-  <hr>
-
-</main>
 
 {% endblock %}

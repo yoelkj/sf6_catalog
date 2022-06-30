@@ -11,6 +11,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ColorField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
@@ -34,7 +35,7 @@ class CompanyCrudController extends AbstractCrudController
 
         yield FormField::addTab('General')->setIcon('info');
             yield Field::new('name')->setColumns(6);
-            yield Field::new('address')->setColumns(6)
+            yield Field::new('address')->setColumns(6)->onlyOnForms()
                 //->setTextAlign('right')
                 ;
             yield Field::new('phoneMain')->setColumns(6);
@@ -102,6 +103,19 @@ class CompanyCrudController extends AbstractCrudController
     
         ;
 
+        yield FormField::addTab('Translations')->setIcon('info');
+        yield CollectionField::new('translations')
+            ->useEntryCrudForm()
+            ->setColumns(12)
+            ->onlyOnForms()
+            /*
+            ->formatValue(static function ($value, ?Company $company): ?string {
+                $num_translations = $company?->getTranslations()->count();
+                return sprintf('%s translation(s)', $num_translations);
+            })
+            */
+        ;
+
         /*
         
         yield Field::new('slug')
@@ -130,9 +144,7 @@ class CompanyCrudController extends AbstractCrudController
                 ],
             ]);
 
-        */
-
-        
+        */        
 
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

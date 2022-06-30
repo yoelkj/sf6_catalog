@@ -30,10 +30,10 @@ class WidgetCrudController extends AbstractCrudController
         yield Field::new('orderRow')->onlyOnIndex();
 
         yield ChoiceField::new('template')->setColumns(12)->onlyOnForms()->setChoices([
-            'TEMPLATE_MAIN_CAROUCEL' => 'Main Caroucel',
-            'TEMPLATE_CONTENT_CAROUCEL' => 'Content Caroucel',
-            'TEMPLATE_SUBSCRIPTION' => 'Subscription',
-            'TEMPLATE_VIDEO' => 'Video',
+            'Main Caroucel' => 'TEMPLATE_MAIN_CAROUCEL',
+            'Content Caroucel' => 'TEMPLATE_CONTENT_CAROUCEL',
+            'Subscription' => 'TEMPLATE_SUBSCRIPTION',
+            'Video' => 'TEMPLATE_VIDEO',
         ]);
 
         yield FormField::addRow();
@@ -42,14 +42,11 @@ class WidgetCrudController extends AbstractCrudController
                 //->renderExpanded()
                 ->setColumns(12)
                 ->formatValue(static function ($value, ?Widget $widget): ?string {
-                    
                     $name = $widget?->getTranslateName();
                     $num_translations = $widget?->getTranslations()->count();
                     return sprintf('%s - %s translation(s)', $name, $num_translations);
-                              
                 });
 
-        
         yield FormField::addRow();
         yield ImageField::new('bgImage')
             ->setBasePath('uploads/widgets/bg')

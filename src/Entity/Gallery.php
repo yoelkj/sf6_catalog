@@ -224,4 +224,19 @@ class Gallery implements TimestampableInterface
         return $this;
     }
 
+
+    public function getGalleryImagesByLanguage($lang){
+
+        $arr_result = [];
+        foreach ($this->galleryImages as $key => $row) {
+            if($row->getLanguage()->getCode() == $lang){
+                $arr_result[] = $row;
+            }
+        }
+
+
+        return $arr_result;
+
+    }
+
 }

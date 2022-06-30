@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+
 #[ORM\Entity(repositoryClass: GalleryImagesRepository::class)]
 class GalleryImages implements TimestampableInterface
 {
@@ -27,6 +28,12 @@ class GalleryImages implements TimestampableInterface
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $image;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $link;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $body;
+        
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
@@ -40,7 +47,7 @@ class GalleryImages implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->getImage().' - '.($this->language) ?? $this->language->getName();
+        return 'Imagen - '.($this->language) ?? $this->language->getName();
     }
 
     public function getLanguage(): ?Language
@@ -70,6 +77,14 @@ class GalleryImages implements TimestampableInterface
     public function getImage(): ?string
     {
         return $this->image;
+    }
+
+
+    public function getImageUrl(): ?string
+    {
+        if (!$this->image) return null;
+        if (strpos($this->image, '/') !== false) return $this->image;
+        return sprintf('/uploads/gallery/%s', $this->image);
     }
 
     public function setImage(?string $image): self
@@ -123,6 +138,30 @@ class GalleryImages implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getLink(): ?string
+    {
+        return $this->link;
+    }
+
+    public function setLink(?string $link): self
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    public function getBody(): ?string
+    {
+        return $this->body;
+    }
+
+    public function setBody(?string $body): self
+    {
+        $this->body = $body;
 
         return $this;
     }

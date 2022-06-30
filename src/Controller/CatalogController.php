@@ -30,23 +30,8 @@ class CatalogController extends BaseController
         
         $obj_widgets = $obj_page->getWidgets(); 
         
-        foreach ($obj_widgets as $obj_widget) {
-            echo $obj_widget->getTranslateName().'<br>';
-        }
-
-        exit();
-
-        $slides = [
-            ['name' => 'Gangsta\'s Paradise', 'desc' => 'Coolio'],
-            ['name' => 'Waterfalls', 'desc' => 'TLC'],
-            ['name' => 'Creep', 'desc' => 'Radiohead'],
-            ['name' => 'Kiss from a Rose', 'desc' => 'Seal'],
-            ['name' => 'On Bended Knee', 'desc' => 'Boyz II Men'],
-            ['name' => 'Fantasy', 'desc' => 'Mariah Carey'],
-        ];
-
         return $this->render('catalog/index.html.twig', [
-            'slides' => $slides
+            'obj_widgets' => $obj_widgets
         ]);
     }
 
