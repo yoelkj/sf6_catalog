@@ -44,9 +44,17 @@ class Page implements TimestampableInterface,  TranslatableInterface
     #[ORM\OrderBy(['orderRow'=> "ASC"])]
     private $widgets;
 
+    #[ORM\ManyToMany(targetEntity: Menu::class, mappedBy: 'pages')]
+    private $menus;
+
+    #[ORM\OneToMany(mappedBy: 'page', targetEntity: Menu::class)]
+    private $singlemenus;
+
     public function __construct()
     {
         $this->widgets = new ArrayCollection();
+        $this->menus = new ArrayCollection();
+        $this->singlemenus = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -167,6 +175,63 @@ class Page implements TimestampableInterface,  TranslatableInterface
     public function removeWidget(Widget $widget): self
     {
         $this->widgets->removeElement($widget);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->addPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            $menu->removePage($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getSinglemenus(): Collection
+    {
+        return $this->singlemenus;
+    }
+
+    public function addSinglemenu(Menu $singlemenu): self
+    {
+        if (!$this->singlemenus->contains($singlemenu)) {
+            $this->singlemenus[] = $singlemenu;
+            $singlemenu->setPage($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSinglemenu(Menu $singlemenu): self
+    {
+        if ($this->singlemenus->removeElement($singlemenu)) {
+            // set the owning side to null (unless already changed)
+            if ($singlemenu->getPage() === $this) {
+                $singlemenu->setPage(null);
+            }
+        }
 
         return $this;
     }

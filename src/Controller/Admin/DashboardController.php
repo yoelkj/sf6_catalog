@@ -9,6 +9,7 @@ use App\Entity\Country;
 use App\Entity\Gallery;
 use App\Entity\GalleryImages;
 use App\Entity\Language;
+use App\Entity\Menu;
 use App\Entity\Page;
 use App\Entity\Presentation;
 use App\Entity\Product;
@@ -186,6 +187,7 @@ class DashboardController extends AbstractDashboardController
         yield MenuItem::subMenu('Pages', 'fas fa-clipboard')->setSubItems([
             MenuItem::linkToCrud('Pages', 'fas fa-clipboard', Page::class),
             MenuItem::linkToCrud('Widgets', 'fas fa-diamond', Widget::class),
+            MenuItem::linkToCrud('Menu', 'fas fa-list', Menu::class),
         ]); 
 
         yield MenuItem::subMenu('Gallery', 'fa fa-folder')->setSubItems([
