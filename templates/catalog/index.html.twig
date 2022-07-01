@@ -10,9 +10,9 @@
     {% elseif obj_widget.template == 'TEMPLATE_CONTENT_CAROUCEL' %}
       {{ include('widget/_owlCaroucel.html.twig', {obj_widget: obj_widget}) }}  
     {% elseif obj_widget.template == 'TEMPLATE_SUBSCRIPTION' %}
-      {{ include('widget/_video.html.twig', {obj_widget: obj_widget}) }}
-    {% elseif obj_widget.template == 'TEMPLATE_VIDEO' %}
       {{ include('widget/_subscribe.html.twig', {obj_widget: obj_widget}) }}
+    {% elseif obj_widget.template == 'TEMPLATE_VIDEO' %}
+      {{ include('widget/_video.html.twig', {obj_widget: obj_widget}) }}
     {% endif %}
   {% endfor %}
 
