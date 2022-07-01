@@ -8,6 +8,8 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 
 class CategoryCrudController extends AbstractCrudController
 {
@@ -22,6 +24,14 @@ class CategoryCrudController extends AbstractCrudController
         
         yield IdField::new('id')->onlyOnIndex();
         
+        yield ImageField::new('bgImage')
+                ->setBasePath('uploads/categories/bg')
+                ->setUploadDir('public/uploads/categories/bg')
+                ->setUploadedFileNamePattern('[slug]-bg-[timestamp].[extension]')
+                //->setFormTypeOption('upload_new', function(){})
+                ->onlyOnForms()
+                ->setColumns(6);
+
         yield CollectionField::new('translations')
             ->useEntryCrudForm()
             ->setColumns(12)
@@ -36,7 +46,7 @@ class CategoryCrudController extends AbstractCrudController
             /*->setFormTypeOptions(['row_attr' => ['data-controller' => 'translations',],])*/
             ;
         
-
+        yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);    
         yield BooleanField::new('isActive');
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

@@ -25,15 +25,27 @@ class Category implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
+    private $bgImage;
+
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $orderRow;
+
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
     private $products;
 
+    #[ORM\OneToMany(mappedBy: 'category', targetEntity: Menu::class)]
+    private $menus;
+
+    
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -126,6 +138,60 @@ class Category implements TimestampableInterface,  TranslatableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    public function getBgImage(): ?string
+    {
+        return $this->bgImage;
+    }
+
+    public function setBgImage(?string $bgImage): self
+    {
+        $this->bgImage = $bgImage;
+
+        return $this;
+    }
+
+    public function getOrderRow(): ?int
+    {
+        return $this->orderRow;
+    }
+
+    public function setOrderRow(?int $orderRow): self
+    {
+        $this->orderRow = $orderRow;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->setCategory($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getCategory() === $this) {
+                $menu->setCategory(null);
+            }
+        }
 
         return $this;
     }

@@ -36,11 +36,11 @@ class MenuCrudController extends AbstractCrudController
         ;
 
         yield AssociationField::new('page')->setColumns(6);
-        yield IntegerField::new('orderRow')->setColumns(6)->onlyOnForms();
+        yield AssociationField::new('category')->setColumns(6);
 
         yield AssociationField::new('menus', 'Sub menus')->onlyOnForms()->setColumns(12);
 
-        //yield AssociationField::new('pages', 'Sub pages')->setColumns(6);
+        yield IntegerField::new('orderRow')->setColumns(2)->onlyOnForms();
         yield BooleanField::new('isActive');//->setColumns(12)
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

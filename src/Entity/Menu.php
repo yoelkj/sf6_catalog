@@ -40,6 +40,9 @@ class Menu implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
 
+    #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'menus')]
+    private $category;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
@@ -129,6 +132,18 @@ class Menu implements TimestampableInterface,  TranslatableInterface
     public function setOrderRow(?int $orderRow): self
     {
         $this->orderRow = $orderRow;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): self
+    {
+        $this->category = $category;
 
         return $this;
     }
