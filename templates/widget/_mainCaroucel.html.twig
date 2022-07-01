@@ -1,37 +1,43 @@
-{#class="max-h-100px"/>#}																																																																																																											                #}
+{# max-h-100px" #}
 {% set gallery = obj_widget.gallery %}
 {% set images = gallery.getGalleryImagesByLanguage(app.request.getLocale()) %}
 
-<div id="myCarousel" class="carousel slide" data-bs-ride="carousel">
+<div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
-      <button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      {% for image in images %}
+      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{loop.index}}" {{(loop.index == 1) ? ' class="active" aria-current="true" ': '' }} aria-label="Slide {{loop.index}}"></button>
+      {% endfor %}
     </div>
+
     <div class="carousel-inner">
-      
 
       {% for image in images %}
       <div class="carousel-item active">
-        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false"><rect width="100%" height="100%" fill="#777"/></svg>
-
+        
+        <img class="d-block w-100" src="{{image.getImageUrl()}}">
+        
         <div class="container">
-          <div class="carousel-caption text-start">
-            <h1>Example headline.</h1>
-            <p>Some representative placeholder content for the first slide of the carousel.</p>
-            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+          <div class="carousel-caption text-center">
+            
+            <h1>COMPANY</h1>
+            {{image.body|raw}}
+
+            {% if image.link %}
+              <p><a class="btn btn-lg btn-primary" href="{{image.link}}">{{'View more'|trans}}</a></p>
+            {% endif %}
           </div>
         </div>
+        
       </div>
       {% endfor %}
 
     </div>
 
-    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+    <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
       <span class="carousel-control-prev-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Previous</span>
     </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+    <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
       <span class="carousel-control-next-icon" aria-hidden="true"></span>
       <span class="visually-hidden">Next</span>
     </button>

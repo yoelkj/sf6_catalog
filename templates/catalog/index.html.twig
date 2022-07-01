@@ -5,11 +5,6 @@
 <main>
 
   {% for obj_widget in obj_widgets %}
-
-
-    {{dump(obj_widget)}}
-
-
     {% if obj_widget.template == 'TEMPLATE_MAIN_CAROUCEL' %}
       {{ include('widget/_mainCaroucel.html.twig', {obj_widget: obj_widget}) }}  
     {% elseif obj_widget.template == 'TEMPLATE_CONTENT_CAROUCEL' %}
@@ -23,7 +18,7 @@
 
 </main>
 
- {#
+  {#
   <a href="{{path('app_homepage')}}" class="btn btn-sm btn-primary">Hompage</a>
   <a href="{{path('app_browse', {slug: 'Category 1'})}}" class="btn btn-sm btn-primary">Category 1</a>
     <ul class="data-list">
@@ -33,7 +28,7 @@
         </li>
     {% endfor %}
     </ul>
-#}
+  #}
 
 
 {% endblock %}

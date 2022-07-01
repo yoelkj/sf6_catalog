@@ -233,8 +233,7 @@ class Gallery implements TimestampableInterface
                 $arr_result[] = $row;
             }
         }
-
-
+        
         return $arr_result;
 
     }

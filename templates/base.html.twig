@@ -22,10 +22,7 @@
         </style>
    
     </head>
-    <body
-
-        {{ component('menu') }}
-        
+    <body 
         {#
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ stimulus_controller('user-api', {
@@ -34,162 +31,19 @@
         {% endif %}
         #}
     >
-        {#
-        <nav 
-            class="navbar navbar-expand-lg navbar-light bg-light px-1"
-            {{ is_granted('ROLE_PREVIOUS_ADMIN') ? 'style="background-color: red !important"' }}>
 
-            <div class="container-fluid">
-                <a class="navbar-brand" href="{{ path('app_homepage') }}">
-                    <p class="pl-2 d-inline font-weight-bold" style="color: #444;">
-                        BUCKY SNACKS</p>
-                </a>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-collapsable" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbar-collapsable">
-                    
-                    
-                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('app_browse') }}">Browse</a>
-                        </li>
-                    </ul>
+        {{ component('menu') }}
         
-                    {{ include('widget/_language.html.twig', {primaryColor: '#000', secondaryColor: '#fff'}) }}
-
-                    
-                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-                      
-                       <div class="dropdown">
-                            <button
-                                class="dropdown-toggle btn"
-                                type="button"
-                                id="user-dropdown"
-                                data-bs-toggle="dropdown"
-                                aria-expanded="false"
-                            >
-                                <img
-                                    src="{{app.user.getAvatarUri}}"
-                                    alt="{{app.user.getDisplayName}}">
-                            </button>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="user-dropdown">
-                                
-                                
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('app_2fa_enable') }}">Enble 2fa</a>
-                                </li>
-
-                                {% if is_granted('ROLE_ADMIN') %}
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('admin') }}">Dashboard</a>
-                                </li>
-                                {% endif %}
-
-                                {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                                    <li>
-                                        <a class="dropdown-item" href="{{ path('app_homepage', {
-                                            '_switch_user': '_exit'
-                                        }) }}">Exit Impersonation</a>
-                                    </li>
-                                    <!-- https://localhost?_switch_user=user_email_to_switch -->
-                                {% endif %}
-
-                                <li>
-                                    <a class="dropdown-item" href="{{ path('app_logout') }}">Log Out</a>
-                                </li>
-                            </ul>
-                        </div>
-
-                    {% else %}
-
-                        <a class="nav-link text-black-50" href="{{ path('app_login') }}">Log In</a>
-                        <a href="{{path('app_register')}}" class="btn btn-dark">Sign up</a>
-
-                    {% endif %}
-
-                    
-
-                </div>
-            </div>
-        </nav>
-        #}
-
-        <header class="site-header sticky-top py-1 bg_color_main">
-            <nav class="container d-flex flex-column flex-md-row justify-content-between">
-                <a class="py-2" href="#" aria-label="Product">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mx-auto" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-                </a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Tour</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Product</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Features</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Enterprise</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Support</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Pricing</a>
-                <a class="py-2 d-none d-md-inline-block" href="#">Cart</a>
-            </nav>
-        </header>
-
         {% for flash in app.flashes('success') %}
             <div class="alert alert-success">{{ flash }}</div>
         {% endfor %}
         {% for flash in app.flashes('error') %}
             <div class="alert alert-danger">{{ flash }}</div>
         {% endfor %}
-        
+
         {% block body %}{% endblock %}
 
-        <footer class="container py-5">
-            <div class="row">
-                <div class="col-12 col-md">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-                <small class="d-block mb-3 text-muted">&copy; 2017–2022</small>
-                </div>
-                <div class="col-6 col-md">
-                <h5>Features</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="link-secondary" href="#">Cool stuff</a></li>
-                    <li><a class="link-secondary" href="#">Random feature</a></li>
-                    <li><a class="link-secondary" href="#">Team feature</a></li>
-                    <li><a class="link-secondary" href="#">Stuff for developers</a></li>
-                    <li><a class="link-secondary" href="#">Another one</a></li>
-                    <li><a class="link-secondary" href="#">Last time</a></li>
-                </ul>
-                </div>
-                <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="link-secondary" href="#">Resource name</a></li>
-                    <li><a class="link-secondary" href="#">Resource</a></li>
-                    <li><a class="link-secondary" href="#">Another resource</a></li>
-                    <li><a class="link-secondary" href="#">Final resource</a></li>
-                </ul>
-                </div>
-                <div class="col-6 col-md">
-                <h5>Resources</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="link-secondary" href="#">Business</a></li>
-                    <li><a class="link-secondary" href="#">Education</a></li>
-                    <li><a class="link-secondary" href="#">Government</a></li>
-                    <li><a class="link-secondary" href="#">Gaming</a></li>
-                </ul>
-                </div>
-                <div class="col-6 col-md">
-                <h5>About</h5>
-                <ul class="list-unstyled text-small">
-                    <li><a class="link-secondary" href="#">Team</a></li>
-                    <li><a class="link-secondary" href="#">Locations</a></li>
-                    <li><a class="link-secondary" href="#">Privacy</a></li>
-                    <li><a class="link-secondary" href="#">Terms</a></li>
-                </ul>
-                </div>
-            </div>
-            {#
-            Made with <i style="color: red;" class="fa fa-heart"></i> by the guys and gals at <a style="color: #444; text-decoration: underline;" href="#">Bucky</a>
-            #}
-        </footer>
+        {{ component('footer') }}
 
     </body>
 </html>
