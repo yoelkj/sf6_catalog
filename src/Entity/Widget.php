@@ -78,6 +78,19 @@ class Widget implements TimestampableInterface,  TranslatableInterface
         return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
+    public function getTranslateBodyImageUrl(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getBodyImageUrl();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
+    }
+
+    public function getTranlation(){
+        $translate = $this->translate(Locale::getDefault());
+        return ($translate) ? $translate : null;
+    }
+
+    
+
     public function getId(): ?int
     {
         return $this->id;
@@ -192,6 +205,13 @@ class Widget implements TimestampableInterface,  TranslatableInterface
         $this->bgImage = $bgImage;
 
         return $this;
+    }
+
+    public function getBgImageUrl(): ?string
+    {
+        if (!$this->bgImage) return null;
+        if (strpos($this->bgImage, '/') !== false) return $this->bgImage;
+        return sprintf('/uploads/widgets/bg/%s', $this->bgImage);
     }
 
     public function getTextColor(): ?string

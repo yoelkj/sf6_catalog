@@ -12,32 +12,26 @@ body {
 }
 
 /*
-* Custom translucent site header
-*/
-
 .site-header {
 background-color: rgba(0, 0, 0, .85);
 -webkit-backdrop-filter: saturate(180%) blur(20px);
 backdrop-filter: saturate(180%) blur(20px);
 }
-.site-header a {
-color: #8e8e8e;
+*/
+
+.footer{
+    color: #fcfcfc;
+}
+
+.footer a {
+color: #fcfcfc;
 transition: color .15s ease-in-out;
 }
-.site-header a:hover {
-color: #fff;
+
+.footer a:hover {
+color: #8e8e8e;
 text-decoration: none;
 }
-  
-
-.b-example-divider {
-height: 3rem;
-background-color: rgba(0, 0, 0, .1);
-border: solid rgba(0, 0, 0, .15);
-border-width: 1px 0;
-box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-}
-
   
 
 /*widget-language-toggle*/

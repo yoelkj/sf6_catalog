@@ -87,4 +87,11 @@ class WidgetTranslation implements TranslationInterface
 
         return $this;
     }
+
+    public function getBodyImageUrl(): ?string
+    {
+        if (!$this->bodyImage) return null;
+        if (strpos($this->bodyImage, '/') !== false) return $this->bodyImage;
+        return sprintf('/uploads/widgets/body/%s', $this->bodyImage);
+    }
 }

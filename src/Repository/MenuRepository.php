@@ -39,6 +39,18 @@ class MenuRepository extends ServiceEntityRepository
         }
     }
 
+    public function getActiveRows(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.isActive = 1')
+            ->orderBy('m.orderRow', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    
+
 //    /**
 //     * @return Menu[] Returns an array of Menu objects
 //     */

@@ -6,7 +6,7 @@
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
@@ -18,13 +18,18 @@
         <style>
             .bg_color_main{background: {{app.session.get('appParam').bgColorMain}}}
             .bg_color_secondary{background: {{app.session.get('appParam').bgColorSecondary}}}
+            
             .primary_color{background: {{app.session.get('appParam').primaryColor}}}
+
             .secondary_color{background: {{app.session.get('appParam').secondaryColor}}}
+            
             .tertiary_color{background: {{app.session.get('appParam').tertiaryColor}}}
+            
         </style>
    
     </head>
-    <body 
+    <body class="bg_color_main"
+
         {#
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ stimulus_controller('user-api', {

@@ -1,49 +1,53 @@
-<footer class="container py-5">
-    <div class="row">
-        <div class="col-12 col-md">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mb-2" role="img" viewBox="0 0 24 24"><title>Product</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-        <small class="d-block mb-3 text-muted">&copy; 2017–2022</small>
-        </div>
+{% set generalMenu = this.getMenuItems() %}
+<div class="secondary_color">
+<footer class="container py-5 footer">
+
+    <div class="row mb-5">
+
+        {% for menu  in generalMenu.withChilds %}
+            <div class="col-6 col-md">
+            <h5>Features</h5>
+                <ul class="list-unstyled text-small">
+                    {% for chilMenu in menu.menus %}
+                        <li><a class="link-secondary" href="#">{{chilMenu.getTranslateName}}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+
         <div class="col-6 col-md">
-        <h5>Features</h5>
-        <ul class="list-unstyled text-small">
-            <li><a class="link-secondary" href="#">Cool stuff</a></li>
-            <li><a class="link-secondary" href="#">Random feature</a></li>
-            <li><a class="link-secondary" href="#">Team feature</a></li>
-            <li><a class="link-secondary" href="#">Stuff for developers</a></li>
-            <li><a class="link-secondary" href="#">Another one</a></li>
-            <li><a class="link-secondary" href="#">Last time</a></li>
-        </ul>
+            <ul class="list-unstyled text-small">    
+            {% for menu  in generalMenu.noChilds %}
+                <li><a class="link-secondary" href="#">{{menu.getTranslateName}}</a></li>
+            {% endfor %}
+            </ul>
         </div>
+
         <div class="col-6 col-md">
-        <h5>Resources</h5>
-        <ul class="list-unstyled text-small">
-            <li><a class="link-secondary" href="#">Resource name</a></li>
-            <li><a class="link-secondary" href="#">Resource</a></li>
-            <li><a class="link-secondary" href="#">Another resource</a></li>
-            <li><a class="link-secondary" href="#">Final resource</a></li>
-        </ul>
+            <h5>Contactenos</h5>
+            <p>Description contact</p>
         </div>
-        <div class="col-6 col-md">
-        <h5>Resources</h5>
-        <ul class="list-unstyled text-small">
-            <li><a class="link-secondary" href="#">Business</a></li>
-            <li><a class="link-secondary" href="#">Education</a></li>
-            <li><a class="link-secondary" href="#">Government</a></li>
-            <li><a class="link-secondary" href="#">Gaming</a></li>
-        </ul>
-        </div>
-        <div class="col-6 col-md">
-        <h5>About</h5>
-        <ul class="list-unstyled text-small">
-            <li><a class="link-secondary" href="#">Team</a></li>
-            <li><a class="link-secondary" href="#">Locations</a></li>
-            <li><a class="link-secondary" href="#">Privacy</a></li>
-            <li><a class="link-secondary" href="#">Terms</a></li>
-        </ul>
-        </div>
+
     </div>
-    {#
-    Made with <i style="color: red;" class="fa fa-heart"></i> by the guys and gals at <a style="color: #444; text-decoration: underline;" href="#">Bucky</a>
-    #}
+
+    <div class="row my-3">
+    
+        <div class="col-4 col-md">
+            <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
+                <img width="80" alt="logo-footer" src="/uploads/logo/{{ app.session.get('appParam').logo }}">
+            </a>
+        </div>
+
+        <div class="col-4 col-md text-center">
+            <small class="d-block mb-3">&copy; {{app.session.get('appParam').name |upper}} {{"now"|date("Y")}}. {{'All rights reserved'| trans }}</small>
+        </div>
+
+        <div class="col-4 col-md text-end">
+            <p>ESCENCIAL STUDIO</p>
+        </div>
+
+    </div>
+
 </footer>
+
+</div>
