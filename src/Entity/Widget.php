@@ -53,6 +53,9 @@ class Widget implements TimestampableInterface,  TranslatableInterface
 
     private $translateName;
 
+    #[ORM\Column(type: 'string', length: 140, nullable: true)]
+    private $textColor;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -66,6 +69,12 @@ class Widget implements TimestampableInterface,  TranslatableInterface
     public function getTranslateName(): ?string
     {
         $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
+    }
+
+    public function getTranslateBody(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getBody();
         return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
@@ -181,6 +190,18 @@ class Widget implements TimestampableInterface,  TranslatableInterface
     public function setBgImage(string $bgImage): self
     {
         $this->bgImage = $bgImage;
+
+        return $this;
+    }
+
+    public function getTextColor(): ?string
+    {
+        return $this->textColor;
+    }
+
+    public function setTextColor(?string $textColor): self
+    {
+        $this->textColor = $textColor;
 
         return $this;
     }

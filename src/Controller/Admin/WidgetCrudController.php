@@ -57,9 +57,14 @@ class WidgetCrudController extends AbstractCrudController
             ->setColumns(6);
 
         yield ColorField::new('bgColor')
-                ->setColumns(6)
+                ->setColumns(3)
                 ->onlyOnForms()
                 ->showValue();
+
+        yield ColorField::new('textColor')
+            ->setColumns(3)
+            ->onlyOnForms()
+            ->showValue();
 
         yield FormField::addRow();
         yield AssociationField::new('gallery')
