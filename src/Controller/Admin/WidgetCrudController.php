@@ -30,8 +30,9 @@ class WidgetCrudController extends AbstractCrudController
         yield Field::new('orderRow')->onlyOnIndex();
 
         yield ChoiceField::new('template')->setColumns(12)->onlyOnForms()->setChoices([
-            'Main Caroucel' => 'TEMPLATE_MAIN_CAROUCEL',
             'Content Caroucel' => 'TEMPLATE_CONTENT_CAROUCEL',
+            'Main Caroucel' => 'TEMPLATE_MAIN_CAROUCEL',
+            'Office' => 'TEMPLATE_OFFICE',
             'Subscription' => 'TEMPLATE_SUBSCRIPTION',
             'Video' => 'TEMPLATE_VIDEO',
         ]);

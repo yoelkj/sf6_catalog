@@ -59,7 +59,7 @@ class Category implements TimestampableInterface,  TranslatableInterface
         return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
     }
 
-    public function getTranlation(){
+    public function getTranslation(){
         $translate = $this->translate(Locale::getDefault());
         return ($translate) ? $translate : null;
     }

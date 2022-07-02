@@ -123,7 +123,7 @@ class Company implements TimestampableInterface,  TranslatableInterface
         return $this->name;
     }
 
-    public function getTranlation(){
+    public function getTranslation(){
         $translate = $this->translate(Locale::getDefault());
         return ($translate) ? $translate : null;
     }

@@ -1,4 +1,6 @@
+{% set company = app.session.get('appParam') %}
 {% set generalMenu = this.getMenuItems() %}
+
 <div id="footer" class="secondary_color">
 <footer class="container py-5 footer">
 
@@ -24,8 +26,20 @@
         </div>
 
         <div class="col-6 col-md">
-            <h5>Contactenos</h5>
-            <p>Description contact</p>
+            <h5 class="my-3">Contáctanos</h5>
+
+            <p>{{company.legalName}}</br>
+            {{company.address}}<br>
+            {{company.city}} {{company.province}} {{company.Country}}</p>
+            
+            <hr>
+            
+            <p>
+                {{((company.phoneMain) ? company.phoneMain~'<br>': '')|striptags('<br>')|raw}}
+                {{((company.phoneSales) ? company.phoneSales~'<br>': '')|striptags('<br>')|raw}}
+                {{((company.phoneSupport) ? company.phoneSupport~'<br>': '')|striptags('<br>')|raw}}
+            </p>
+        
         </div>
 
     </div>
@@ -34,20 +48,19 @@
     
         <div class="col-4 col-md">
             <a href="/" class="d-flex align-items-center col-md-3 mb-2 mb-md-0 text-dark text-decoration-none">
-                <img width="80" alt="logo-footer" src="/uploads/logo/{{ app.session.get('appParam').logo }}">
+                <img width="80" alt="logo-footer" src="/uploads/logo/{{ company.logo }}">
             </a>
         </div>
 
-        <div class="col-4 col-md text-center">
-            <small class="d-block mb-3">&copy; {{app.session.get('appParam').name |upper}} {{"now"|date("Y")}}. {{'All rights reserved'| trans }}</small>
+        <div class="col-4 col-md d-flex align-items-center justify-content-center">
+            <small>&copy; {{company.name |upper}} {{"now"|date("Y")}}. {{'All rights reserved'| trans }}</small>
         </div>
 
-        <div class="col-4 col-md text-end">
-            <p>ESCENCIAL STUDIO</p>
+        <div class="col-4 col-md  d-flex align-items-center justify-content-end">
+            <strong><i class="far fa-circle"></i> ESCENCIAL STUDIO</strong>
         </div>
 
     </div>
 
 </footer>
-
 </div>

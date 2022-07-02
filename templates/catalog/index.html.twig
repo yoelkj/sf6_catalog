@@ -13,6 +13,8 @@
       {{ include('widget/_subscribe.html.twig', {obj_widget: obj_widget}) }}
     {% elseif obj_widget.template == 'TEMPLATE_VIDEO' %}
       {{ include('widget/_video.html.twig', {obj_widget: obj_widget}) }}
+    {% elseif obj_widget.template == 'TEMPLATE_OFFICE' %}
+      {{ include('widget/_office.html.twig', {obj_widget: obj_widget}) }}
     {% endif %}
   {% endfor %}
 
