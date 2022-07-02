@@ -8,7 +8,7 @@
 
         {% for menu  in generalMenu.withChilds %}
             <div class="col-6 col-md">
-            <h5>Features</h5>
+                <h3><a class="link-secondary" href="#">{{menu.getTranslateName}}</a></h3>
                 <ul class="list-unstyled text-small">
                     {% for chilMenu in menu.menus %}
                         <li><a class="link-secondary" href="#">{{chilMenu.getTranslateName}}</a></li>
@@ -19,7 +19,7 @@
 
         <div class="col-6 col-md">
             <ul class="list-unstyled text-small">    
-            {% for menu  in generalMenu.noChilds %}
+            {% for menu  in generalMenu.noChilds  %}
                 <li><a class="link-secondary" href="#">{{menu.getTranslateName}}</a></li>
             {% endfor %}
             </ul>

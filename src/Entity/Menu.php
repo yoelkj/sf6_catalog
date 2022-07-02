@@ -43,6 +43,9 @@ class Menu implements TimestampableInterface,  TranslatableInterface
     #[ORM\ManyToOne(targetEntity: Category::class, inversedBy: 'menus')]
     private $category;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isParent = false;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
@@ -144,6 +147,18 @@ class Menu implements TimestampableInterface,  TranslatableInterface
     public function setCategory(?Category $category): self
     {
         $this->category = $category;
+
+        return $this;
+    }
+
+    public function getIsParent(): ?bool
+    {
+        return $this->isParent;
+    }
+
+    public function setIsParent(?bool $isParent): self
+    {
+        $this->isParent = $isParent;
 
         return $this;
     }

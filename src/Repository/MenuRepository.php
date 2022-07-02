@@ -49,6 +49,30 @@ class MenuRepository extends ServiceEntityRepository
         ;
     }
 
+    public function getParentRows(): array
+    {
+        return $this->createQueryBuilder('m')
+            ->andWhere('m.isActive = 1 AND m.isParent = 1')
+            ->orderBy('m.orderRow', 'ASC')
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
+    public function getFilterMenuVsChilds(){
+        $arr_result = ['withChilds' => [], 'noChilds' => []];
+        $arr_rows = $this->getParentRows();
+        
+        foreach ($arr_rows as $row) {
+            if($row->getMenus()->count()){
+                $arr_result['withChilds'][] = $row;
+            }else{
+                $arr_result['noChilds'][] = $row;
+            }
+        }
+
+        return $arr_result;
+    }
     
 
 //    /**

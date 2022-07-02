@@ -32,9 +32,15 @@ backdrop-filter: saturate(180%) blur(20px);
     z-index: 1;
     top: 0;
     text-align: center;
+    width: 230px;
 }
+
+.container-logo em{
+    font-size:0.8em;
+}
+
 #logoApp{
-    display: block;    
+    display: block;
     width: 100%;
 }
 
@@ -42,10 +48,14 @@ backdrop-filter: saturate(180%) blur(20px);
     width: 100%;
 }
 
-#logoApp a:hover{
-    color: #fcfcfc;
+#header a, #footer a{
+    color: #fff;
+    text-decoration: none;
 }
 
+#header a:hover, #footer a:hover{
+    color: #edeeef;
+}
 
 #header, #footer{
     color: #fcfcfc;
@@ -56,9 +66,8 @@ backdrop-filter: saturate(180%) blur(20px);
     transition: color .15s ease-in-out;
 }
 
-#header a:hover, #footer a:hover {
-    color: #8e8e8e;
-    text-decoration: none;
+#header a.dropdown-item {
+    color: #212529;
 }
 
 /*widget-language-toggle*/
@@ -126,8 +135,6 @@ backdrop-filter: saturate(180%) blur(20px);
         width: 220px;
     }
 }
-
-
 
 
 /*

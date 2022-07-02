@@ -21,7 +21,8 @@ class MenuCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
         yield IdField::new('id')->onlyOnIndex();
-        
+        //yield IntegerField::new('orderRow')->onlyOnIndex();
+        yield BooleanField::new('isParent')->onlyOnIndex();
         yield CollectionField::new('translations')
             ->useEntryCrudForm()
             ->setColumns(12)
@@ -40,7 +41,8 @@ class MenuCrudController extends AbstractCrudController
 
         yield AssociationField::new('menus', 'Sub menus')->onlyOnForms()->setColumns(12);
 
-        yield IntegerField::new('orderRow')->setColumns(2)->onlyOnForms();
+        yield IntegerField::new('orderRow')->setColumns(2);
+        yield BooleanField::new('isParent')->onlyOnForms();//->setColumns(12)
         yield BooleanField::new('isActive');//->setColumns(12)
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

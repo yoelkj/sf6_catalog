@@ -17,7 +17,7 @@ class MenuComponent
 
     public function getMenuItems(): array
     {
-        return $this->repo_menu->findAll();
+        return $this->repo_menu->getParentRows();
     }
 
 }

@@ -1,5 +1,4 @@
 <div id="header">
-
     <nav class="navbar navbar-expand-md navbar-dark fixed-top pt-5" style="background-color: rgba(0, 166, 235, .85)">
         <div class="container">
             <a class="navbar-brand" href="#">
@@ -17,11 +16,25 @@
 
             <ul class="navbar-nav nav ms-auto col-12 col-md-auto mb-2 justify-content-end mb-md-0">
                 {% for menuItem in this.menuItems %}
-                    <li class="nav-item">
+                    
+                    {% set childMenu =  menuItem.menus %}
+                    {% set chilItems = childMenu|length %}
+                    <li class="nav-item {{chilItems > 0 ? 'dropdown': '' }}" >
                         {#<a class="nav-link active" aria-current="page" href="#">Home</a>#}
-                    <a href="#" class="nav-link px-2 link-secondary">{{menuItem.getTranslateName}}</a></li>
+                        <a class="nav-link {{chilItems > 0 ? 'dropdown-toggle': ''}}" href="#" {{ chilItems > 0 ?'id="navbarDropdown-{{menuItem.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false"' : ''}} >{{menuItem.getTranslateName}}</a>
+
+                        {% if chilItems > 0 %}
+                            <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{menuItem.id}}">
+                            {% for chilMenuItem in childMenu %}
+                                <li><a class="dropdown-item" href="#">{{chilMenuItem.getTranslateName}}</a></li>
+                            {% endfor %}
+                            </ul>    
+                        {% endif %}
+                    
+                    </li>
                 {% endfor %}
                 
+                <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fas fa-search"></i></a></li>
                 <li class="nav-item">{{ include('widget/_language.html.twig', {primaryColor: '#fff', secondaryColor: 'transparent'}) }}</li>
 
             </ul>
@@ -50,7 +63,6 @@
     </header>
     #}
 </div>
-
 
 {#
 <nav 
