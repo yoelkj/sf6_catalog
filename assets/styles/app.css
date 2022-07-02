@@ -19,20 +19,26 @@ backdrop-filter: saturate(180%) blur(20px);
 }
 */
 
-.footer{
+#logoApp{
+    display: block;
+    position: absolute;
+    width: 300px;
+    z-index: 1;
+}
+
+#header, #footer{
     color: #fcfcfc;
 }
 
-.footer a {
-color: #fcfcfc;
-transition: color .15s ease-in-out;
+#header a, #footer a {
+    color: #fcfcfc;
+    transition: color .15s ease-in-out;
 }
 
-.footer a:hover {
-color: #8e8e8e;
-text-decoration: none;
+#header a:hover, #footer a:hover {
+    color: #8e8e8e;
+    text-decoration: none;
 }
-  
 
 /*widget-language-toggle*/
 .widget-language-toggle{
