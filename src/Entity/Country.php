@@ -38,9 +38,13 @@ class Country implements TimestampableInterface
     #[ORM\ManyToOne(targetEntity: Language::class, inversedBy: 'countries')]
     private $language;
 
+    #[ORM\OneToMany(mappedBy: 'country', targetEntity: Office::class)]
+    private $offices;
+
     public function __construct()
     {
         $this->companies = new ArrayCollection();
+        $this->offices = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -162,6 +166,36 @@ class Country implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Office>
+     */
+    public function getOffices(): Collection
+    {
+        return $this->offices;
+    }
+
+    public function addOffice(Office $office): self
+    {
+        if (!$this->offices->contains($office)) {
+            $this->offices[] = $office;
+            $office->setCountry($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffice(Office $office): self
+    {
+        if ($this->offices->removeElement($office)) {
+            // set the owning side to null (unless already changed)
+            if ($office->getCountry() === $this) {
+                $office->setCountry(null);
+            }
+        }
+
         return $this;
     }
 

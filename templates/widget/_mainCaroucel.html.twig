@@ -12,9 +12,10 @@
     <div class="carousel-inner">
 
       {% for image in images %}
-      <div class="carousel-item active">
+      {#style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));"#}
+      <div class="carousel-item active" style="background-color: #000">
         
-        <img class="d-block w-100" src="{{image.getImageUrl()}}">
+        <img class="d-block w-100 opacity-50" src="{{image.getImageUrl()}}">
         
         <div class="container">
           <div class="carousel-caption text-center">

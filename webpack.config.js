@@ -23,6 +23,9 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('admin', './assets/admin.js')
 
+    //base theme
+    .addEntry('base_theme', './assets/themes/base/app.js')
+
 
     .copyFiles({
         from: 'node_modules/tinymce/skins',

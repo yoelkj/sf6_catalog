@@ -10,6 +10,7 @@ use App\Entity\Gallery;
 use App\Entity\GalleryImages;
 use App\Entity\Language;
 use App\Entity\Menu;
+use App\Entity\Office;
 use App\Entity\Page;
 use App\Entity\Presentation;
 use App\Entity\Product;
@@ -201,7 +202,11 @@ class DashboardController extends AbstractDashboardController
             MenuItem::linkToCrud('Languages', 'fas fa-globe', Language::class)
         ]);
 
-        yield MenuItem::linkToCrud('Companies', 'fas fa-building', Company::class);
+
+        yield MenuItem::subMenu('Companies', 'fas fa-building')->setSubItems([
+            MenuItem::linkToCrud('Companies', 'fas fa-building', Company::class),
+            MenuItem::linkToCrud('Offices', 'fas fa-map-marked-alt', Office::class)
+        ]);
 
         yield MenuItem::section('Security');
         

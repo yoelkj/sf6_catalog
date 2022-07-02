@@ -12,4 +12,4 @@ import './styles/app.css';
 import './bootstrap';
 
 // activates collapse functionality
-import { Collapse } from 'bootstrap';
+//import { Collapse } from 'bootstrap';

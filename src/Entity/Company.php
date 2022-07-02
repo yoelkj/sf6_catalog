@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\CompanyRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -95,6 +97,17 @@ class Company implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'string', length: 50, nullable: true)]
     private $tertiaryColor;
 
+    #[ORM\OneToMany(mappedBy: 'company', targetEntity: Office::class)]
+    private $offices;
+
+    #[ORM\Column(type: 'string', length: 140, nullable: true)]
+    private $legalName;
+
+    public function __construct()
+    {
+        $this->offices = new ArrayCollection();
+    }
+
     public function __toString(): string
     {
         return $this->name;
@@ -108,6 +121,11 @@ class Company implements TimestampableInterface,  TranslatableInterface
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getTranlation(){
+        $translate = $this->translate(Locale::getDefault());
+        return ($translate) ? $translate : null;
     }
 
     public function setName(string $name): self
@@ -411,6 +429,48 @@ class Company implements TimestampableInterface,  TranslatableInterface
     public function setTertiaryColor(?string $tertiaryColor): self
     {
         $this->tertiaryColor = $tertiaryColor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Office>
+     */
+    public function getOffices(): Collection
+    {
+        return $this->offices;
+    }
+
+    public function addOffice(Office $office): self
+    {
+        if (!$this->offices->contains($office)) {
+            $this->offices[] = $office;
+            $office->setCompany($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOffice(Office $office): self
+    {
+        if ($this->offices->removeElement($office)) {
+            // set the owning side to null (unless already changed)
+            if ($office->getCompany() === $this) {
+                $office->setCompany(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getLegalName(): ?string
+    {
+        return $this->legalName;
+    }
+
+    public function setLegalName(?string $legalName): self
+    {
+        $this->legalName = $legalName;
 
         return $this;
     }

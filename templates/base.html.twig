@@ -9,10 +9,12 @@
 
         {% block stylesheets %}
             {{ encore_entry_link_tags('app') }}
+            {{ encore_entry_link_tags('base_theme') }}
         {% endblock %}
 
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
+            {{ encore_entry_script_tags('base_theme') }} 
         {% endblock %}
 
         <style>
@@ -28,8 +30,7 @@
         </style>
    
     </head>
-    <body class="bg_color_main"
-
+    <body id="base-theme" class="bg_color_main"
         {#
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ stimulus_controller('user-api', {
@@ -38,6 +39,13 @@
         {% endif %}
         #}
     >
+
+    {#
+    <div class="bg-image" 
+     style="background-image: url('https://mdbootstrap.com/img/Photos/Others/images/76.jpg');
+            height: 100vh">
+    </div>
+    #}
 
         {{ component('menu') }}
         

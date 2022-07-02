@@ -35,7 +35,9 @@ class CompanyCrudController extends AbstractCrudController
 
         yield FormField::addTab('General')->setIcon('info');
             yield Field::new('name')->setColumns(6);
-            yield Field::new('address')->setColumns(6)->onlyOnForms()
+            yield Field::new('legalName')->hideOnIndex()->setColumns(6);
+            
+            yield Field::new('address')->setColumns(12)->onlyOnForms()
                 //->setTextAlign('right')
                 ;
             yield Field::new('phoneMain')->setColumns(6);
