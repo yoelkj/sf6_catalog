@@ -34,7 +34,9 @@
                     </li>
                 {% endfor %}
                 
-                <li class="nav-item"><a class="nav-link px-2" href="#"><i class="fas fa-search"></i></a></li>
+                <li class="nav-item">
+                    <a class="nav-link px-2 " data-bs-toggle="offcanvas" href="#offcanvasSearch" role="button" aria-controls="offcanvasSearch" href="#"><i class="fas fa-search"></i></a>
+                </li>
                 <li class="nav-item">{{ include('widget/_language.html.twig', {primaryColor: '#fff', secondaryColor: 'transparent'}) }}</li>
 
             </ul>
@@ -51,6 +53,29 @@
         </div>
     </nav>
 
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasSearch" aria-labelledby="offcanvasSearchLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="offcanvasSearchLabel">{{'Search'|upper|trans}}</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+
+            <form class="card card-sm">
+                <div id="custom-search-input">
+                    <div class="input-group col-md-12">
+                        <input type="text" class="form-control input-lg mx-1" placeholder="{{'Search'|trans}}" />
+                        <span class="input-group-btn">
+                            <button class="btn btn-info btn-lg" type="button">
+                                <i class="fas fa-search"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            
+        </div>
+    </div>
+
 
     {#
     <header class=" d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
@@ -62,6 +87,7 @@
       
     </header>
     #}
+
 </div>
 
 {#
