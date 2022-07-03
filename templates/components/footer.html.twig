@@ -32,8 +32,6 @@
             {{company.address}}<br>
             {{company.city}} {{company.province}} {{company.Country}}</p>
             
-            <hr>
-            
             <p>
                 {{((company.phoneMain) ? company.phoneMain~'<br>': '')|striptags('<br>')|raw}}
                 {{((company.phoneSales) ? company.phoneSales~'<br>': '')|striptags('<br>')|raw}}
@@ -44,6 +42,8 @@
 
     </div>
 
+    <hr>
+    
     <div class="row my-3">
     
         <div class="col-4 col-md">
