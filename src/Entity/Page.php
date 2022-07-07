@@ -36,6 +36,9 @@ class Page implements TimestampableInterface,  TranslatableInterface
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
+    
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isCatalog;
 
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'pages')]
     private $gallery;
@@ -133,25 +136,15 @@ class Page implements TimestampableInterface,  TranslatableInterface
         return $this;
     }
 
-    public function getCreated()
+    public function getIsCatalog(): ?bool
     {
-        return $this->created;
+        return $this->isCatalog;
     }
 
-    public function setCreated(?\DateTimeInterface $created): self
+    public function setIsCatalog(?bool $isCatalog): self
     {
-        $this->created = $created;
-        return $this;
-    }
+        $this->isCatalog = $isCatalog;
 
-    public function getUpdated()
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(?\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
         return $this;
     }
 
@@ -247,4 +240,6 @@ class Page implements TimestampableInterface,  TranslatableInterface
 
         return $this;
     }
+
+    
 }

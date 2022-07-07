@@ -39,6 +39,19 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
+    public function getCategoryBySlug($slug){
+
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.translations',  'rt' )
+            ->andWhere('r.isActive = :active AND rt.slug = :slug')    
+            ->setParameter('active', true)
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
+
 //    /**
 //     * @return Category[] Returns an array of Category objects
 //     */

@@ -35,9 +35,13 @@ class Brand implements TimestampableInterface
     #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Product::class)]
     private $products;
 
+    #[ORM\OneToMany(mappedBy: 'brand', targetEntity: Menu::class)]
+    private $menus;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
     
     public function __toString(): string
@@ -148,6 +152,36 @@ class Brand implements TimestampableInterface
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus[] = $menu;
+            $menu->setBrand($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getBrand() === $this) {
+                $menu->setBrand(null);
+            }
+        }
 
         return $this;
     }

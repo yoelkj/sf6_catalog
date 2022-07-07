@@ -43,7 +43,7 @@ class PageCrudController extends AbstractCrudController
 
             yield FormField::addRow();
             yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
-            //yield TextEditorField::new('body')->onlyOnIndex(); 
+            yield BooleanField::new('isCatalog');
             yield BooleanField::new('isActive');
             yield BooleanField::new('isCore')->onlyOnForms();
 

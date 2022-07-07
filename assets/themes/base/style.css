@@ -201,6 +201,28 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 }
 
 
+
+
+/*
+* Catalog
+*/
+
+#page.catalog .filter label{
+    top: -0.8em;
+    left: 1em;
+}
+
+
+#page.catalog .filter select{
+    color: #00a6eb;
+}
+
+#page.catalog .product .caption h3{
+    font-size: 1.2em;   
+    font-weight: bold;
+}
+
+
 /*
 * Extra utilities
 */

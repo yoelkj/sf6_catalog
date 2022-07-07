@@ -20,8 +20,23 @@
                     {% set childMenu =  menuItem.menus %}
                     {% set chilItems = childMenu|length %}
                     <li class="nav-item {{chilItems > 0 ? 'dropdown': '' }}" >
-                        
-                        <a class="nav-link {{chilItems > 0 ? 'dropdown-toggle': ''}}" href="{{(menuItem.getPageTranslateSlug()) ? path('app_page', {slug: menuItem.getPageTranslateSlug() }) : '#' }}" {{ chilItems > 0 ?'id="navbarDropdown-{{menuItem.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false"' : ''}} >{{menuItem.getTranslateName}}</a>
+
+                        {% set obj_page = menuItem.getPage() %}
+                        {% set obj_page_translation = obj_page.getTranslation() %}
+                        {% set page_slug = obj_page_translation.slug %}
+                        {% set page_name = obj_page_translation.name %}
+                        {% if obj_page.isCatalog == true %}
+                            {% set obj_brand = menuItem.getBrand() %}
+                            {% set brand_slug = (obj_brand and obj_brand.slug) ? obj_brand.slug : ('all'|trans)%}
+                            {% set obj_category = menuItem.getcategory() %}
+                            {% set obj_category_translation = (obj_category) ? obj_category.getTranslation() : '' %}
+                            {% set category_slug = (obj_category and obj_category_translation and bj_category_translation.slug) ? obj_category_translation.slug: ('all'|trans) %}
+                            {% set urlpage = (page_slug) ? path('app_catalog', {slug: page_slug, brand: brand_slug, category: category_slug }) : '' %}
+                        {% else %}
+                            {% set urlpage = (page_slug) ? path('app_page', {slug: page_slug }) : '' %}
+                        {% endif %}
+
+                        <a class="nav-link {{chilItems > 0 ? 'dropdown-toggle': ''}}" href="{{(urlpage) ? urlpage : '#' }}" {{ chilItems > 0 ?'id="navbarDropdown-{{menuItem.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false"' : ''}} >{{menuItem.getTranslateName}}</a>
 
                         {% if chilItems > 0 %}
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{menuItem.id}}">
@@ -31,7 +46,23 @@
                             {% endif %}
                             
                             {% for chilMenuItem in childMenu %}
-                                <li><a class="dropdown-item" href="{{ (chilMenuItem.getPageTranslateSlug()) ? path('app_page', {slug: chilMenuItem.getPageTranslateSlug() }) : '#'  }}">{{chilMenuItem.getTranslateName}}</a></li>
+
+                                {% set obj_page = chilMenuItem.getPage() %}
+                                {% set obj_page_translation = obj_page.getTranslation() %}
+                                {% set page_slug = obj_page_translation.slug %}
+                                {% set page_name = obj_page_translation.name %}
+                                {% if obj_page.isCatalog == true %}
+                                    {% set obj_brand = chilMenuItem.getBrand() %}
+                                    {% set brand_slug = (obj_brand and obj_brand.slug) ? obj_brand.slug : ('all'|trans)%}
+                                    {% set obj_category = chilMenuItem.getcategory() %}
+                                    {% set obj_category_translation = (obj_category) ? obj_category.getTranslation() : '' %}
+                                    {% set category_slug = (obj_category and obj_category_translation and bj_category_translation.slug) ? obj_category_translation.slug: ('all'|trans) %}
+                                    {% set urlpage = (page_slug) ? path('app_catalog', {slug: page_slug, brand: brand_slug, category: category_slug }) : '' %}
+                                {% else %}
+                                    {% set urlpage = (page_slug) ? path('app_page', {slug: page_slug }) : '' %}
+                                {% endif %}
+
+                                <li><a class="dropdown-item" href="{{ (urlpage) ? urlpage : '#' }}">{{chilMenuItem.getTranslateName}}</a></li>
                             {% endfor %}
                             </ul>    
                         {% endif %}
@@ -77,10 +108,8 @@
                     </div>
                 </div>
             </form>
-            
         </div>
     </div>
-
 
     {#
     <header class=" d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">

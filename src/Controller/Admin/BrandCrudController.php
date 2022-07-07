@@ -25,7 +25,7 @@ class BrandCrudController extends AbstractCrudController
         yield IdField::new('id')->onlyOnIndex();
         yield Field::new('name');
         yield SlugField::new('slug')->onlyOnForms()->setTargetFieldName('name');
-        yield TextEditorField::new('body');
+        yield TextEditorField::new('body')->onlyOnForms();
         yield BooleanField::new('isActive');
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();

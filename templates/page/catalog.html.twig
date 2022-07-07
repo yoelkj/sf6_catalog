@@ -1,0 +1,279 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{obj_row_translation.name}}{% endblock %}
+
+{% block body %}
+
+<div id="page" class="catalog">
+    <div class="cover" style="background-color:#000">
+        <img class="opacity-50" src="{{obj_row.bgImageUrl}}">
+
+        <div class="cover-caption">
+            <h1 class="text-center">{{obj_row_translation.name}}</h1>    
+        </div>
+    </div>
+
+    <div class="container my-5">
+        
+        {#
+        <div class="row">
+            <div class="col-md-12">
+                <div>
+                    {{obj_row_translation.body|raw}}
+                </div>
+            </div>
+            <div class="col-md-12">
+                <img src="{{obj_row_translation.bodyImageUrl}}" class="img-fluid">
+            </div>
+        </div>
+        #}
+
+        <!--Star filters-->
+        <form action="" class="my-3">
+            <div class="row">
+                <div class="col-md">
+                    <div class="position-relative filter">
+                        <label class="bg-white position-absolute" for="cboBrand">Marca</label>
+                        <select id="cboBrand" class="form-control p-2">
+                            <option value="">Select</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md">
+                    <div class="position-relative filter">
+                        <label class="bg-white position-absolute" for="cboBrand">Presentación</label>
+                        <select id="cboBrand" class="form-control p-2">
+                            <option value="">Select</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="col-md">
+                    <div class="position-relative filter">
+                        <label class="bg-white position-absolute" for="cboBrand">Categoría</label>
+                        <select id="cboBrand" class="form-control p-2">
+                            <option value="">Select</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    </div>
+                </div>
+                
+
+                <div class="col-md">
+                    <div class="position-relative filter">
+                        <label class="bg-white position-absolute" for="cboBrand">Características</label>
+                        <select id="cboBrand" class="form-control p-2">
+                            <option value="">Select</option>
+                            <option value="1">Option 1</option>
+                            <option value="2">Option 2</option>
+                        </select>
+                    </div>
+                </div>
+                
+            </div>
+        </form>
+
+        <!--END filters-->
+
+
+        <!--Content products-->
+        <div class="container-products">
+            <div class="row">
+                
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-2 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-2 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-2 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-1 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-1 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-1 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid" src="/uploads/products-test/product-2.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-2 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-2 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-2 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-1 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-1 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-1 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid" src="/uploads/products-test/product-2.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-2 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-2 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-2 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-1 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-1 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-1 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid" src="/uploads/products-test/product-2.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-2 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-2 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-2 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-1 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-1 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-1 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid" src="/uploads/products-test/product-2.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-2 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-2 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-2 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+
+                <!--Product item-->
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <div class="product border rounded p-3 pt-5 position-relative">
+                        <div class="position-absolute top-0 left-0 w-100 pt-3">
+                            <span class="badge bg-success col-md-6 p-1 mb-1">Nuevo</span>
+                            <span class="badge bg-warning col-md-6 p-1 mb-1">Mas vendido</span>
+                            <span class="badge bg-secondary col-md-6 p-1 mb-1">Recomendado</span>
+                        </div>
+                        <img alt="product-name" class="img-fluid" src="/uploads/products-test/product-2.png">
+                        <div class="caption text-center">
+                            <h3>Product name</h3>
+                            <p>Product gram</p>
+                        </div>
+                    </div>
+                </div>
+                <!--END Product item-->
+
+                
+
+            </div>
+        </div>
+        <!--END Content products-->
+    </div>
+</div>
+
+
+
+{% endblock %}
