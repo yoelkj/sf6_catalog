@@ -83,6 +83,13 @@ class Page implements TimestampableInterface,  TranslatableInterface
         return $this->bgImage;
     }
 
+    public function getBgImageUrl(): ?string
+    {
+        if (!$this->bgImage) return null;
+        if (strpos($this->bgImage, '/') !== false) return $this->bgImage;
+        return sprintf('/uploads/pages/bg/%s', $this->bgImage);
+    }
+
     public function setBgImage(?string $bgImage): self
     {
         $this->bgImage = $bgImage;

@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{obj_row_translation.name}}{% endblock %}
+
+{% block body %}
+
+<div id="page">
+    <div class="cover" style="background-color:#000">
+        <img class="opacity-50" src="{{obj_row.bgImageUrl}}">
+
+        <div class="cover-caption">
+            <h1 class="text-center">{{obj_row_translation.name}}</h1>    
+        </div>
+    </div>
+
+    <div class="container my-5">
+        <div class="row">    
+            <div class="col-md-6">
+                <img src="{{obj_row_translation.bodyImageUrl}}" class="img-fluid">
+            </div>
+
+            <div class="col-md-6">
+
+                <div>
+                    {{obj_row_translation.body|raw}}
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

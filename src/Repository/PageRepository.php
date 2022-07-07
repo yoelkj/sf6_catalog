@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Page;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Intl\Locale;
 
 /**
  * @extends ServiceEntityRepository<Page>
@@ -30,7 +31,20 @@ class PageRepository extends ServiceEntityRepository
     }
 
     public function getAboutPages() {
-        return self::$arr_about_pages;
+        return [];//self::$arr_about_pages;
+    }
+
+    public function getPageBySlug($slug){
+
+        return $this->createQueryBuilder('p')
+            ->innerJoin('p.translations',  'pt' )
+            ->andWhere('p.isActive = :active AND pt.slug = :slug')    
+            ->setParameter('active', true)
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
     }
 
     public function add(Page $entity, bool $flush = false): void

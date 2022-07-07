@@ -84,6 +84,13 @@ class PageTranslation implements TranslationInterface
         return $this->bodyImage;
     }
 
+    public function getBodyImageUrl(): ?string
+    {
+        if (!$this->bodyImage) return null;
+        if (strpos($this->bodyImage, '/') !== false) return $this->bodyImage;
+        return sprintf('/uploads/pages/body/%s', $this->bodyImage);
+    }
+
     public function setBodyImage(?string $bodyImage): self
     {
         $this->bodyImage = $bodyImage;

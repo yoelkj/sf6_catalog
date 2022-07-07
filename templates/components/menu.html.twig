@@ -1,7 +1,7 @@
 <div id="header">
     <nav class="navbar navbar-expand-md navbar-dark fixed-top pt-5" style="background-color: rgba(0, 166, 235, .85)">
         <div class="container">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="{{path('app_homepage_local')}}">
                 <div class="container-logo ">
                     <img id="logoApp" src="/uploads/logo/{{ app.session.get('appParam').logo }}">
                     <em>{{app.session.get('appParam').translate(app.request.locale).slogan}}</em>
@@ -20,13 +20,18 @@
                     {% set childMenu =  menuItem.menus %}
                     {% set chilItems = childMenu|length %}
                     <li class="nav-item {{chilItems > 0 ? 'dropdown': '' }}" >
-                        {#<a class="nav-link active" aria-current="page" href="#">Home</a>#}
-                        <a class="nav-link {{chilItems > 0 ? 'dropdown-toggle': ''}}" href="#" {{ chilItems > 0 ?'id="navbarDropdown-{{menuItem.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false"' : ''}} >{{menuItem.getTranslateName}}</a>
+                        
+                        <a class="nav-link {{chilItems > 0 ? 'dropdown-toggle': ''}}" href="{{(menuItem.getPageTranslateSlug()) ? path('app_page', {slug: menuItem.getPageTranslateSlug() }) : '#' }}" {{ chilItems > 0 ?'id="navbarDropdown-{{menuItem.id}}" role="button" data-bs-toggle="dropdown" aria-expanded="false"' : ''}} >{{menuItem.getTranslateName}}</a>
 
                         {% if chilItems > 0 %}
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown-{{menuItem.id}}">
+
+                            {% if menuItem.getPageTranslateSlug() %}
+                                <li><a class="dropdown-item" href="{{(menuItem.getPageTranslateSlug()) ? path('app_page', {slug: menuItem.getPageTranslateSlug() }) : '#' }}">{{menuItem.getTranslateName}}</a></li>    
+                            {% endif %}
+                            
                             {% for chilMenuItem in childMenu %}
-                                <li><a class="dropdown-item" href="#">{{chilMenuItem.getTranslateName}}</a></li>
+                                <li><a class="dropdown-item" href="{{ (chilMenuItem.getPageTranslateSlug()) ? path('app_page', {slug: chilMenuItem.getPageTranslateSlug() }) : '#'  }}">{{chilMenuItem.getTranslateName}}</a></li>
                             {% endfor %}
                             </ul>    
                         {% endif %}

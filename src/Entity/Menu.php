@@ -61,6 +61,13 @@ class Menu implements TimestampableInterface,  TranslatableInterface
        return $this->getTranslateName();
     }
     
+    public function getPageTranslateSlug(): ?string
+    {
+        $obj_page =  $this->page; 
+        $obj_page_translation = ($obj_page) ? $obj_page->getTranslation():null;
+        return ($obj_page)? $obj_page_translation->getSlug():'';
+    }
+
     public function getTranslateName(): ?string
     {
         $translate = $this->translate(Locale::getDefault())->getName();
