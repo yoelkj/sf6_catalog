@@ -9,11 +9,6 @@ export default class extends Controller {
 
     static targets = ['form', 'entries', 'pagination'];
 
-    connect() {
-        console.log('Connect catalog controller');
-        console.log(this.urlValue);
-    }
-
     handleScroll(){
 
         let body = document.body;
@@ -66,8 +61,6 @@ export default class extends Controller {
     }
 
     async loadMore(){
-
-        
         
         var $obj_btn_next = this.paginationTarget.querySelector('a[rel="next"]')
         

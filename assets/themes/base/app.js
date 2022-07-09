@@ -1,4 +1,5 @@
 
+//Import main styles
 import './style.css';
 
 //On scroll page

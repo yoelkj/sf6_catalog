@@ -20,11 +20,13 @@
         <div class="container">
           <div class="carousel-caption text-center">
             
-            <h1>COMPANY</h1>
-            {{image.body|raw}}
+            <h1 data-aos="fade-down" data-aos-duratio="3000" data-aos-delay="100">COMPANY</h1>
+            <div data-aos="fade-up" data-aos-duration="2000" data-aos-delay="100">
+              {{image.body|raw}}
+            </div>
 
-            {% if image.link %}
-              <p><a class="btn btn-lg btn-primary" href="{{image.link}}">{{'View more'|trans}}</a></p>
+            {% if image.link %} 
+              <p data-aos="fade-up" data-aos-delay="250"><a class="btn btn-lg btn-primary" href="{{image.link}}">{{'View more'|trans}}</a></p>
             {% endif %}
           </div>
         </div>
