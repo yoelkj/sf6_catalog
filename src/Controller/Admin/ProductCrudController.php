@@ -26,6 +26,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
+use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 
 class ProductCrudController extends AbstractCrudController
 {
@@ -50,18 +51,27 @@ class ProductCrudController extends AbstractCrudController
         
         yield FormField::addTab('General')->setIcon('cog');
             yield FormField::addRow();
-            yield Field::new('name')->setColumns(6);
-            yield SlugField::new('slug')->onlyOnForms()->setColumns(6)->setTargetFieldName('name');
-            yield FormField::addRow();
             yield Field::new('code')->setColumns(12);
             yield AssociationField::new('category')->onlyOnIndex();
-            
+
+            yield CollectionField::new('translations')
+                ->useEntryCrudForm()
+                ->setColumns(12)
+                ->formatValue(static function ($value, ?Product $row): ?string {
+
+                    $name = $row?->getTranslateName();
+                    $num_translations = $row?->getTranslations()->count();
+                    return sprintf('%s - %s translation(s)', $name, $num_translations);
+            });
             
             yield FormField::addRow();
             yield BooleanField::new('isNew')->onlyOnForms()->setColumns(3);
             yield BooleanField::new('isBestSeller')->onlyOnForms()->setColumns(3);
             yield BooleanField::new('isRecommended')->onlyOnForms()->setColumns(3);
             yield BooleanField::new('isActive')->onlyOnForms()->setColumns(3);
+
+            yield FormField::addRow();
+            yield IntegerField::new('orderRow')->setTextAlign('right')->onlyOnForms()->setColumns(2);
 
         yield FormField::addTab('Content')->setIcon('cogs');
             yield FormField::addRow();
@@ -78,12 +88,9 @@ class ProductCrudController extends AbstractCrudController
             yield AssociationField::new('gallery')
                 ->setCrudController(GalleryCrudController::class)
                 ->setColumns(12);
-
-            yield FormField::addRow();
-            yield TextEditorField::new('body')->onlyOnForms()->setColumns(12);
-                    
         
-        yield DateField::new('createdAt')->hideOnForm();
+        
+        yield DateField::new('createdAt')->onlyOnForms()->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
     }
 
@@ -91,7 +98,7 @@ class ProductCrudController extends AbstractCrudController
     {
         return parent::configureFilters($filters)
             ->add('category')
-            ->add('name')
+            ->add('brand')
             ->add('createdAt')
             ->add(BooleanFilter::new('isActive'))
             //->add(BooleanFilter::new('enabled')->setFormTypeOption('expanded', false));

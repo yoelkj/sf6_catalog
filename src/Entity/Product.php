@@ -8,27 +8,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Intl\Locale;
+
 #[ORM\Entity(repositoryClass: ProductRepository::class)]
-class Product implements TimestampableInterface
+class Product implements TimestampableInterface,  TranslatableInterface
 {
     use TimestampableTrait;
+    use TranslatableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255)]
-    private $name;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $slug;
-
     #[ORM\Column(type: 'string', length: 140)]
     private $code;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $body;
 
     #[ORM\Column(type: 'decimal', precision: 6, scale: 2, nullable: true)]
     private $weightGrammage;
@@ -63,26 +59,29 @@ class Product implements TimestampableInterface
     #[ORM\ManyToOne(targetEntity: Gallery::class, inversedBy: 'products')]
     private $gallery;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $orderRow;
+
     public function __toString(): string
     {
-        return $this->name;
+       return $this->getTranslateName();
     }
+    
+    public function getTranslateName(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
+    }
+
+    public function getTranslation(){
+        $translate = $this->translate(Locale::getDefault());
+        return ($translate) ? $translate : null;
+    }
+
     
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
     }
 
     public function getCode(): ?string
@@ -93,18 +92,6 @@ class Product implements TimestampableInterface
     public function setCode(string $code): self
     {
         $this->code = $code;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
 
         return $this;
     }
@@ -217,18 +204,6 @@ class Product implements TimestampableInterface
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
     public function getCreated(): ?\DateTimeInterface
     {
         return $this->created;
@@ -273,6 +248,18 @@ class Product implements TimestampableInterface
     public function setGallery(?Gallery $gallery): self
     {
         $this->gallery = $gallery;
+
+        return $this;
+    }
+
+    public function getOrderRow(): ?int
+    {
+        return $this->orderRow;
+    }
+
+    public function setOrderRow(?int $orderRow): self
+    {
+        $this->orderRow = $orderRow;
 
         return $this;
     }

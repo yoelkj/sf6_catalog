@@ -25,9 +25,6 @@ class Category implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $bgImage;
-
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
 
@@ -39,8 +36,6 @@ class Category implements TimestampableInterface,  TranslatableInterface
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Menu::class)]
     private $menus;
-
-    
 
     public function __construct()
     {
@@ -107,54 +102,6 @@ class Category implements TimestampableInterface,  TranslatableInterface
                 $product->setCategory(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
-
-    public function setSlug(string $slug): self
-    {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(?\DateTimeInterface $created): self
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(?\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
-
-        return $this;
-    }
-
-    public function getBgImage(): ?string
-    {
-        return $this->bgImage;
-    }
-
-    public function setBgImage(?string $bgImage): self
-    {
-        $this->bgImage = $bgImage;
 
         return $this;
     }

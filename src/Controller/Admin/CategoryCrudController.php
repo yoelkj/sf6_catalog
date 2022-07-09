@@ -23,7 +23,7 @@ class CategoryCrudController extends AbstractCrudController
         
         
         yield IdField::new('id')->onlyOnIndex();
-        
+        /*
         yield ImageField::new('bgImage')
                 ->setBasePath('uploads/categories/bg')
                 ->setUploadDir('public/uploads/categories/bg')
@@ -31,7 +31,7 @@ class CategoryCrudController extends AbstractCrudController
                 //->setFormTypeOption('upload_new', function(){})
                 ->onlyOnForms()
                 ->setColumns(6);
-
+        */
         yield CollectionField::new('translations')
             ->useEntryCrudForm()
             ->setColumns(12)
@@ -50,6 +50,7 @@ class CategoryCrudController extends AbstractCrudController
         yield BooleanField::new('isActive');
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
+
     }
     
 }

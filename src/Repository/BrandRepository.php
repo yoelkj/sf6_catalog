@@ -39,6 +39,21 @@ class BrandRepository extends ServiceEntityRepository
         }
     }
 
+    public function getChoices(){
+        //Locale::getDefault()
+        $arr_result = [];
+        $arr_rows =  $this->createQueryBuilder('r')
+            ->select('r.id as r_id, r.orderRow as r_order_row, r.name as r_name' )
+            ->andWhere('r.isActive = :active')    
+            ->setParameter('active', true)
+            ->getQuery()->getResult()
+        ;
+
+        foreach($arr_rows as $key => $row) $arr_result[$row['r_id']] = ucfirst($row['r_name']);
+
+        return $arr_result;
+    }
+
 //    /**
 //     * @return Brand[] Returns an array of Brand objects
 //     */

@@ -24,10 +24,10 @@
             {% endif %}
 
             <div class="col-6 col-md">
-                <h3><a class="link-secondary" href="{{ (menu.getPageTranslateSlug()) ? path('app_page', {slug: menu.getPageTranslateSlug() }) : '#'  }}">{{menu.getTranslateName}}</a></h3>
+                <h3><a class="link-secondary" href="{{ urlpage }}">{{menu.getTranslateName}}</a></h3>
                 <ul class="list-unstyled text-small">
                     {% for chilMenu in menu.menus %}
-                        <li><a class="link-secondary" href="{{ (chilMenu.getPageTranslateSlug()) ? path('app_page', {slug: chilMenu.getPageTranslateSlug() }) : '#'  }}">{{chilMenu.getTranslateName}}</a></li>
+                        <li><a class="link-secondary" href="{{ urlpage }}">{{chilMenu.getTranslateName}}</a></li>
                     {% endfor %}
                 </ul>
             </div>
@@ -52,7 +52,7 @@
                     {% set urlpage = (page_slug) ? path('app_page', {slug: page_slug }) : '' %}
                 {% endif %}
                 
-                <li><a class="link-secondary" href="{{ (menu.getPageTranslateSlug()) ? path('app_page', {slug: menu.getPageTranslateSlug() }) : '#'  }}">{{menu.getTranslateName}}</a></li>
+                <li><a class="link-secondary" href="{{ urlpage }}">{{menu.getTranslateName}}</a></li>
             {% endfor %}
             </ul>
         </div>

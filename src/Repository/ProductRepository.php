@@ -6,6 +6,8 @@ use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
+use Symfony\Contracts\Translation\TranslatorInterface;
+
 /**
  * @extends ServiceEntityRepository<Product>
  *
@@ -18,13 +20,17 @@ class ProductRepository extends ServiceEntityRepository
 {
     private CategoryRepository $repo_category;
     private BrandRepository $repo_brand;
-    
-    public function __construct(ManagerRegistry $registry, CategoryRepository $repo_category, BrandRepository $repo_brand)
+    private PresentationRepository $repo_presentation;
+    private TranslatorInterface $translator;
+
+    public function __construct(ManagerRegistry $registry, CategoryRepository $repo_category, BrandRepository $repo_brand, PresentationRepository $repo_presentation, TranslatorInterface $translator)
     {
         parent::__construct($registry, Product::class);
         
+        $this->translator = $translator;
         $this->repo_category = $repo_category;
         $this->repo_brand = $repo_brand;
+        $this->repo_presentation = $repo_presentation;
     }
 
     public function add(Product $entity, bool $flush = false): void
@@ -45,26 +51,51 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
-    public function getCatalogData($brand, $category): array
+    public function getCatalogData($params = [], $only_query = false)
     {
-        $arr_result = [];
 
-        $obj_brand = ($brand && $brand != 'all' && $brand != 'todos') ? $this->repo_brand->findOneBySlug($brand) : null;
-        $obj_category = ($category && $category != 'all' && $category != 'todos') ? $this->repo_category->getCategoryBySlug($category) : null;
-        
+        $brand =        (isset($params["cbo_brand"])) ?$params["cbo_brand"]:'';
+        $presentation = (isset($params["cbo_presentation"])) ?$params["cbo_presentation"]:'';
+        $category =     (isset($params["cbo_category"])) ? $params["cbo_category"]:'';
+        $feature =      (isset($params["cbo_feature"])) ? $params["cbo_feature"]:'';
+
         $qb = $this->createQueryBuilder('r')
             ->where('r.isActive = :active');
 
-        if($obj_category) $qb->andWhere('r.category = :category')->setParameter('category', $obj_category);
-        if($obj_brand) $qb->andWhere('r.brand = :brand')->setParameter('brand', $obj_brand);
+        if($brand){
+
+            if((int)$brand > 0) $qb->andWhere('r.brand = :brand')->setParameter('brand', $brand);
+            else $qb->andWhere('r.brand = :brand')->setParameter('brand', $this->repo_brand->findOneBySlug($brand));
+        }
+
+        if($category) $qb->andWhere('r.category = :category')->setParameter('category', $category);
         
-        $qb->setParameter('active', true);
+        if($presentation) $qb->andWhere('r.brand = :brand')->setParameter('brand', $presentation);
+        
+        if($feature){
+            switch (strtolower($feature)) {
+                case 'news':
+                    $qb->andWhere('r.isNew = 1');
+                    break;
+                case 'bestsellers':
+                    $qb->andWhere('r.isBestSeller = 1');
+                break;
+                case 'recommendeds':
+                    $qb->andWhere('r.isRecommended = 1');
+                    break;
+            }
+        }
 
-        $arr_result['data'] = $qb->orderBy('r.orderRow ASC')->getQuery()->getResult();
-        $arr_result['brand'] = $obj_brand; 
-        $arr_result['category'] = $obj_category;
+        $qb->setParameter('active', true)
+        ->orderBy('r.orderRow', 'ASC')
+        ;
 
-        return $arr_result;
+        
+        if($only_query){
+            return $qb;
+        }else{
+            return $qb->setMaxResults(10)->getQuery()->getResult();
+        }
 
     }
 
@@ -72,10 +103,15 @@ class ProductRepository extends ServiceEntityRepository
     {
         $arr_result = [];
 
-        $arr_brands =
-        $arr_categories = 
-        $arr_features = 
-        $arr_presentations = [];
+        //Features
+        $arr_st_features = [1 => 'News', 2 => 'Bestsellers', 3 => 'Recommendeds'];
+        foreach($arr_st_features as $value){
+            $arr_feartures[$value] = $this->translator->trans($value);
+        } 
+        $arr_result['features'] = $arr_feartures; 
+        $arr_result['brands'] = $this->repo_brand->getChoices(); 
+        $arr_result['categories'] = $this->repo_category->getChoices();
+        $arr_result['presentations'] = $this->repo_presentation->getChoices();
 
         return $arr_result;
     }

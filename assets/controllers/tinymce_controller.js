@@ -26,7 +26,7 @@ export default class extends Controller {
     
     connect(){
         let config = Object.assign({ target: this.inputTarget }, this.defaults)
-        console.log(this.inputTargets.length)
+        //console.log(this.inputTargets.length)
         tinymce.init(config)
     }
 

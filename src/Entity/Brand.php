@@ -26,8 +26,8 @@ class Brand implements TimestampableInterface
     #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $body;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $orderRow;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
@@ -66,18 +66,6 @@ class Brand implements TimestampableInterface
         return $this;
     }
 
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
-    }
-
     public function isIsActive(): ?bool
     {
         return $this->isActive;
@@ -86,6 +74,18 @@ class Brand implements TimestampableInterface
     public function setIsActive(?bool $isActive): self
     {
         $this->isActive = $isActive;
+
+        return $this;
+    }
+
+    public function getOrderRow(): ?int
+    {
+        return $this->orderRow;
+    }
+
+    public function setOrderRow(?int $orderRow): self
+    {
+        $this->orderRow = $orderRow;
 
         return $this;
     }

@@ -10,24 +10,23 @@ use Doctrine\ORM\Mapping as ORM;
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
 use Knp\DoctrineBehaviors\Model\Timestampable\TimestampableTrait;
 
+use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
+use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
+use Symfony\Component\Intl\Locale;
+
 #[ORM\Entity(repositoryClass: PresentationRepository::class)]
-class Presentation implements TimestampableInterface
+class Presentation implements TimestampableInterface,  TranslatableInterface
 {
     use TimestampableTrait;
+    use TranslatableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    #[ORM\Column(type: 'string', length: 140)]
-    private $name;
-
-    #[ORM\Column(type: 'string', length: 255)]
-    private $slug;
-
-    #[ORM\Column(type: 'text', nullable: true)]
-    private $body;
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $orderRow;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
@@ -42,36 +41,24 @@ class Presentation implements TimestampableInterface
 
     public function __toString(): string
     {
-        return $this->name;
+       return $this->getTranslateName();
     }
+    
+    public function getTranslateName(): ?string
+    {
+        $translate = $this->translate(Locale::getDefault())->getName();
+        return ($translate) ? $translate : 'Translation not available for '.Locale::getDefault();
+    }
+
+    public function getTranslation(){
+        $translate = $this->translate(Locale::getDefault());
+        return ($translate) ? $translate : null;
+    }
+
 
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getName(): ?string
-    {
-        return $this->name;
-    }
-
-    public function setName(string $name): self
-    {
-        $this->name = $name;
-
-        return $this;
-    }
-
-    public function getBody(): ?string
-    {
-        return $this->body;
-    }
-
-    public function setBody(?string $body): self
-    {
-        $this->body = $body;
-
-        return $this;
     }
 
     public function isIsActive(): ?bool
@@ -86,38 +73,14 @@ class Presentation implements TimestampableInterface
         return $this;
     }
 
-    public function getSlug(): ?string
+    public function getOrderRow(): ?int
     {
-        return $this->slug;
+        return $this->orderRow;
     }
 
-    public function setSlug(string $slug): self
+    public function setOrderRow(?int $orderRow): self
     {
-        $this->slug = $slug;
-
-        return $this;
-    }
-
-    public function getCreated(): ?\DateTimeInterface
-    {
-        return $this->created;
-    }
-
-    public function setCreated(?\DateTimeInterface $created): self
-    {
-        $this->created = $created;
-
-        return $this;
-    }
-
-    public function getUpdated(): ?\DateTimeInterface
-    {
-        return $this->updated;
-    }
-
-    public function setUpdated(?\DateTimeInterface $updated): self
-    {
-        $this->updated = $updated;
+        $this->orderRow = $orderRow;
 
         return $this;
     }

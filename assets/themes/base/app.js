@@ -8,8 +8,6 @@ const obj_slogan = document.querySelector('.container-logo em');
 function checkPosition() {
   let windowY = window.scrollY;
   
-  console.log(windowY,scrollPos);
-
   if (windowY <= 50) {
     // Scrolling UP
     obj_slogan.classList.add('d-block');
