@@ -99,6 +99,29 @@ class PageController extends AbstractController
     }
 
     #[Route(
+        path: '/{_locale}/product/{slug}',
+        name: 'app_product',
+        requirements: [
+            '_locale' => 'en|es',
+        ],
+    )]
+    public function product(Request $request, $slug = null, ProductRepository $repo_product): Response
+    {
+
+        $obj_row = $repo_product->getRowBySlug($slug);
+        $obj_row_translation = $obj_row->getTranslation();
+
+        $obj_widgets = $obj_row->getWidgets();
+
+        return $this->render('page/product.html.twig', [
+            'obj_row' => $obj_row,
+            'obj_row_translation' => $obj_row_translation,
+            'obj_widgets' => $obj_widgets,
+        ]);
+
+    }
+
+    #[Route(
         path: '/{_locale}/ajax-catalog',
         name: 'ajax_app_products',
         requirements: [

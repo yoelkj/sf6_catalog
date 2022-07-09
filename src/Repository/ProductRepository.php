@@ -51,6 +51,19 @@ class ProductRepository extends ServiceEntityRepository
         }
     }
 
+    public function getRowBySlug($slug){
+
+        return $this->createQueryBuilder('r')
+            ->innerJoin('r.translations',  'rt' )
+            ->andWhere('r.isActive = :active AND rt.slug = :slug')    
+            ->setParameter('active', true)
+            ->setParameter('slug', $slug)
+            ->getQuery()
+            ->getOneOrNullResult()
+        ;
+
+    }
+
     public function getCatalogData($params = [], $only_query = false)
     {
 

@@ -56,9 +56,13 @@ class Widget implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'string', length: 140, nullable: true)]
     private $textColor;
 
+    #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'widgets')]
+    private $products;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -222,6 +226,33 @@ class Widget implements TimestampableInterface,  TranslatableInterface
     public function setTextColor(?string $textColor): self
     {
         $this->textColor = $textColor;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Product>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(Product $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addWidget($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(Product $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            $product->removeWidget($this);
+        }
 
         return $this;
     }

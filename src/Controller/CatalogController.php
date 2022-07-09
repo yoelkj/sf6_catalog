@@ -22,8 +22,8 @@ class CatalogController extends BaseController
     }
     */
     
-    #[Route("/", name: 'app_homepage')]
-    #[Route("/{_locale}/", name: 'app_homepage_local', requirements: ['_locale' => 'en|es'])]
+    #[Route("/", name: 'app_njjjhomepage')]
+    #[Route("/{_locale}/", name: 'app_mkkhomepage_local', requirements: ['_locale' => 'en|es'])]
     public function homepage(PageRepository $repo_page): Response
     {
         $obj_page = $repo_page->find(1);//Load homepage configuration
@@ -36,7 +36,7 @@ class CatalogController extends BaseController
     }
 
     
-    #[Route('/{_locale}/browse/{slug}', name: 'app_browse', requirements: ['_locale' => 'en|es'])]
+    #[Route('/{_locale}/browse/{slug}', name: 'app_kmkmbrowse', requirements: ['_locale' => 'en|es'])]
     public function browse(string $slug = null): Response
     {
         //HttpClientInterface $httpClient: install composer require symfony/http-client 

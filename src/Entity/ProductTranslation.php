@@ -27,6 +27,11 @@ class ProductTranslation implements TranslationInterface
     #[ORM\Column(type: 'text', nullable: true)]
     private $body;
 
+    public function __toString(): string
+    {
+        return $this->getName().' - '.$this->getLocale();
+    }
+    
     public function getId(): ?int
     {
         return $this->id;

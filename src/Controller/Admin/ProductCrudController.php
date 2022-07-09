@@ -88,6 +88,9 @@ class ProductCrudController extends AbstractCrudController
             yield AssociationField::new('gallery')
                 ->setCrudController(GalleryCrudController::class)
                 ->setColumns(12);
+            
+            yield AssociationField::new('widgets')
+                ->setColumns(12);
         
         
         yield DateField::new('createdAt')->onlyOnForms()->hideOnForm();

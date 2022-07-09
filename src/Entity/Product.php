@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\ProductRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 use Knp\DoctrineBehaviors\Contract\Entity\TimestampableInterface;
@@ -61,6 +63,14 @@ class Product implements TimestampableInterface,  TranslatableInterface
 
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderRow;
+
+    #[ORM\ManyToMany(targetEntity: Widget::class, inversedBy: 'products')]
+    private $widgets;
+
+    public function __construct()
+    {
+        $this->widgets = new ArrayCollection();
+    }
 
     public function __toString(): string
     {
@@ -260,6 +270,30 @@ class Product implements TimestampableInterface,  TranslatableInterface
     public function setOrderRow(?int $orderRow): self
     {
         $this->orderRow = $orderRow;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Widget>
+     */
+    public function getWidgets(): Collection
+    {
+        return $this->widgets;
+    }
+
+    public function addWidget(Widget $widget): self
+    {
+        if (!$this->widgets->contains($widget)) {
+            $this->widgets[] = $widget;
+        }
+
+        return $this;
+    }
+
+    public function removeWidget(Widget $widget): self
+    {
+        $this->widgets->removeElement($widget);
 
         return $this;
     }
