@@ -13,6 +13,7 @@ import 'tinymce/themes/silver/theme';
 
 import 'tinymce/plugins/fullscreen';
 import 'tinymce/plugins/preview'; 
+import 'tinymce/plugins/code'; 
 
 export default class extends Controller {
 
@@ -20,7 +21,7 @@ export default class extends Controller {
 
     initialize () {
         this.defaults = {
-            plugins: 'fullscreen preview',
+            plugins: 'fullscreen preview code ',
         }
     }
     

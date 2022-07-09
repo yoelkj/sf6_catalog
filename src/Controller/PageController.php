@@ -16,6 +16,24 @@ use Pagerfanta\Pagerfanta;
 
 class PageController extends AbstractController
 {
+
+    #[Route("/", name: 'app_homepage')]
+    #[Route("/{_locale}/", name: 'app_homepage_local', requirements: ['_locale' => 'en|es'])]
+    public function index(PageRepository $repo_page): Response
+    {
+        
+        $obj_page = $repo_page->findOneByIsHomepage(true); //Load homepage configuration
+        $obj_page = ($obj_page) ?$obj_page : $repo_page->find(1);
+
+        if ($obj_page->getIsCatalog()) throw $this->createNotFoundException('It is not possible to use a catalog page as a home page');
+
+        $obj_widgets = $obj_page->getWidgets(); 
+        
+        return $this->render('page/home.html.twig', [
+            'obj_widgets' => $obj_widgets
+        ]);
+    }
+
     #[Route(
         path: '/{_locale}/page/{slug}',
         name: 'app_page',
@@ -23,15 +41,18 @@ class PageController extends AbstractController
             '_locale' => 'en|es',
         ],
     )]
-    public function index($slug = null, PageRepository $repo_page): Response
+    public function page($slug = null, PageRepository $repo_page): Response
     {
         
         $obj_row = $repo_page->getPageBySlug($slug);
         $obj_row_translation = $obj_row->getTranslation();
 
+        $obj_widgets = $obj_row->getWidgets();
+
         return $this->render('page/index.html.twig', [
             'obj_row' => $obj_row,
             'obj_row_translation' => $obj_row_translation,
+            'obj_widgets' => $obj_widgets
         ]);
 
     }
@@ -61,6 +82,9 @@ class PageController extends AbstractController
         
         $arr_filter_data = $repo_product->getFilterData();
 
+
+        $obj_widgets = $obj_row->getWidgets();
+
         //$request->getSession()->set('searchParams', []);
         
         return $this->render('page/catalog.html.twig', [
@@ -69,6 +93,7 @@ class PageController extends AbstractController
             'obj_row_translation' => $obj_row_translation,
             'arr_catalog_data' => $arr_data,
             'search_params' => [],
+            'obj_widgets' => $obj_widgets
         ]);
 
     }

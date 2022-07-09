@@ -13,10 +13,3 @@ import './bootstrap';
 
 // activates collapse functionality
 import { Collapse } from 'bootstrap';
-
-//Use Aos animations
-import AOS from 'aos';
-import 'aos/dist/aos.css';
-AOS.init();
-
-

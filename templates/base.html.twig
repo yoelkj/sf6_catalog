@@ -32,7 +32,7 @@
         </style>
    
     </head>
-    <body id="base-theme" class="bg_color_main"
+    <body {{stimulus_controller('load')}} id="base-theme" class="bg_color_main"
         {#
         {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
             {{ stimulus_controller('user-api', {

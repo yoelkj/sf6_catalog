@@ -13,10 +13,10 @@
     </div>
     <div class="row">  
         <div class="col-md-12">
-            <div id="owlCaroucel" {{stimulus_controller('owl-caroucel')}} class="owl-carousel owl-theme">
+            <div id="owlCaroucel" {{stimulus_controller('owl-caroucel', {targetId: '#owlCaroucel'})}} class="owl-carousel owl-theme">
                 {% for image in images %}
                     <div class="item">
-                        <img class="" src="{{image.getImageUrl()}}">
+                        <img class="img-fluid" src="{{image.getImageUrl()}}">
                     </div>    
                 {% endfor %}
             </div>

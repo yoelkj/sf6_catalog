@@ -7,8 +7,14 @@ import 'owl.carousel';
 
 export default class extends Controller{
 
+
+    static values = {
+        targetId: String
+    }
+
     connect(){
-        $('#owlCaroucel').owlCarousel({
+
+        var obj_params = {
             margin:20,
             nav:false,
             items: 1,
@@ -17,12 +23,15 @@ export default class extends Controller{
                     items:1
                 },
                 600:{
-                    items:2
+                    items: 2
                 },
                 1000:{
-                    items:2
+                    items: 2
                 }
             }
-        })
+        };  
+
+        $(this.targetIdValue).owlCarousel(obj_params);
+    
     }
 }

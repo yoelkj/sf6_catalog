@@ -5,21 +5,91 @@
 {% block body %}
 
 <div id="page">
-    <div class="cover" style="background-color:#000" >
+
+    <div class="cover" style="background-color:#000">
         <img class="opacity-50" src="{{obj_row.bgImageUrl}}">
 
-        <div class="cover-caption" data-aos="fade-up" data-aos-duration="2000" data-aos-delay="100">
+        <div class="cover-caption">
             <h1 class="text-center">{{obj_row_translation.name}}</h1>    
         </div>
     </div>
 
     <div class="container my-5">
         <div class="row">    
-            <div class="col-md-6">
-                <img src="{{obj_row_translation.bodyImageUrl}}" class="img-fluid">
-            </div>
+            
+            {% set gallery = obj_row.gallery %}
+            
+            {% if gallery %}
+                
+                {% set images = gallery.getGalleryImagesByLanguage(app.request.getLocale()) %}
+                <div class="col-md-6">
 
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                        <div class="carousel-indicators">
+                            {% for image in images %}
+                                {% set lpi = loop.index - 1 %}
+                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="{{lpi}}" {{(lpi == 0) ? ' class="active" aria-current="true" ' : ''}} aria-label="Slide {{loop.index - 1}}"></button>
+                            {% endfor %}                            
+                        </div>
+                        <div class="carousel-inner">
+                            {% for image in images %}
+
+                            {% set lpi = loop.index - 1 %}
+                            <div each="{{lpi}}" class="carousel-item {{  (lpi == 0) ? 'active':''}}">
+                                <img class="d-block w-100" src="{{image.getImageUrl()}}">
+                            </div>
+                            {% endfor %}
+
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                        </div>
+
+                           {# 
+
+
+                    <!--////-->
+                    <div id="pageCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                        
+
+                        <div class="carousel-inner">
+
+                        {% for image in images %}
+                        <div class="carousel-item active">
+                            <img class="d-block img-fluid" src="{{image.getImageUrl()}}">
+                        </div>
+                        {% endfor %}
+
+                        </div>
+
+                        <button class="carousel-control-prev" type="button" data-bs-target="#mainCarousel" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#mainCarousel" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                    <!--////////////-->
+                    #}
+                
+                </div>
+            
+            {% else %}
             <div class="col-md-6">
+                <img src="{{obj_row_translation.bodyImageUrl}}" class="img-fluid">    
+            </div>
+            {% endif %}
+
+            <div class="col-md">
 
                 <div>
                     {{obj_row_translation.body|raw}}
@@ -28,7 +98,13 @@
             
         </div>
     </div>
+
+
+    {{ include('page/_widgets.html.twig', {obj_widgets: obj_widgets}) }}
+
 </div>
+
+
 
 
 

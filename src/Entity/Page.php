@@ -53,6 +53,9 @@ class Page implements TimestampableInterface,  TranslatableInterface
     #[ORM\OneToMany(mappedBy: 'page', targetEntity: Menu::class)]
     private $singlemenus;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $isHomepage = false;
+
     public function __construct()
     {
         $this->widgets = new ArrayCollection();
@@ -237,6 +240,18 @@ class Page implements TimestampableInterface,  TranslatableInterface
                 $singlemenu->setPage(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isIsHomepage(): ?bool
+    {
+        return $this->isHomepage;
+    }
+
+    public function setIsHomepage(?bool $isHomepage): self
+    {
+        $this->isHomepage = $isHomepage;
 
         return $this;
     }

@@ -5,23 +5,25 @@
 <div id="mainCarousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-indicators">
       {% for image in images %}
-      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{loop.index}}" {{(loop.index == 1) ? ' class="active" aria-current="true" ': '' }} aria-label="Slide {{loop.index}}"></button>
+      {% set lpi = loop.index - 1 %}
+      <button type="button" data-bs-target="#mainCarousel" data-bs-slide-to="{{lpi}}" {{(lpi == 0) ? ' class="active" aria-current="true" ': '' }} aria-label="Slide {{lpi}}"></button>
       {% endfor %}
     </div>
 
     <div class="carousel-inner">
 
       {% for image in images %}
+
+      {% set lpi = loop.index - 1 %}
       {#style="background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7));"#}
-      <div class="carousel-item active" style="background-color: #000">
+      <div class="carousel-item {{(lpi == 0 ? 'active' : '')}}" style="background-color: #000">
         
         <img class="d-block w-100 opacity-50" src="{{image.getImageUrl()}}">
         
         <div class="container">
           <div class="carousel-caption text-center">
             
-            <h1 data-aos="fade-down" data-aos-duratio="3000" data-aos-delay="100">COMPANY</h1>
-            <div data-aos="fade-up" data-aos-duration="2000" data-aos-delay="100">
+            <div data-aos="fade-up" data-aos-duration="3000" data-aos-delay="100">
               {{image.body|raw}}
             </div>
 

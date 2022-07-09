@@ -43,8 +43,13 @@ class PageCrudController extends AbstractCrudController
 
             yield FormField::addRow();
             yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
+            
             yield BooleanField::new('isCatalog');
+            
+            yield BooleanField::new('isHomepage')->onlyOnForms()->hideOnForm();
+
             yield BooleanField::new('isActive');
+            
             yield BooleanField::new('isCore')->onlyOnForms();
 
 
@@ -68,8 +73,7 @@ class PageCrudController extends AbstractCrudController
                 ->autocomplete()
                 //->setFormTypeOption('by_reference', false)
                 ;
-            
-          
+
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
     }

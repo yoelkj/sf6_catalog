@@ -1,0 +1,21 @@
+{% extends "base.html.twig" %}
+{% block title %} Homepage | {{parent()}} {% endblock %}
+{% block body %}
+
+
+{{ include('page/_widgets.html.twig', {obj_widgets: obj_widgets}) }}
+
+{#
+<a href="{{path('app_homepage')}}" class="btn btn-sm btn-primary">Hompage</a>
+<a href="{{path('app_browse', {slug: 'Category 1'})}}" class="btn btn-sm btn-primary">Category 1</a>
+<ul class="data-list">
+{% for row in rows %}
+    <li {{stimulus_controller('product', {url: path('app_ajax_produc_detail', {id: loop.index})})}} class="data-item">
+        <a href="#" {{stimulus_action('product', 'showDeail')}}>{{row.name}} - {{row.desc}}</a> 
+    </li>
+{% endfor %}
+</ul>
+#}
+
+
+{% endblock %}
