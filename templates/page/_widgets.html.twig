@@ -1,4 +1,6 @@
 <div>
+  
+
 
   {% for obj_widget in obj_widgets %}
     
@@ -16,17 +18,18 @@
     
     {% elseif obj_widget.template == 'TEMPLATE_ONE_FLUID_IMAGE' %}
       {{ include('widget/_oneFluidImage.html.twig', {obj_widget: obj_widget}) }}
-    
+
+    {% elseif obj_widget.template == 'TEMPLATE_ONLY_COMPONENT' %}
+      {{ include('widget/_onlyComponent.html.twig', {obj_widget: obj_widget, product: main_product.id}) }}
+
     {% elseif obj_widget.template == 'TEMPLATE_OFFICE' %}
-   
       {{ include('widget/_office.html.twig', {obj_widget: obj_widget}) }}
     
     {% elseif obj_widget.template == 'TEMPLATE_LIGHTBOX_IMAGES' %}
-    
-      {{ include('widget/_lightboxImages.html.twig', {obj_widget: obj_widget}) }}
+      {% set use_title_result = (use_title) ? true : false %}
+      {{ include('widget/_lightboxImages.html.twig', {obj_widget: obj_widget, use_title: use_title_result}) }}
     
     {% elseif obj_widget.template == 'TEMPLATE_CONTENT_SIMPLE' %}
-    
       {{ include('widget/_simpleContent.html.twig', {obj_widget: obj_widget}) }}
     
     {% endif %}

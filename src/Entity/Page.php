@@ -56,6 +56,9 @@ class Page implements TimestampableInterface,  TranslatableInterface
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isHomepage = false;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $useContactForm;
+
     public function __construct()
     {
         $this->widgets = new ArrayCollection();
@@ -252,6 +255,18 @@ class Page implements TimestampableInterface,  TranslatableInterface
     public function setIsHomepage(?bool $isHomepage): self
     {
         $this->isHomepage = $isHomepage;
+
+        return $this;
+    }
+
+    public function isUseContactForm(): ?bool
+    {
+        return $this->useContactForm;
+    }
+
+    public function setUseContactForm(?bool $useContactForm): self
+    {
+        $this->useContactForm = $useContactForm;
 
         return $this;
     }

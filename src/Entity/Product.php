@@ -67,9 +67,17 @@ class Product implements TimestampableInterface,  TranslatableInterface
     #[ORM\ManyToMany(targetEntity: Widget::class, inversedBy: 'products')]
     private $widgets;
 
+    #[ORM\ManyToMany(targetEntity: self::class, inversedBy: 'products')]
+    private $relateds;
+
+    #[ORM\ManyToMany(targetEntity: self::class, mappedBy: 'relateds')]
+    private $products;
+
     public function __construct()
     {
         $this->widgets = new ArrayCollection();
+        $this->relateds = new ArrayCollection();
+        $this->products = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -294,6 +302,57 @@ class Product implements TimestampableInterface,  TranslatableInterface
     public function removeWidget(Widget $widget): self
     {
         $this->widgets->removeElement($widget);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getRelateds(): Collection
+    {
+        return $this->relateds;
+    }
+
+    public function addRelated(self $related): self
+    {
+        if (!$this->relateds->contains($related)) {
+            $this->relateds[] = $related;
+        }
+
+        return $this;
+    }
+
+    public function removeRelated(self $related): self
+    {
+        $this->relateds->removeElement($related);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, self>
+     */
+    public function getProducts(): Collection
+    {
+        return $this->products;
+    }
+
+    public function addProduct(self $product): self
+    {
+        if (!$this->products->contains($product)) {
+            $this->products[] = $product;
+            $product->addRelated($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduct(self $product): self
+    {
+        if ($this->products->removeElement($product)) {
+            $product->removeRelated($this);
+        }
 
         return $this;
     }

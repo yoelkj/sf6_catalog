@@ -13,7 +13,7 @@
     </div>
     <div class="row">  
         <div class="col-md-12">
-            <div id="owlCaroucel" {{stimulus_controller('owl-caroucel', {targetId: '#owlCaroucel'})}} class="owl-carousel owl-theme">
+            <div id="owlCaroucel" {{stimulus_controller('owl-caroucel', {targetId: '#owlCaroucel', items:2})}} class="owl-carousel owl-theme">
                 {% for image in images %}
                     <div class="item">
                         <img class="img-fluid" src="{{image.getImageUrl()}}">

@@ -22,6 +22,10 @@ a{
     text-decoration: none;
 }
 
+a.title{
+    color: #ff6f00;
+}
+
 a:hover{
     color: #333;
     text-decoration: none;
@@ -247,27 +251,27 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 }
 
 
-#entries .wrapper-img{
+#entries .wrapper-img .owl-carousel .wrapper-img{
     overflow: hidden;
     cursor: pointer;
     position: relative;
 }
 
-#entries .wrapper-img a.product-item{
+#entries .wrapper-img a.product-item, .owl-carousel .wrapper-img a{
     display: block;
     overflow: hidden;
     width: 100%;
     height: auto;
 }
 
-#entries .wrapper-img a img{
+#entries .wrapper-img a img, .owl-carousel .wrapper-img a img{
     -webkit-transition: -webkit-transform 0.5s ease-out,-webkit-transform 0.5s ease-out;
     -webkit-transition: transform 0.5s ease-out,-webkit-transform 0.5s ease-out;
     transition: transform 0.5s ease-out,-webkit-transform 0.5s ease-out;
     display: block;
 }
 
-#entries .wrapper-img a:hover img{
+#entries .wrapper-img a:hover img, .owl-carousel .wrapper-img a:hover img{
     -webkit-transform: scale(1.05);
     -ms-transform: scale(1.05);
     transform: scale(1.05);

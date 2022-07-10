@@ -9,7 +9,8 @@ export default class extends Controller{
 
 
     static values = {
-        targetId: String
+        targetId: String,
+        items: Number
     }
 
     connect(){
@@ -17,16 +18,16 @@ export default class extends Controller{
         var obj_params = {
             margin:20,
             nav:false,
-            items: 1,
+            items: this.itemsValue,
             responsive:{
                 0:{
                     items:1
                 },
                 600:{
-                    items: 2
+                    items: (this.itemsValue) ? this.itemsValue : 2
                 },
                 1000:{
-                    items: 2
+                    items: (this.itemsValue) ? this.itemsValue : 2
                 }
             }
         };  

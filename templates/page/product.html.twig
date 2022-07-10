@@ -141,7 +141,7 @@
         </div>
     </div>
 
-    {{ include('page/_widgets.html.twig', {obj_widgets: obj_widgets}) }}
+    {{ include('page/_widgets.html.twig', {obj_widgets: obj_widgets, use_title: true, main_product: obj_row}) }}
 
 </div>
 

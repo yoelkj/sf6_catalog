@@ -52,7 +52,7 @@ class ProductCrudController extends AbstractCrudController
         yield FormField::addTab('General')->setIcon('cog');
             yield FormField::addRow();
             yield Field::new('code')->setColumns(12);
-            yield AssociationField::new('category')->onlyOnIndex();
+            
 
             yield CollectionField::new('translations')
                 ->useEntryCrudForm()
@@ -63,6 +63,8 @@ class ProductCrudController extends AbstractCrudController
                     $num_translations = $row?->getTranslations()->count();
                     return sprintf('%s - %s translation(s)', $name, $num_translations);
             });
+
+            yield AssociationField::new('category')->onlyOnIndex();
             
             yield FormField::addRow();
             yield BooleanField::new('isNew')->onlyOnForms()->setColumns(3);
@@ -90,6 +92,10 @@ class ProductCrudController extends AbstractCrudController
                 ->setColumns(12);
             
             yield AssociationField::new('widgets')
+                ->setColumns(12);
+
+
+            yield AssociationField::new('relateds')
                 ->setColumns(12);
         
         

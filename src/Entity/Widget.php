@@ -59,6 +59,18 @@ class Widget implements TimestampableInterface,  TranslatableInterface
     #[ORM\ManyToMany(targetEntity: Product::class, mappedBy: 'widgets')]
     private $products;
 
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $useRelatedProductsComponent = false;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $useNewProductsComponent = false;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $useBestSellerComponent = false;
+
+    #[ORM\Column(type: 'boolean', nullable: true)]
+    private $useRecommendedProductsComponent = false;
+
     public function __construct()
     {
         $this->pages = new ArrayCollection();
@@ -253,6 +265,54 @@ class Widget implements TimestampableInterface,  TranslatableInterface
         if ($this->products->removeElement($product)) {
             $product->removeWidget($this);
         }
+
+        return $this;
+    }
+
+    public function getUseRelatedProductsComponent(): ?bool
+    {
+        return $this->useRelatedProductsComponent;
+    }
+
+    public function setUseRelatedProductsComponent(?bool $useRelatedProductsComponent): self
+    {
+        $this->useRelatedProductsComponent = $useRelatedProductsComponent;
+
+        return $this;
+    }
+
+    public function getUseNewProductsComponent(): ?bool
+    {
+        return $this->useNewProductsComponent;
+    }
+
+    public function setUseNewProductsComponent(?bool $useNewProductsComponent): self
+    {
+        $this->useNewProductsComponent = $useNewProductsComponent;
+
+        return $this;
+    }
+
+    public function getUseBestSellerComponent(): ?bool
+    {
+        return $this->useBestSellerComponent;
+    }
+
+    public function setUseBestSellerComponent(?bool $useBestSellerComponent): self
+    {
+        $this->useBestSellerComponent = $useBestSellerComponent;
+
+        return $this;
+    }
+
+    public function getUseRecommendedProductsComponent(): ?bool
+    {
+        return $this->useRecommendedProductsComponent;
+    }
+
+    public function setUseRecommendedProductsComponent(?bool $useRecommendedProductsComponent): self
+    {
+        $this->useRecommendedProductsComponent = $useRecommendedProductsComponent;
 
         return $this;
     }
