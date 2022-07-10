@@ -343,6 +343,13 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 }
 
 
+.share-btn > a {
+    padding: 5px;
+}
+.share-btn > a:hover {
+    cursor: pointer;
+}
+
 
 @media (min-width: 1200px) {
     /*

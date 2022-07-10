@@ -1,6 +1,9 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}{{obj_row_translation.name}}{% endblock %}
+{% block meta %}
+    <meta name="description" content="{{(obj_row_translation.body)|striptags|slice(0, 400) }}">            
+{% endblock %}
 
 {% block body %}
 
@@ -70,6 +73,20 @@
                     <div>
                         <h1 class="border-bottom">{{obj_row_translation.name}}</h1>
 
+                        <div {{stimulus_controller('share-buttons') }} 
+                    
+                        data-url="{{app.request.uri}}"
+                        data-title="{{obj_row_translation.name}}"
+                        data-desc="{{(obj_row_translation.body)|striptags|slice(0, 140)}}"
+                        class="share-btn my-3">
+                            Shared on:  
+                            <a data-id="fb"><i class="fa-brands fa-lg fa-facebook"></i></a>
+                            <a data-id="tw"><i class="fa-brands fa-lg fa-twitter-square"></i></a>
+                            <a data-id="tg"><i class="fa-brands fa-lg fa-telegram"></i></a>
+                            <a data-id="mail"><i class="fa-solid fa-lg fa-envelope"></i></a>
+
+                        </div>
+
                         {{obj_row_translation.body|raw}}
                     </div>
                 </div>
@@ -104,10 +121,19 @@
 
             <div class="col-md-3 border-start">
                 <div id="contentPurchase">
+                 
                     {% set session_translate = app.session.get('appParam').translate(app.request.locale) %}
                     {% set wp_message = session_translate.wpCommerceText %}
                     {% set wp_body = session_translate.wpCommerceBody %}
-                    <h5><a href="javascript:void(0);"><img src="/uploads/common/wp.png" class="d-inline" style="width:30px;"> Cotiza por whasapp</a></h5>
+                    {% set sales_number = (app.session.get('appParam').phoneSales) ?app.session.get('appParam').phoneSales : app.session.get('appParam').phoneMain %}
+                    
+                    <h5 {{stimulus_controller('wp-send-message', 
+                        {
+                            phone: sales_number,
+                            message: wp_message ~' '~ app.request.uri
+                        }
+                    ) }} ><a href="javascript:void(0);" data-action="click->wp-send-message#handleClick"><img src="/uploads/common/wp.png" class="d-inline" style="width:30px;"> Cotiza por whatsapp</a></h5>                    
+                    
                     <div class="alert alert-info">{{wp_body|raw}}</div>
                 </div>
             </div>
