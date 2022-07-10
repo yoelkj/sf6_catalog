@@ -13,9 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use Pagerfanta\Doctrine\ORM\QueryAdapter;
 use Pagerfanta\Pagerfanta;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class PageController extends AbstractController
 {
+    private TranslatorInterface $translator;
+
+    public function __construct(TranslatorInterface $translator){
+        $this->translator = $translator;
+    }
 
     #[Route("/", name: 'app_homepage')]
     #[Route("/{_locale}/", name: 'app_homepage_local', requirements: ['_locale' => 'en|es'])]
@@ -155,11 +163,46 @@ class PageController extends AbstractController
             '_locale' => 'en|es',
         ],
     )]
-    public function proccessForm(Request $request){
+    public function proccessForm(Request $request, MailerInterface $mailer){
 
         $params = $request->request->all();
+        $session_data = $request->getSession()->get('appParam');
+        $to_email = $session_data->getEmailMain(); 
+        $from_email = $session_data->getEmailMain();
+
+        if(!isset($params['proccess']) || ($params['proccess'] != 'contact' && $params['proccess'] != 'subscriber'  )) throw $this->createNotFoundException('It is not possible send email, invalid action');
         
-        dd($params);
+        $message_error = $this->translator->trans('Sorry we did not receive your message, please try again');
+
+        if($params['proccess'] == 'contact'){
+            $message_success = $this->translator->trans('We have received your message, thank you for contacting us');
+            $template = 'email/contact.html.twig'; 
+        } 
+        if($params['proccess'] == 'subscriber'){
+            $message_success = $this->translator->trans('We have received your message, thanks for subscribing');
+            $template = 'email/subscriber.html.twig'; 
+        }
+
+        try{ 
+            $email = (new TemplatedEmail())
+            ->from($from_email)
+            ->to($to_email)
+            ->subject('Contact from website')
+            ->htmlTemplate($template)
+            ->context([
+                'data' => $params
+            ]);
+
+            $mailer->send($email);
+            $this->addFlash('success', $message_success);
+        
+        
+        } catch (\Exception $e) {
+            $this->addFlash('error', $message_error);
+        }
+
+        $referer = $request->headers->get('referer');
+        return $this->redirect($referer);
 
     }
 

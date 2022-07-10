@@ -16,6 +16,12 @@
 
     <div class="container my-5">
 
+        <div class="row">
+            <div class="col-md">
+                 {{ component('flashmsg') }}
+            </div>
+        </div>
+        
         {% if obj_row.useContactForm %}
         <div class="row">
             <div class="col-md">
@@ -103,6 +109,7 @@
                         </div>
 
                         <div class="d-grid gap-2 my-3">
+                            <input name="proccess" type="hidden" value="contact">
                             <button class="btn btn-success btn-block btn-lg" type="submit">Send message</button>
                         </div>
                     </form>

@@ -55,32 +55,21 @@
 
         {{ component('menu') }}
         
-        {% for flash in app.flashes('success') %}
-            <div class="alert alert-success">{{ flash }}</div>
-        {% endfor %}
-        {% for flash in app.flashes('error') %}
-            <div class="alert alert-danger">{{ flash }}</div>
-        {% endfor %}
-
+        
         {% block body %}{% endblock %}
 
         {{ component('footer') }}
 
             <div {{ stimulus_controller('goto', {text: '<i class="btn-scroll-top-icon fas fa-angle-up"></i>', position: 'mainCarousel'}) }} 
                 data-action="scroll@window->goto#handleScroll">
-            <a
-
-                
-
+            <a 
                 class="btn-scroll-top"
                 data-goto-target="btn" 
                 id="goToTop" 
                 href="javascript:void(0);" 
                 data-action="click->goto#handleClick"
                  
-                ></a>
-
-                </div>
+                ></a></div>
         
     </body>
 </html>
