@@ -10,8 +10,6 @@
 */
 
 
-
-
 body {
     background-color: #fcfcfc;
     font-family: 'Roboto Condensed', sans-serif;
@@ -346,7 +344,6 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
     width:100%;
 }
 
-
 .share-btn > a {
     padding: 5px;
 }
@@ -354,6 +351,20 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
     cursor: pointer;
 }
 
+.search-preview {
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    top: 44px;
+}
+
+.search-preview img {
+    width: 50px;
+}
+
+#header .search-preview .list-group a,#header .shortcuts a{
+    color: #212529;
+}
 
 @media (min-width: 1200px) {
     /*

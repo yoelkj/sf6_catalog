@@ -150,9 +150,28 @@ class PageController extends AbstractController
             return $this->render('page/_products.html.twig', [
                 'data' => $pager
             ]);
-
         }
+    }
 
+    #[Route(
+        path: '/{_locale}/search',
+        name: 'app_search',
+        requirements: [
+            '_locale' => 'en|es',
+        ],
+    )]
+    public function search( Request $request,  ProductRepository $repo_product)
+    {
+        $params['q'] = $request->query->get('q'); 
+        $request->getSession()->set('searchParams', $params);
+        
+        $products = $repo_product->getCatalogData($params);
+        
+        if ($request->query->get('preview')) {
+            return $this->render('page/_searchPreview.html.twig', [
+                'products' => $products,
+            ]);
+        }
     }
 
 

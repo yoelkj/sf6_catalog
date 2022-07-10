@@ -5,8 +5,8 @@ namespace App\Repository;
 use App\Entity\Product;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
-
 use Symfony\Contracts\Translation\TranslatorInterface;
+use Symfony\Component\Intl\Locale;
 
 /**
  * @extends ServiceEntityRepository<Product>
@@ -26,7 +26,6 @@ class ProductRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry, CategoryRepository $repo_category, BrandRepository $repo_brand, PresentationRepository $repo_presentation, TranslatorInterface $translator)
     {
         parent::__construct($registry, Product::class);
-        
         $this->translator = $translator;
         $this->repo_category = $repo_category;
         $this->repo_brand = $repo_brand;
@@ -71,12 +70,22 @@ class ProductRepository extends ServiceEntityRepository
         $presentation = (isset($params["cbo_presentation"])) ?$params["cbo_presentation"]:'';
         $category =     (isset($params["cbo_category"])) ? $params["cbo_category"]:'';
         $feature =      (isset($params["cbo_feature"])) ? $params["cbo_feature"]:'';
-
+        
         $qb = $this->createQueryBuilder('r')
             ->where('r.isActive = :active');
 
-        if($brand){
+        if(isset($params["q"])){
+            if(trim($params["q"]) != ''){
+                $qb->innerJoin('r.translations', 'rt')
+                    ->andWhere('(rt.name LIKE :term OR rt.body LIKE :term) AND rt.locale = :language')
+                    ->setParameter('term', '%'.$params["q"].'%')
+                    ->setParameter('language', Locale::getDefault());
+            }else{
+                return null;
+            }
+        }
 
+        if($brand){
             if((int)$brand > 0) $qb->andWhere('r.brand = :brand')->setParameter('brand', $brand);
             else $qb->andWhere('r.brand = :brand')->setParameter('brand', $this->repo_brand->findOneBySlug($brand));
         }
