@@ -146,4 +146,21 @@ class PageController extends AbstractController
         }
 
     }
+
+
+    #[Route(
+        path: '/{_locale}/proccess-form',
+        name: 'app_proccess_form',
+        requirements: [
+            '_locale' => 'en|es',
+        ],
+    )]
+    public function proccessForm(Request $request){
+
+        $params = $request->request->all();
+        
+        dd($params);
+
+    }
+
 }

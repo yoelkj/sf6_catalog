@@ -45,6 +45,8 @@ class PageCrudController extends AbstractCrudController
             yield IntegerField::new('orderRow')->onlyOnForms()->setColumns(2);
             
             yield BooleanField::new('isCatalog');
+ 
+            yield BooleanField::new('useContactForm')->onlyOnForms();
             
             yield BooleanField::new('isHomepage')->onlyOnForms()->hideOnForm();
 

@@ -57,7 +57,7 @@ class Page implements TimestampableInterface,  TranslatableInterface
     private $isHomepage = false;
 
     #[ORM\Column(type: 'boolean', nullable: true)]
-    private $useContactForm;
+    private $useContactForm = false;
 
     public function __construct()
     {

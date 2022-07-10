@@ -15,6 +15,16 @@
     </div>
 
     <div class="container my-5">
+
+        {% if obj_row.useContactForm %}
+        <div class="row">
+            <div class="col-md">
+                {{obj_row_translation.body|raw}}
+            </div>
+        </div>    
+        {% endif %}
+        
+
         <div class="row">    
             
             {% set gallery = obj_row.gallery %}
@@ -60,9 +70,49 @@
 
             <div class="col-md">
 
+                {% if obj_row.useContactForm %}
+                
+                    <form {{stimulus_controller('form')}} class="needs-validation" action="{{path('app_proccess_form')}}" method="POST" novalidate>
+                        <div class="form-group has-validation my-3">
+                            <label for="name">Name:</label>
+                            <input id="name" minlength="5"  class="form-control" name="name" type="text" placeholder="Complete name" required>
+                            <div class="invalid-feedback">
+                                Please provide a name.
+                            </div>
+                        </div>
+
+                        <div class="form-group has-validation my-3">
+                            <label for="phone">Phone:</label>
+                            <input id="phone" class="form-control" name="phone" type="text" placeholder="Phone" required>
+                            <div class="invalid-feedback">
+                                Please provide a phone number.
+                            </div>
+                        </div>
+
+                        <div class="form-group has-validation my-3">
+                            <label for="email">Email:</label>
+                            <input id="email" class="form-control" name="email" type="email" placeholder="E-mail" required>
+                            <div class="invalid-feedback">
+                                Please provide a email.
+                            </div>
+                        </div>
+
+                        <div class="form-group has-validation my-3">
+                            <label for="comment">Mensaje:</label>
+                            <textarea minlength="10" class="form-control" name="comment" id="comment" placeholder="Write a message" required cols="30" rows="10"></textarea>
+                        </div>
+
+                        <div class="d-grid gap-2 my-3">
+                            <button class="btn btn-success btn-block btn-lg" type="submit">Send message</button>
+                        </div>
+                    </form>
+
+                {% else %}
                 <div>
                     {{obj_row_translation.body|raw}}
-                </div>
+                </div>    
+                {% endif %}
+                
             </div>
             
         </div>
