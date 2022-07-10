@@ -32,6 +32,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\UserMenu;
 
 use EasyCorp\Bundle\EasyAdminBundle\Config\Assets;
+use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\Security\Core\User\UserInterface;
@@ -58,25 +59,27 @@ class DashboardController extends AbstractDashboardController
         $this->requestStack = $requestStack;
     }
 
-
     #[IsGranted('ROLE_ADMIN')]
     #[Route('/{_locale}/admin', name: 'admin', requirements: ['_locale' => 'en|es',],)]
-    public function index(ChartBuilderInterface $chartBuilder = null): Response
+    //public function index(ChartBuilderInterface $chartBuilder = null): Response
+    public function index(): Response
     {
 
-        assert(null !== $chartBuilder);
+        //assert(null !== $chartBuilder);
 
         //return parent::index();
 
         // Redirect to some common page of your backend
-        // $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
-        // return $this->redirect($adminUrlGenerator->setController(OneOfYourCrudController::class)->generateUrl());
+        $adminUrlGenerator = $this->container->get(AdminUrlGenerator::class);
+        return $this->redirect($adminUrlGenerator->setController(ProductCrudController::class)->generateUrl());
+
 
         // redirect to different pages depending on the user
         // if ('jane' === $this->getUser()->getUsername()) {
         //     return $this->redirect('...');
         // }
         
+        /*
         $chart = $chartBuilder->createChart(Chart::TYPE_LINE);
         $chart->setData([
             'labels' => ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -116,6 +119,7 @@ class DashboardController extends AbstractDashboardController
             'chart2' => $chart,
             'chart3' => $chart2,
         ]);
+        */
 
     }
 

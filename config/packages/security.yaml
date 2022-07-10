@@ -23,20 +23,19 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            entry_point: form_login
-#            entry_point: App\Security\LoginFormAuthenticator
+#            entry_point: form_login
+            entry_point: App\Security\LoginFormAuthenticator
             custom_authenticator:
-#                - App\Security\LoginFormAuthenticator
-                - App\Security\DummyAuthenticator
+                - App\Security\LoginFormAuthenticator
             form_login:
                 login_path: app_login
                 check_path: app_login
                 username_parameter: email
                 password_parameter: password
                 enable_csrf: true
-            two_factor:
-                auth_form_path: 2fa_login
-                check_path: 2fa_login_check
+#            two_factor:
+#                auth_form_path: 2fa_login
+#                check_path: 2fa_login_check
             logout: true
             remember_me:
                 secret: '%kernel.secret%'

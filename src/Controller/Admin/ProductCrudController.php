@@ -115,6 +115,7 @@ class ProductCrudController extends AbstractCrudController
         ;
     }
 
+    /*
     public function configureActions(Actions $actions): Actions
     {
         $exportAction = Action::new('export')
@@ -134,6 +135,7 @@ class ProductCrudController extends AbstractCrudController
             ->add(Crud::PAGE_INDEX, $exportAction)
             ;
     }
+    */
 
     public function export(AdminContext $context, CsvExporter $csvExporter)
     {

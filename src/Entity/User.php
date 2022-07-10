@@ -32,9 +32,6 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
     #[ORM\Column(type: 'string', length: 180, unique: true)]
     private $email;
 
-    #[ORM\Column(type: 'json')]
-    private $roles = [];
-
     #[Groups("user:read")]
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $name;
@@ -55,6 +52,9 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
 
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $isActive = false;
+
+    #[ORM\ManyToOne(targetEntity: Profile::class, inversedBy: 'users')]
+    private $profile;
 
     public function __toString(): string
     {
@@ -78,6 +78,18 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
         return $this;
     }
 
+    public function getRoles(): array{
+        
+        $arr_roles = [];
+        $obj_role = $this->getProfile();
+        
+        if($obj_role){
+            if($obj_role->isRoleUser()) $arr_roles[] = 'ROLE_USER'; 
+            if($obj_role->isRoleAdmin()) $arr_roles[] = 'ROLE_ADMIN'; 
+        }
+        return array_unique($arr_roles);
+    }
+
     /**
      * A visual identifier that represents this user.
      *
@@ -86,25 +98,6 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
     public function getUserIdentifier(): string
     {
         return (string) $this->email;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
-        // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
-
-        return array_unique($roles);
-    }
-
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
     }
 
     /**
@@ -259,6 +252,18 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
     public function setUpdated(?\DateTimeInterface $updated): self
     {
         $this->updated = $updated;
+        return $this;
+    }
+
+    public function getProfile(): ?Profile
+    {
+        return $this->profile;
+    }
+
+    public function setProfile(?Profile $profile): self
+    {
+        $this->profile = $profile;
+
         return $this;
     }
 
