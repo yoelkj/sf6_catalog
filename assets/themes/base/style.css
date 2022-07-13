@@ -26,8 +26,6 @@
     src: url("../../fonts/HelveticaTStd/HelveticaLTStd-Bold.otf") format("opentype");
 }
 
-
-
 /*
 :root{
     --bs-primary: #ff6f00;
@@ -42,12 +40,18 @@
     max-width: 1100px;
 }
 
+
+
 h1, h2, h3, h4, h5, h6{
     font-family: 'HelveticaTStdBlack'
 } 
 
 h1{
-    font-size: 4em;;
+    font-size: 4em;
+}
+
+#productPage h1{
+    font-size: 2em
 }
 
 body {
@@ -416,6 +420,10 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 
 .content-widgets i{
     color: #00a6eb;
+}
+
+.rounded-3 {
+    border-radius: 0.8rem !important;
 }
 
 

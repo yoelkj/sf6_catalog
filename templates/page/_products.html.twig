@@ -1,5 +1,7 @@
 {% for row in data %}
-            
+
+    {% set gallery = row.gallery %}
+    {% set images = (gallery) ? gallery.getGalleryImagesByLanguage(app.request.getLocale()) : null %}        
     {% set row_translation = row.getTranslation() %}
     <!--Product item-->
     <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-5">
@@ -19,7 +21,12 @@
 
                 <div class="wrapper-img">
                     <a href="{{path('app_product', {slug: row_translation.slug})}}">
-                        <img alt="product-name" class="img-fluid mb-3" src="/uploads/products-test/product-1.png">
+
+                        {% if images %}
+                            {% for image in images|slice(0, 1) %}
+                                <img alt="product-name" class="img-fluid mb-3" src="{{image.getImageUrl()}}">
+                            {% endfor %}
+                        {% endif %}                    
                     </a>
                 </div>
 

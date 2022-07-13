@@ -7,13 +7,13 @@
 
 {% block body %}
 
-<div id="page" style="margin-top: 10em;">
+<div id="productPage" style="margin-top: 10em;">
 
     <div class="container my-5">
 
         <div class="row justify-content-md-end">    
             
-            <div class="col-md-7">
+            <div class="col-md-9">
             <div class="row justify-content-md-end">
             
                 {% set gallery = obj_row.gallery %}
@@ -89,32 +89,38 @@
                         </div>
 
                         {{obj_row_translation.body|raw}}
+
+
+                         <div class="row my-1">
+                            <div class="col-md">
+                                <table class="table">
+                                        
+                                    <tbody>
+                                        <tr>
+                                            <td ><span class="fw-bold">Peso<br>gramge</span></td>
+                                            <td ><span class="fw-bold">Cantidad por<br>caja</span></td>
+                                            <td ><span class="fw-bold">Vida de almacenamiento<br>meses</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="border-0">{{obj_row.weightGrammage}}</td>
+                                            <td class="border-0">{{obj_row.quantityPerBox}}</td>
+                                            <td class="border-0">{{obj_row.storageLifeMonths}}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+
+
+
                     </div>
                 </div>
             </div><!--END .row-->
 
 
             
-            <div class="row my-1">
-                <div class="col-md">
-                    <table class="table">
-                            
-                        <tbody>
-                            <tr>
-                                <td ><span class="fw-bold">Peso<br>gramge</span></td>
-                                <td ><span class="fw-bold">Cantidad por<br>caja</span></td>
-                                <td ><span class="fw-bold">Vida de alamacenamiento<br>meses</span></td>
-                            </tr>
-                            <tr>
-                                <td class="border-0">Value</td>
-                                <td class="border-0">Value</td>
-                                <td class="border-0">Value</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-
-            </div>
+           
 
 
             </div><!--END .col-->
