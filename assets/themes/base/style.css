@@ -426,6 +426,28 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
     border-radius: 0.8rem !important;
 }
 
+.presentation p {
+    margin-top: 1em;
+}
+
+.presentation ul {
+    margin: 0;
+    padding: 0;
+}
+
+.presentation ul li {
+    margin: 0.5em 0;
+    
+}
+
+.presentation ul li {
+    list-style: none;    
+}
+
+.presentation ul li a{
+    text-decoration: underline;    
+}
+
 
 @media (min-width: 1200px) {
     /*
