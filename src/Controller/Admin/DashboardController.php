@@ -191,8 +191,8 @@ class DashboardController extends AbstractDashboardController
 
         yield MenuItem::subMenu('Pages', 'fas fa-clipboard')->setSubItems([
             MenuItem::linkToCrud('Pages', 'fas fa-clipboard', Page::class),
-            MenuItem::linkToCrud('Widgets', 'fas fa-diamond', Widget::class),
             MenuItem::linkToCrud('Menu', 'fas fa-list', Menu::class),
+            MenuItem::linkToCrud('Widgets', 'fas fa-diamond', Widget::class),
         ]); 
 
         yield MenuItem::subMenu('Gallery', 'fa fa-folder')->setSubItems([

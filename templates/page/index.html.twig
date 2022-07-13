@@ -8,9 +8,8 @@
 
     <div class="cover" style="background-color:#000">
         <img class="opacity-50" src="{{obj_row.bgImageUrl}}">
-
         <div class="cover-caption">
-            <h1 class="text-center">{{obj_row_translation.name}}</h1>    
+            <h1 class="text-center">{{obj_row_translation.name|upper}}</h1>    
         </div>
     </div>
 
@@ -124,7 +123,6 @@
             
         </div>
     </div>
-
 
     {{ include('page/_widgets.html.twig', {obj_widgets: obj_widgets}) }}
 

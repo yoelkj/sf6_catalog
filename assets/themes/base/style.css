@@ -2,6 +2,32 @@
 @import '~@fortawesome/fontawesome-free/css/all.css';
 @import '~@fontsource/roboto-condensed';
 
+@font-face {
+    font-family: HelveticaTStdBlack;
+    font-weight: bold;
+    src: url("../../fonts/HelveticaTStd/HelveticaLTStd-Blk.otf") format("opentype");
+}
+
+@font-face {
+    font-family: HelveticaTStdBlack;
+    src: url("../../fonts/HelveticaTStd/HelveticaLTStd-BlkCond.otf") format("opentype");
+}
+
+
+
+@font-face {
+    font-family: HelveticaTStd;
+    src: url("../../fonts/HelveticaTStd/HelveticaLTStd-Cond.otf") format("opentype");
+}
+
+@font-face {
+    font-family: HelveticaTStd;
+    font-weight: bold;
+    src: url("../../fonts/HelveticaTStd/HelveticaLTStd-Bold.otf") format("opentype");
+}
+
+
+
 /*
 :root{
     --bs-primary: #ff6f00;
@@ -9,10 +35,29 @@
 }
 */
 
+.container {
+    /*
+    max-width: 960px;
+    */
+    max-width: 1100px;
+}
+
+h1, h2, h3, h4, h5, h6{
+    font-family: 'HelveticaTStdBlack'
+} 
+
+h1{
+    font-size: 4em;;
+}
 
 body {
     background-color: #fcfcfc;
+    
+    /*
     font-family: 'Roboto Condensed', sans-serif;
+    */
+
+    font-family: 'HelveticaTStd';
 }
 
 a{
@@ -36,9 +81,7 @@ a:hover{
     transition: all 200ms
 }
 
-.container {
-    max-width: 960px;
-}
+
 
 #page .cover{   
     height: 350px;
@@ -366,6 +409,16 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
     color: #212529;
 }
 
+
+#mainCarousel .carousel-caption {
+    bottom: 3.25rem;
+}
+
+.content-widgets i{
+    color: #00a6eb;
+}
+
+
 @media (min-width: 1200px) {
     /*
     .dropdown:hover .dropdown-menu {
@@ -376,6 +429,19 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 }
 
 @media (max-width: 768px) {
+    
+    #header img#logoApp{
+        width: 100px;
+    }
+
+    #header a{
+        font-size: .8em;
+    }
+
+    #header ul.navbar:first-child{
+        display: none;
+    }
+
     #mainCarousel img{
         height:auto;
         width:100%;
@@ -394,6 +460,26 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 
     #header .container-logo em{
         display:none!important;
+    }
+
+    
+}
+
+@media (max-width: 425px){
+    #header img#logoApp{
+        width: 150px;
+    }
+
+    #header a{
+        font-size: 1rem;
+    }
+
+    h1{
+        font-size: 3em;
+    }
+
+    .home > .red ~ .red {
+        border: none;
     }
     
 }

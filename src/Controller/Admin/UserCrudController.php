@@ -196,13 +196,15 @@ class UserCrudController extends AbstractCrudController
         yield ArrayField::new('roles')
             ->setHelp('Available roles: ROLE_ADMIN, ROLE_USER');
         */
+        
+        /*
         $roles = ['ROLE_ADMIN', 'ROLE_USER'];
         yield ChoiceField::new('roles')
             ->setChoices(array_combine($roles, $roles))
             ->allowMultipleChoices()
             ->renderExpanded()
             ->renderAsBadges();
-
+        */
         yield BooleanField::new('isVerified');
         yield BooleanField::new('isActive');
 
