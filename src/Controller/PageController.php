@@ -49,7 +49,7 @@ class PageController extends AbstractController
             '_locale' => 'en|es',
         ],
     )]
-    public function page($slug = null, PageRepository $repo_page): Response
+    public function page($slug, PageRepository $repo_page): Response
     {
         
         $obj_row = $repo_page->getPageBySlug($slug);
@@ -72,7 +72,7 @@ class PageController extends AbstractController
             '_locale' => 'en|es',
         ],
     )]
-    public function catalog(Request $request, $slug = null, $brand = null, BrandRepository $repo_brand, PageRepository $repo_page, ProductRepository $repo_product): Response
+    public function catalog(Request $request, $slug, $brand, BrandRepository $repo_brand, PageRepository $repo_page, ProductRepository $repo_product): Response
     {
 
         $obj_row = $repo_page->getPageBySlug($slug);
@@ -113,7 +113,7 @@ class PageController extends AbstractController
             '_locale' => 'en|es',
         ],
     )]
-    public function product(Request $request, $slug = null, ProductRepository $repo_product): Response
+    public function product(Request $request, $slug, ProductRepository $repo_product): Response
     {
 
         $obj_row = $repo_product->getRowBySlug($slug);

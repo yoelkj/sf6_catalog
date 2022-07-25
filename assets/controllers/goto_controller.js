@@ -19,6 +19,25 @@ export default class extends Controller{
         } else {
             this.btnTarget.classList.remove('show');
         }
+
+
+
+
+
+        let obj_slogan = document.querySelector('.container-logo em');
+        let windowY = window.scrollY;
+  
+        if (windowY <= 50) {
+            // Scrolling UP
+            obj_slogan.classList.add('d-block');
+            obj_slogan.classList.remove('d-none');
+        } else {
+            // Scrolling DOWN
+            obj_slogan.classList.add('d-none');
+            obj_slogan.classList.remove('d-block');
+        }
+
+
     }
 
     handleClick(e){
