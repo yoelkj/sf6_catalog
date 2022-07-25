@@ -67,6 +67,16 @@
                 
                 <li><a class="link-secondary" href="{{ urlpage }}">{{menu.getTranslateName}}</a></li>
             {% endfor %}
+
+
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') and is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a class="link-secondary" data-turbo="false" href="{{ path('admin') }}">
+                        Admin
+                    </a>
+                </li>
+            {% endif %}
+
             </ul>
         </div>
 

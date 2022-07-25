@@ -12,17 +12,21 @@ use EasyCorp\Bundle\EasyAdminBundle\Config\Action;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Actions;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Crud;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Filters;
+use EasyCorp\Bundle\EasyAdminBundle\Config\KeyValueStore;
 use EasyCorp\Bundle\EasyAdminBundle\Context\AdminContext;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\EntityDto;
 use EasyCorp\Bundle\EasyAdminBundle\Dto\SearchDto;
 use EasyCorp\Bundle\EasyAdminBundle\Factory\FilterFactory;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ArrayField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AvatarField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\BooleanField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ChoiceField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\EmailField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
+use EasyCorp\Bundle\EasyAdminBundle\Field\FormField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
@@ -30,7 +34,12 @@ use EasyCorp\Bundle\EasyAdminBundle\Router\AdminUrlGenerator;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 #[IsGranted('ROLE_ADMIN')]
 class UserCrudController extends AbstractCrudController
@@ -45,6 +54,13 @@ class UserCrudController extends AbstractCrudController
         $this->requestStack = $requestStack;
     }
     */
+
+    private UserPasswordHasherInterface $passwordEncoder;
+    public function __construct(UserPasswordHasherInterface $passwordEncoder){
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
+    
 
     public static function getEntityFqcn(): string
     {
@@ -147,13 +163,21 @@ class UserCrudController extends AbstractCrudController
 
         //yield FormField::addTab('Basic Data')->setIcon('info')        
 
+        yield FormField::addPanel( 'User data' )->setIcon( 'fa fa-user' );
+
         yield IdField::new('id')
             ->onlyOnForms()
             ->hideOnForm();
 
         yield AvatarField::new('avatar')
             ->formatValue(static function ($value, ?User $user) {
-                return $user?->getAvatarUrl();
+
+                $avatar_url = null;    
+                if($user?->getAvatarUrl()) $avatar_url = $user?->getAvatarUrl();
+                else $avatar_url = $user?->getAvatarUri();
+
+                return $avatar_url;
+            
             })
             ->hideOnForm();
         
@@ -164,11 +188,18 @@ class UserCrudController extends AbstractCrudController
             //->setFormTypeOption('upload_new', function(){})
             ->onlyOnForms();
 
+        /*
         yield TextField::new('password')
             ->onlyOnForms()
+            ->setFormType(PasswordType::class);
+        */
+        /*
+        yield TextField::new('password')
+            
             ->hideOnForm()
             //->setColumns(5)
             ;
+            */
 
         /*
         yield TextField::new('password')
@@ -210,6 +241,31 @@ class UserCrudController extends AbstractCrudController
 
         yield DateField::new('createdAt')->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
+
+        yield FormField::addPanel( 'Change password' )->setIcon( 'fa fa-key' );
+
+        yield AssociationField::new('profile')->onlyOnForms()->setColumns(4);
+
+        yield Field::new( 'password', 'New password' )->onlyWhenCreating()->setRequired( true )
+                   ->setFormType( RepeatedType::class )
+                   ->setFormTypeOptions( [
+                       'type'            => PasswordType::class,
+                       'first_options'   => [ 'label' => 'New password' ],
+                       'second_options'  => [ 'label' => 'Repeat password' ],
+                       'error_bubbling'  => true,
+                       'invalid_message' => 'The password fields do not match.',
+                   ] )->setColumns(4);;
+
+        yield Field::new( 'password', 'New password' )->onlyWhenUpdating()->setRequired( false )
+                   ->setFormType( RepeatedType::class )
+                   ->setFormTypeOptions( [
+                       'type'            => PasswordType::class,
+                       'first_options'   => [ 'label' => 'New password' ],
+                       'second_options'  => [ 'label' => 'Repeat password' ],
+                       'error_bubbling'  => true,
+                       'invalid_message' => 'The password fields do not match.',
+                   ] )->setColumns(4);;
+
 
 
         /*
@@ -303,5 +359,36 @@ class UserCrudController extends AbstractCrudController
     }
     
     */
+
+
+    public function createEditFormBuilder( EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context ): FormBuilderInterface {
+        $plainPassword = $entityDto->getInstance()?->getPassword();
+        
+        //dd($plainPassword);
+        
+        $formBuilder   = parent::createEditFormBuilder( $entityDto, $formOptions, $context );
+        $this->addEncodePasswordEventListener( $formBuilder, $plainPassword );
+
+        return $formBuilder;
+    }
+
+    public function createNewFormBuilder( EntityDto $entityDto, KeyValueStore $formOptions, AdminContext $context ): FormBuilderInterface {
+        $formBuilder = parent::createNewFormBuilder( $entityDto, $formOptions, $context );
+        $this->addEncodePasswordEventListener( $formBuilder );
+
+        return $formBuilder;
+    }
+
+    protected function addEncodePasswordEventListener( FormBuilderInterface $formBuilder, $plainPassword = null ): void {
+        $formBuilder->addEventListener( FormEvents::SUBMIT, function ( FormEvent $event ) use ( $plainPassword ) {
+            /** @var User $user */
+            $user = $event->getData();
+
+            //dd($plainPassword, $user->getPassword());
+            if ( $user->getPassword() !== $plainPassword ) {
+                $user->setPassword( $this->passwordEncoder->hashPassword( $user, $user->getPassword() ) );
+            }
+        } );
+    }
     
 }

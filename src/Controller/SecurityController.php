@@ -13,7 +13,7 @@ use Endroid\QrCode\Builder\Builder;
 
 class SecurityController extends BaseController
 {
-    #[Route('/{_locale}/login', name: 'app_login')]
+    #[Route('/{_locale}/login1507', name: 'app_login')]
     public function login(AuthenticationUtils $auth_utils): Response
     {
         return $this->render('security/login.html.twig', [

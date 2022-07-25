@@ -76,7 +76,7 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
         }
 
         return new RedirectResponse(
-            $this->router->generate('admin')
+            $this->router->generate('app_homepage_local')
         );
     }
 

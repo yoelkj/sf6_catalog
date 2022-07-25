@@ -129,9 +129,14 @@ class User implements TimestampableInterface, UserInterface, PasswordAuthenticat
         return $this->password;
     }
     
-    public function setPassword(string $password): self
+    public function setPassword($password): self
     {
-        $this->password = $password;
+
+        if (!is_null($password)) {
+            $this->password = $password;
+        }
+
+        //$this->password = $password;
 
         return $this;
     }
