@@ -303,7 +303,8 @@ ul.dropdown-menu .dropdown-item:hover{
 
 
 #page.catalog .filter select{
-    color: #00a6eb;
+    color: #98989C;
+    /*color: #00a6eb;*/
 }
 
 #page.catalog .product .caption h3{
