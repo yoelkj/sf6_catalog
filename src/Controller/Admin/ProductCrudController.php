@@ -64,6 +64,8 @@ class ProductCrudController extends AbstractCrudController
                     return sprintf('%s - %s translation(s)', $name, $num_translations);
             });
 
+            yield NumberField::new('weightGrammage')->onlyOnIndex();
+
             yield AssociationField::new('category')->onlyOnIndex();
             
             yield FormField::addRow();
