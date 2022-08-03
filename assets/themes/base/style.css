@@ -475,9 +475,20 @@ ul.dropdown-menu .dropdown-item:hover{
     text-decoration: underline;    
 }
 
-@media (min-width: 768px) {
-    
+#presentation-body{
+    background-repeat: no-repeat;
+    background-position: left top;
+    padding-left: 30%;
+    background-size: 300px;
+    text-align: left;
+}
 
+#presentation-body ul li a{
+    color: #98989c;
+    text-decoration: underline;
+}
+
+@media (min-width: 768px) {
 
     #header ul.navbar:first-child{
         display: none;
@@ -502,11 +513,20 @@ ul.dropdown-menu .dropdown-item:hover{
     #header .container-logo em{
         display:none!important;
     }
-
     
 }
 
+@media (max-width: 560px){
+
+    #presentation-body{
+        background: none;
+        padding-left: 0;
+        text-align: center;
+    }
+}
 @media (max-width: 425px){
+
+
     #header img#logoApp{
         width: 150px;
     }

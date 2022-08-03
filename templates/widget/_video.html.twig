@@ -13,12 +13,8 @@
             {% if translation %}
                 
                 {% if obj_widget.bgImageUrl or translation.body %}  
-                <div class="col-md py-3" style="
+                <div id="presentation-body" class="col-md py-3" style="
                     background-image: url('{{obj_widget.bgImageUrl}}');
-                    background-repeat: no-repeat;
-                    background-position: left top;
-                    padding-left: 30%;
-                    background-size: 300px;
                     ">
                         {% if translation.getBodyImageUrl %}
                             <img class="img-fluid" src="{{translation.getBodyImageUrl}}">
