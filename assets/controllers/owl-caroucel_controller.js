@@ -18,7 +18,13 @@ export default class extends Controller{
         var obj_params = {
             margin:20,
             nav:false,
+            autoplay:true,
+
+            loop: true,
+            autoplayTimeout:3000,
             items: this.itemsValue,
+            autoplayHoverPause:true,
+
             responsive:{
                 0:{
                     items:1

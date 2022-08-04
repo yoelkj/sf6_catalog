@@ -33,7 +33,7 @@
                 <div class="caption text-center">
                     <a href="{{path('app_product', {slug: row_translation.slug})}}">
                         <h3>{{row_translation.name}}</h3>
-                        <p>{{ 'Weight'|trans }}: {{row.weightGrammage}}</p>
+                        <p>{{ 'Weight'|trans }}: {{row.weightGrammage|round(1, 'floor')}}g</p>
                     </a>
                 </div>
 

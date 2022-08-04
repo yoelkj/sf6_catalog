@@ -46,7 +46,9 @@
                     <div class="position-relative filter">
                         <label class=" {{ (brand) ? '': 'bg-white '}}  position-absolute" for="cboBrand">Marca</label>
                         <select data-action="change->catalog#handleChange" name="cbo_brand" id="cboBrand" class="form-select p-2" {{ (brand) ? 'disabled': '' }}>
-                            <option value="">{{(filter_data.brands|slice(0, 2)|join('/'))|slice(0, 22) ~ '...'}}</option>
+                            <option value="">
+                                {{'All'|trans}}{#{{(filter_data.brands|slice(0, 2)|join('/'))|slice(0, 22) ~ '...'}}#}
+                            </option>
                             {% for key, value in filter_data.brands %}
                                 <option value="{{key}}" {{ (brand and brand.id == key) ? 'selected': '' }}>{{value}}</option>
                             {% endfor %}
@@ -62,7 +64,7 @@
                     <div class="position-relative filter">
                         <label class="bg-white position-absolute" for="cboPresentation">Presentación</label>
                         <select data-action="change->catalog#handleChange" name="cbo_presentation" id="cboPresentation" class="form-select p-2">
-                            <option value="">{{(filter_data.presentations|slice(0, 2)|join('/')|slice(0, 22) ~ '...')}}</option>
+                            <option value="">{{'All'|trans}}{#{{(filter_data.presentations|slice(0, 2)|join('/')|slice(0, 22) ~ '...')}}#}</option>
                             {% for key, value in filter_data.presentations %}
                                 <option value="{{key}}">{{value}}</option>
                             {% endfor %}
@@ -74,7 +76,7 @@
                     <div class="position-relative filter">
                         <label class="bg-white position-absolute" for="cboCategories">Categoría</label>
                         <select data-action="change->catalog#handleChange" name="cbo_category" id="cboCategories" class="form-select p-2">
-                            <option value="">{{(filter_data.categories|slice(0, 2)|join('/')|slice(0, 25) ~ '...')}}</option>
+                            <option value="">{{'All'|trans}}{#{{(filter_data.categories|slice(0, 2)|join('/')|slice(0, 25) ~ '...')}}#}</option>
                             {% for key, value in filter_data.categories %}
                                 <option value="{{key}}">{{value}}</option>
                             {% endfor %}
@@ -86,7 +88,7 @@
                     <div class="position-relative filter">
                         <label class="bg-white position-absolute" for="cboFeatures">Características</label>
                         <select data-action="change->catalog#handleChange" name="cbo_feature" id="cboFeatures" class="form-select p-2">
-                            <option value="">{{(filter_data.features|slice(0, 5)|join('/')) |slice(0, 22) ~ '...'}}</option>
+                            <option value="">{{'All'|trans}}{#{{(filter_data.features|slice(0, 5)|join('/')) |slice(0, 22) ~ '...'}}#}</option>
                             {% for key, value in filter_data.features %}
                                 <option value="{{key}}">{{value}}</option>
                             {% endfor %}

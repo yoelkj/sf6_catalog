@@ -16,7 +16,7 @@
         <a href="{{ path('app_product', {slug: translation.slug}) }}">
             <div class="d-flex w-100 justify-content-between">
                 <h5 class="h6 m-0">{{translation.name}}</h5>
-                <small>{{ 'Weight'|trans }}: {{row_item.weightGrammage}}</small>
+                <small>{{ 'Weight'|trans }}: {{row_item.weightGrammage|round(1, 'floor')}}g</small>
             </div>
         </a>
     </li>

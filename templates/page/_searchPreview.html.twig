@@ -8,7 +8,7 @@
                 <div>
                     <span class="px-1">{{ translation.name }}</span>
                 </div>
-                <em>{{ product.weightGrammage }} g.</em>
+                <em>{{ product.weightGrammage|round(1, 'floor') }}g</em>
             </div>
         </a>
     {% else %}

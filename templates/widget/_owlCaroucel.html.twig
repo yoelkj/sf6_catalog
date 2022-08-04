@@ -15,8 +15,10 @@
         <div class="col-md-12">
             <div id="owlCaroucel" {{stimulus_controller('owl-caroucel', {targetId: '#owlCaroucel', items:2})}} class="owl-carousel owl-theme">
                 {% for image in images %}
-                    <div class="item">
-                        <img class="img-fluid" src="{{image.getImageUrl()}}">
+                    <div class="item wrapper-img">
+                        <a href="{{(image.link) ? image.link : '#'}}">
+                            <img class="img-fluid" src="{{image.getImageUrl()}}">
+                        </a>
                     </div>    
                 {% endfor %}
             </div>
