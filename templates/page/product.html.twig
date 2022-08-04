@@ -97,12 +97,12 @@
                                         
                                     <tbody>
                                         <tr>
-                                            <td ><span class="fw-bold">Peso<br>gramaje</span></td>
-                                            <td ><span class="fw-bold">Cantidad por<br>caja</span></td>
-                                            <td ><span class="fw-bold">Vida de almacenamiento<br>meses</span></td>
+                                            <td ><span class="fw-bold">{{'Net content'|trans}}</span></td>
+                                            <td ><span class="fw-bold">{{'Quantity per box'|trans}}</span></td>
+                                            <td ><span class="fw-bold">{{'Shelf life in months'|trans}}</span></td>
                                         </tr>
                                         <tr>
-                                            <td class="border-0">{{obj_row.weightGrammage}}</td>
+                                            <td class="border-0">{{obj_row.weightGrammage|round(1, 'floor')}}g</td>
                                             <td class="border-0">{{obj_row.quantityPerBox}}</td>
                                             <td class="border-0">{{obj_row.storageLifeMonths}}</td>
                                         </tr>
