@@ -123,14 +123,14 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 
 .container-logo{
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     text-align: center;
     width: 230px;
 }
 
 .container-logo em{
-    font-size:0.8em;
+    font-size:0.9em;
 }
 
 #logoApp{
@@ -501,9 +501,11 @@ ul.dropdown-menu .dropdown-item:hover{
 
 @media (min-width: 769px) {
 
+    /*
     #header ul.navbar:first-child{
         display: none;
     }
+    */
 
     #mainCarousel img{
         height:auto;
@@ -520,13 +522,13 @@ ul.dropdown-menu .dropdown-item:hover{
         text-align:center
     }
 
-    #header .container-logo em{
-        display:none!important;
-    }
-
 }
 
 @media (max-width: 768px){
+    .container-logo em{
+        display: none!important;
+    }
+
     #presentation-body{
         background-repeat: no-repeat;
         padding-left: 0;
@@ -537,6 +539,10 @@ ul.dropdown-menu .dropdown-item:hover{
 
 @media (max-width: 425px){
 
+    .container-logo em{
+        display: none;
+        font-size:0.8em;
+    }
 
     #header img#logoApp{
         width: 150px;
