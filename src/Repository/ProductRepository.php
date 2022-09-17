@@ -92,7 +92,7 @@ class ProductRepository extends ServiceEntityRepository
 
         if($category) $qb->andWhere('r.category = :category')->setParameter('category', $category);
         
-        if($presentation) $qb->andWhere('r.brand = :brand')->setParameter('brand', $presentation);
+        if($presentation) $qb->andWhere('r.presentation = :presentation')->setParameter('presentation', $presentation);
         
         if($feature){
             switch (strtolower($feature)) {
