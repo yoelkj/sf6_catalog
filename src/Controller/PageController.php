@@ -140,8 +140,7 @@ class PageController extends AbstractController
 
         if ($request->isXmlHttpRequest()) {
             
-            $params = $request->request->all();
-
+            $params = $request->request->all();            
             $obj_qb = $repo_product->getCatalogData($params, 1);
             $pager = new Pagerfanta(new QueryAdapter($obj_qb));
             $pager->setMaxPerPage(8);

@@ -46,7 +46,7 @@
     </div>
 {% endfor %}
 
-<div class="d-flex justify-content-center d-none" id="paginationTarget" data-catalog-target="pagination">
+<div class="d-flex justify-content-center d-none pagination" id="paginationTarget" data-catalog-target="pagination">
 {% if data|length > 0 %}
     {{ pagerfanta(data) }}
 {% endif %}
