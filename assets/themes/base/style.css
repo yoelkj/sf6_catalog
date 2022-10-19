@@ -67,8 +67,9 @@ body {
     font-family: 'HelveticaTStd';
 }
 
+
 a{
-    color: #212529;
+    color: #00a6eb /*#212529*/;
     text-decoration: none;
 }
 
@@ -123,7 +124,7 @@ background-size: cover;background-repeat: no-repeat;background-position: center;
 
 .container-logo{
     position: absolute;
-    z-index: -1;
+    z-index: 1;
     top: 0;
     text-align: center;
     width: 230px;
@@ -498,6 +499,22 @@ ul.dropdown-menu .dropdown-item:hover{
     text-decoration: underline;
     color: #98989c;
 }
+
+a.lnk-dot{
+    border-bottom: 1px dashed #00a6eb;
+}
+
+a.lnk-dot:hover{
+    border-bottom: 1px dashed #212529;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #00a6eb;
+    border-color: #00a6eb;
+}
+
+
 
 @media (min-width: 769px) {
 

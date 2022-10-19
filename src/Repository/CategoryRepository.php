@@ -41,7 +41,7 @@ class CategoryRepository extends ServiceEntityRepository
         }
     }
 
-    public function getCategoryBySlug($slug){
+    public function getRowBySlug($slug){
 
         return $this->createQueryBuilder('r')
             ->innerJoin('r.translations',  'rt' )
@@ -61,6 +61,7 @@ class CategoryRepository extends ServiceEntityRepository
             ->select('r.id as r_id, r.orderRow as r_order_row, rt.name as r_name' )
             ->innerJoin('r.translations',  'rt' )
             ->andWhere('r.isActive = :active AND rt.locale = :language')    
+            ->orderBy('r.orderRow', 'ASC')
             ->setParameter('active', true)
             ->setParameter('language', Locale::getDefault())
             ->getQuery()->getResult()

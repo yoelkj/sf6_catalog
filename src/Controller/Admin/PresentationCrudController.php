@@ -9,6 +9,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\CollectionField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\DateField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\Field;
 use EasyCorp\Bundle\EasyAdminBundle\Field\IdField;
+use EasyCorp\Bundle\EasyAdminBundle\Field\IntegerField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\SlugField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\TextEditorField;
 
@@ -33,8 +34,9 @@ class PresentationCrudController extends AbstractCrudController
                 return sprintf('%s - %s translation(s)', $name, $num_translations);
         });
 
+        yield IntegerField::new('orderRow')->setColumns(2);
         yield BooleanField::new('isActive');
-        yield DateField::new('createdAt')->hideOnForm();
+        yield DateField::new('createdAt')->onlyOnForms()->hideOnForm();
         yield DateField::new('updatedAt')->onlyOnForms()->hideOnForm();
     }
     

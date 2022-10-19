@@ -34,9 +34,13 @@ class Presentation implements TimestampableInterface,  TranslatableInterface
     #[ORM\OneToMany(mappedBy: 'presentation', targetEntity: Product::class)]
     private $products;
 
+    #[ORM\OneToMany(mappedBy: 'presentation', targetEntity: Menu::class)]
+    private Collection $menus;
+
     public function __construct()
     {
         $this->products = new ArrayCollection();
+        $this->menus = new ArrayCollection();
     }
 
     public function __toString(): string
@@ -109,6 +113,36 @@ class Presentation implements TimestampableInterface,  TranslatableInterface
             // set the owning side to null (unless already changed)
             if ($product->getPresentation() === $this) {
                 $product->setPresentation(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Menu>
+     */
+    public function getMenus(): Collection
+    {
+        return $this->menus;
+    }
+
+    public function addMenu(Menu $menu): self
+    {
+        if (!$this->menus->contains($menu)) {
+            $this->menus->add($menu);
+            $menu->setPresentation($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMenu(Menu $menu): self
+    {
+        if ($this->menus->removeElement($menu)) {
+            // set the owning side to null (unless already changed)
+            if ($menu->getPresentation() === $this) {
+                $menu->setPresentation(null);
             }
         }
 

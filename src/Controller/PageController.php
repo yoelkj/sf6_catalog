@@ -4,7 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Page;
 use App\Repository\BrandRepository;
+use App\Repository\CategoryRepository;
 use App\Repository\PageRepository;
+use App\Repository\PresentationRepository;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -66,27 +68,61 @@ class PageController extends AbstractController
     }
 
     #[Route(
-        path: '/{_locale}/catalog/{slug}/{brand}',
+        path: '/{_locale}/catalog/{slug}',
         name: 'app_catalog',
         requirements: [
             '_locale' => 'en|es',
         ],
     )]
-    public function catalog(Request $request, $slug, $brand, BrandRepository $repo_brand, PageRepository $repo_page, ProductRepository $repo_product): Response
+    public function catalog(Request $request, $slug, 
+        BrandRepository $repo_brand, 
+        CategoryRepository $repo_category,
+        PresentationRepository $repo_presentation,
+        PageRepository $repo_page, 
+        ProductRepository $repo_product): Response
     {
+
+        $params = $request->query->all();
+
+        $brand = (isset($params['brand'])) ? $params['brand'] : null;
+        $category = (isset($params['category'])) ? $params['category'] : null;
+        $presentation = (isset($params['presentation'])) ? $params['presentation'] : null;
+        $features = (isset($params['feature'])) ? $params['feature'] : null;
+
+        $arr_params = [];
+        $obj_brand = $obj_presentation = $obj_category = null;
+
+        if($brand && $brand != 'all' && $brand != 'todos'){
+            $obj_brand = $repo_brand->findOneBySlug($brand);
+            $arr_params["cbo_brand"] = $obj_brand->getId();
+        }
+        if($presentation && $presentation != 'all' && $presentation != 'todos'){
+            $obj_presentation = $repo_presentation->getRowBySlug($presentation);
+            $arr_params["cbo_presentation"] = $obj_presentation->getId();
+        }
+        
+        if($category && $category != 'all' && $category != 'todos'){
+            $obj_category = $repo_category->getRowBySlug($category);
+            $arr_params["cbo_category"] = $obj_category->getId();
+        }
+
+        if($features){
+            $arr_params["cbo_feature"] = $features;
+        }
 
         $obj_row = $repo_page->getPageBySlug($slug);
         $obj_row_translation = $obj_row->getTranslation();
         
-        $obj_brand = ($brand && $brand != 'all' && $brand != 'todos') ? $repo_brand->findOneBySlug($brand) : null;
-        
-        $obj_qb = $repo_product->getCatalogData(($obj_brand)?["cbo_brand" => $obj_brand->getId()]:[], 1);
+
+        $obj_qb = $repo_product->getCatalogData($arr_params, 1);
         $data = new Pagerfanta(new QueryAdapter($obj_qb));
         $data->setMaxPerPage(8);
 
         $arr_data['data'] = $data;
         $arr_data['brand'] = $obj_brand;
-
+        $arr_data['presentation'] = $obj_presentation;
+        $arr_data['category'] = $obj_category;
+        $arr_data['features'] = $features;
         
         $arr_filter_data = $repo_product->getFilterData();
 

@@ -39,7 +39,7 @@
                 {% set images = gallery.getGalleryImagesByLanguage(app.request.getLocale()) %}
                 <div class="col-md-6">
 
-                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
+                    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             {% for image in images %}
                                 {% set lpi = loop.index - 1 %}

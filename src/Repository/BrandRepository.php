@@ -45,6 +45,7 @@ class BrandRepository extends ServiceEntityRepository
         $arr_rows =  $this->createQueryBuilder('r')
             ->select('r.id as r_id, r.orderRow as r_order_row, r.name as r_name' )
             ->andWhere('r.isActive = :active')    
+            ->orderBy('r.orderRow', 'ASC')
             ->setParameter('active', true)
             ->getQuery()->getResult()
         ;

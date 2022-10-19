@@ -28,14 +28,47 @@
                         
                         {% if page_slug %}
                             {% if obj_page.isCatalog == true %}
+                                
+                                {% set catalog_params = {} %}
+                                
                                 {% set obj_brand = menuItem.getBrand() %}
+                                {% set obj_presentation = menuItem.getPresentation() %}
+                                
+                                {% set obj_presentation_trans = (obj_presentation) ? obj_presentation.getTranslation() ? null %}
+                                {% set obj_category = menuItem.getCategory() %}
+                                {% set obj_category_trans = (obj_category) ? obj_category.getTranslation() : null %}
+                                
                                 {% set brand_slug = (obj_brand and obj_brand.slug) ? obj_brand.slug : ('all'|trans)%}
+                                {% set presentation_slug = (obj_presentation_trans and obj_presentation_trans.slug) ? obj_presentation_trans.slug : ('all'|trans)%}
+                                {% set category_slug = (obj_category_trans and obj_category_trans.slug) ? obj_category_trans.slug : ('all'|trans)%}
+                                {% set feature = menuItem.getFeature() %}
+
+                                
+                                {% set catalog_params = catalog_params|merge({'slug': page_slug}) %}
+                                
+                                {% if brand_slug and brand_slug != 'todos' and brand_slug != 'all'  %}
+                                    {% set catalog_params = catalog_params|merge({'brand': brand_slug}) %}    
+                                {% endif %}
+                                
+                                
+                                {% if presentation_slug and presentation_slug != 'todos' and presentation_slug != 'all'  %}
+                                    {% set catalog_params = catalog_params|merge({'presentation': presentation_slug}) %}
+                                {% endif %}
+
+                                {% if category_slug and category_slug != 'todos' and category_slug != 'all'  %}
+                                    {% set catalog_params = catalog_params|merge({'category': category_slug}) %}
+                                {% endif %}
+
+                                {% if feature and feature != 'todos' and feature != 'all'  %}
+                                    {% set catalog_params = catalog_params|merge({'feature': (feature) ? feature : ('all'|trans)   }) %}
+                                {% endif %}
+
                                 {#
                                 {% set obj_category = menuItem.getcategory() %}
                                 {% set obj_category_translation = (obj_category) ? obj_category.getTranslation() : '' %}
                                 {% set category_slug = (obj_category and obj_category_translation and bj_category_translation.slug) ? obj_category_translation.slug: ('all'|trans) %}
                                 #}
-                                {% set urlpage = (page_slug) ? path('app_catalog', {slug: page_slug, brand: brand_slug }) : '' %}
+                                {% set urlpage = (page_slug) ? path('app_catalog', catalog_params) : '' %}
                             {% else %}
                                 {% set urlpage = (page_slug) ? path('app_page', {slug: page_slug }) : '' %}
                             {% endif %}
@@ -60,16 +93,42 @@
                                 {% if page_slug %}
                                 
                                     {% if obj_page.isCatalog == true %}
+                                        
+                                        {% set catalog_params = {} %}
+                                
                                         {% set obj_brand = chilMenuItem.getBrand() %}
+                                        {% set obj_presentation = chilMenuItem.getPresentation() %}
+                                        
+                                        {% set obj_presentation_trans = (obj_presentation) ? obj_presentation.getTranslation() : null %}
+                                        
+                                        {% set obj_category = chilMenuItem.getCategory() %}
+                                        {% set obj_category_trans = (obj_category) ? obj_category.getTranslation() : null %}
+                                        
                                         {% set brand_slug = (obj_brand and obj_brand.slug) ? obj_brand.slug : ('all'|trans)%}
+                                        {% set presentation_slug = (obj_presentation_trans and obj_presentation_trans.slug) ? obj_presentation_trans.slug : ('all'|trans)%}
+                                        {% set category_slug = (obj_category_trans and obj_category_trans.slug) ? obj_category_trans.slug : ('all'|trans)%}
+                                        {% set feature = chilMenuItem.getFeature() %}
+
+                                       {% set catalog_params = catalog_params|merge({'slug': page_slug}) %}
+                                
+                                        {% if brand_slug and brand_slug != 'todos' and brand_slug != 'all'  %}
+                                            {% set catalog_params = catalog_params|merge({'brand': brand_slug}) %}    
+                                        {% endif %}
                                         
-                                        {#
-                                        {% set obj_category = chilMenuItem.getcategory() %}
-                                        {% set obj_category_translation = (obj_category) ? obj_category.getTranslation() : '' %}
-                                        {% set category_slug = (obj_category and obj_category_translation and bj_category_translation.slug) ? obj_category_translation.slug: ('all'|trans) %}
-                                        #}
                                         
-                                        {% set urlpage = (page_slug) ? path('app_catalog', {slug: page_slug, brand: brand_slug }) : '' %}
+                                        {% if presentation_slug and presentation_slug != 'todos' and presentation_slug != 'all'  %}
+                                            {% set catalog_params = catalog_params|merge({'presentation': presentation_slug}) %}
+                                        {% endif %}
+
+                                        {% if category_slug and category_slug != 'todos' and category_slug != 'all'  %}
+                                            {% set catalog_params = catalog_params|merge({'category': category_slug}) %}
+                                        {% endif %}
+
+                                        {% if feature and feature != 'todos' and feature != 'all'  %}
+                                            {% set catalog_params = catalog_params|merge({'feature': (feature) ? feature : ('all'|trans)   }) %}
+                                        {% endif %}
+                                        
+                                        {% set urlpage = (page_slug) ? path('app_catalog', catalog_params) : '' %}
                                     
                                     {% else %}
                                         {% set urlpage = (page_slug) ? path('app_page', {slug: page_slug }) : '' %}

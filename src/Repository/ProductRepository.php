@@ -23,6 +23,8 @@ class ProductRepository extends ServiceEntityRepository
     private PresentationRepository $repo_presentation;
     private TranslatorInterface $translator;
 
+    static public $arr_features_options = [1 => 'News', 2 => 'Bestsellers', 3 => 'Recommendeds'];
+     
     public function __construct(ManagerRegistry $registry, CategoryRepository $repo_category, BrandRepository $repo_brand, PresentationRepository $repo_presentation, TranslatorInterface $translator)
     {
         parent::__construct($registry, Product::class);
@@ -69,7 +71,9 @@ class ProductRepository extends ServiceEntityRepository
         $brand =        (isset($params["cbo_brand"])) ?$params["cbo_brand"]:'';
         $presentation = (isset($params["cbo_presentation"])) ?$params["cbo_presentation"]:'';
         $category =     (isset($params["cbo_category"])) ? $params["cbo_category"]:'';
+        
         $feature =      (isset($params["cbo_feature"])) ? $params["cbo_feature"]:'';
+        
         
         $qb = $this->createQueryBuilder('r')
             ->where('r.isActive = :active');
@@ -121,16 +125,24 @@ class ProductRepository extends ServiceEntityRepository
 
     }
 
+    public function getFeaturesOptions(){
+        
+        $arr_result = [];
+        $arr_features_options = self::$arr_features_options;
+        
+        foreach($arr_features_options as $value){
+            $arr_result[$value] = $this->translator->trans($value);
+        }
+
+        return $arr_result;
+
+    }
+
     public function getFilterData()
     {
         $arr_result = [];
 
-        //Features
-        $arr_st_features = [1 => 'News', 2 => 'Bestsellers', 3 => 'Recommendeds'];
-        foreach($arr_st_features as $value){
-            $arr_feartures[$value] = $this->translator->trans($value);
-        } 
-        $arr_result['features'] = $arr_feartures; 
+        $arr_result['features'] = $this->getFeaturesOptions(); 
         $arr_result['brands'] = $this->repo_brand->getChoices(); 
         $arr_result['categories'] = $this->repo_category->getChoices();
         $arr_result['presentations'] = $this->repo_presentation->getChoices();

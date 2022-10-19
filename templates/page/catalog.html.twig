@@ -5,6 +5,10 @@
 {% block body %}
 
 {% set brand = arr_catalog_data.brand %}
+{% set presentation = arr_catalog_data.presentation %}
+{% set category = arr_catalog_data.category %}
+{% set features = arr_catalog_data.features %}
+
 {% set data = arr_catalog_data.data %}
 
 
@@ -24,7 +28,7 @@
         </div>
     </div>
 
-    <div  class="container my-5">
+    <div  class="container my-4">
         
         {#
         <div class="row">
@@ -41,6 +45,11 @@
 
         <!--Star filters-->
         <form data-catalog-target="form" action="" method="POST" class="my-3">
+            
+            <div class="text-end mb-3">
+                <a href="javascript:window.location.href=window.location.href;" class="lnk-dot"><i class="fa-solid fa-rotate-right"></i> Restablecer filtros</a>
+            </div>
+
             <div class="row">
                 <div class="col-md mb-4 mb-md-1 mb-lg-1 mb-xl-1 mb-xxl-1 ">
                     <div class="position-relative filter">
@@ -62,11 +71,11 @@
 
                 <div class="col-md mb-4 mb-md-1 mb-lg-1 mb-xl-1 mb-xxl-1 ">
                     <div class="position-relative filter">
-                        <label class="bg-white position-absolute" for="cboPresentation">{{'Presentation'|trans}}</label>
-                        <select data-action="change->catalog#handleChange" name="cbo_presentation" id="cboPresentation" class="form-select p-2">
+                        <label class="{{ (presentation) ? '': 'bg-white '}} position-absolute" for="cboPresentation">{{'Presentation'|trans}}</label>
+                        <select data-action="change->catalog#handleChange" name="cbo_presentation" id="cboPresentation" class="form-select p-2" {{ (presentation) ? 'disabled': '' }}>
                             <option value="">{{'All'|trans}}{#{{(filter_data.presentations|slice(0, 2)|join('/')|slice(0, 22) ~ '...')}}#}</option>
                             {% for key, value in filter_data.presentations %}
-                                <option value="{{key}}">{{value}}</option>
+                                <option value="{{key}}" {{ (presentation and presentation.id == key) ? 'selected': '' }}>{{value}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -74,11 +83,11 @@
 
                 <div class="col-md mb-4 mb-md-1 mb-lg-1 mb-xl-1 mb-xxl-1 ">
                     <div class="position-relative filter">
-                        <label class="bg-white position-absolute" for="cboCategories">{{'Category'|trans}}</label>
-                        <select data-action="change->catalog#handleChange" name="cbo_category" id="cboCategories" class="form-select p-2">
+                        <label class="{{ (category) ? '': 'bg-white '}} position-absolute" for="cboCategories">{{'Category'|trans}}</label>
+                        <select data-action="change->catalog#handleChange" name="cbo_category" id="cboCategories" class="form-select p-2" {{ (category) ? 'disabled': '' }}>
                             <option value="">{{'All'|trans}}{#{{(filter_data.categories|slice(0, 2)|join('/')|slice(0, 25) ~ '...')}}#}</option>
                             {% for key, value in filter_data.categories %}
-                                <option value="{{key}}">{{value}}</option>
+                                <option value="{{key}}" {{ (category and category.id == key) ? 'selected': '' }}>{{value}}</option>
                             {% endfor %}
                         </select>
                     </div>
@@ -86,11 +95,11 @@
                 
                 <div class="col-md mb-4 mb-md-1 mb-lg-1 mb-xl-1 mb-xxl-1 ">
                     <div class="position-relative filter">
-                        <label class="bg-white position-absolute" for="cboFeatures">{{'Features'|trans}}</label>
-                        <select data-action="change->catalog#handleChange" name="cbo_feature" id="cboFeatures" class="form-select p-2">
+                        <label class="{{ (features) ? '': 'bg-white '}} position-absolute" for="cboFeatures">{{'Features'|trans}}</label>
+                        <select data-action="change->catalog#handleChange" name="cbo_feature" id="cboFeatures" class="form-select p-2" {{ (features) ? 'disabled': '' }}>
                             <option value="">{{'All'|trans}}{#{{(filter_data.features|slice(0, 5)|join('/')) |slice(0, 22) ~ '...'}}#}</option>
                             {% for key, value in filter_data.features %}
-                                <option value="{{key}}">{{value}}</option>
+                                <option value="{{key}}" {{ (features and features|lower == key|lower) ? 'selected': '' }}>{{value}}</option>
                             {% endfor %}
                         </select>
                     </div>

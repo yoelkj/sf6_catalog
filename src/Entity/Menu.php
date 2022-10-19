@@ -49,6 +49,12 @@ class Menu implements TimestampableInterface,  TranslatableInterface
     #[ORM\ManyToOne(targetEntity: Brand::class, inversedBy: 'menus')]
     private $brand;
 
+    #[ORM\ManyToOne(inversedBy: 'menus')]
+    private ?Presentation $presentation = null;
+
+    #[ORM\Column(length: 40, nullable: true)]
+    private ?string $feature = null;
+
     public function __construct()
     {
         $this->menus = new ArrayCollection();
@@ -184,4 +190,29 @@ class Menu implements TimestampableInterface,  TranslatableInterface
 
         return $this;
     }
+
+    public function getPresentation(): ?Presentation
+    {
+        return $this->presentation;
+    }
+
+    public function setPresentation(?Presentation $presentation): self
+    {
+        $this->presentation = $presentation;
+
+        return $this;
+    }
+
+    public function getFeature(): ?string
+    {
+        return $this->feature;
+    }
+
+    public function setFeature(?string $feature): self
+    {
+        $this->feature = $feature;
+
+        return $this;
+    }
+
 }
