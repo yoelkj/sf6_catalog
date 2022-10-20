@@ -15,6 +15,9 @@
     {% elseif obj_widget.template == 'TEMPLATE_VIDEO' %}
       {{ include('widget/_video.html.twig', {obj_widget: obj_widget}) }}
     
+    {% elseif obj_widget.template == 'TEMPLATE_GALLERY_VIDEO' %}
+      {{ include('widget/_galleryVideo.html.twig', {obj_widget: obj_widget}) }}
+
     {% elseif obj_widget.template == 'TEMPLATE_ONE_FLUID_IMAGE' %}
       {{ include('widget/_oneFluidImage.html.twig', {obj_widget: obj_widget}) }}
 

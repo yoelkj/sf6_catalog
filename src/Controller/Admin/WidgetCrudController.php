@@ -43,6 +43,7 @@ class WidgetCrudController extends AbstractCrudController
                 'Only component' => 'TEMPLATE_ONLY_COMPONENT',
                 'Subscription' => 'TEMPLATE_SUBSCRIPTION',
                 'Video' => 'TEMPLATE_VIDEO',
+                'Gallery video' => 'TEMPLATE_GALLERY_VIDEO',
             ]);
 
             yield FormField::addRow();

@@ -1,0 +1,36 @@
+{% set translation = obj_widget.getTranslation %}
+{% set background_color  = (obj_widget.bgImageUrl or translation.body) ? 'background-color:'~obj_widget.bgColor : '' %}
+{% set background_video_color = (obj_widget.bgImageUrl or translation.body) ? '#ffffff' : '' %}
+
+{% set arr_video = (translation.bodyVideo) ? translation.bodyVideo|split(';') : '' %}
+
+<div  
+    {{ stimulus_controller('gallery-video', {
+                        url: path('ajax_load_video')}) }} 
+    
+    class="gallery-video">
+
+    <div class="container">
+
+        <div class="row mt-5">
+            <div class="col-md">
+                <div data-gallery-video-target="preview"  class="preview rounded-3" style="background-color: {{ (background_video_color) ? background_video_color : obj_widget.bgColor}}">
+                    <iframe width="100%" height="450" src="https://www.youtube.com/embed/{{arr_video|first|trim}}?controls=0" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+
+        {% if arr_video|length > 1 %}
+            <div class="row justify-content-md-center thumbs my-3">
+                {% for item in arr_video %}
+                    <div class="col-md-3 item-thumb {{(loop.index == 1) ? 'selected' : '' }} ">
+                        <a code="{{item|trim}}" data-action="click->gallery-video#handleClick" class="item" href="javascript:void(0);">
+                            <img class="img-fluid" src="http://img.youtube.com/vi/{{item|trim}}/mqdefault.jpg">
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+    </div>
+</div>

@@ -260,4 +260,24 @@ class PageController extends AbstractController
 
     }
 
+    
+    #[Route(
+        path: '/{_locale}/ajax-load-video',
+        name: 'ajax_load_video',
+        requirements: [
+            '_locale' => 'en|es',
+        ],
+    )]
+    public function ajaxLoadVideo(Request $request){
+
+        if ($request->isXmlHttpRequest()) {
+            
+            $params = $request->request->all();            
+            
+            return $this->render('page/_loadVideo.html.twig', [
+                'code' => $params['code']
+            ]);
+        }
+    }
+
 }

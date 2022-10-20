@@ -1,9 +1,6 @@
 {% set translation = obj_widget.getTranslation %}
 {% set background_color  = (obj_widget.bgImageUrl or translation.body) ? 'background-color:'~obj_widget.bgColor : '' %}
-
 {% set background_video_color = (obj_widget.bgImageUrl or translation.body) ? '#ffffff' : '' %}
-
-
 
 <div class="presentation py-5" style="{{background_color}}">
 
