@@ -25,11 +25,8 @@ class PageCrudController extends AbstractCrudController
     public function configureFields(string $pageName): iterable
     {
 
-        yield IdField::new('id')->onlyOnIndex();
-            //->hideOnForm();
-            
         yield FormField::addTab('General')->setIcon('cog');    
-            
+            yield IdField::new('id')->onlyOnIndex();   
             yield CollectionField::new('translations')
                 ->useEntryCrudForm()
                 ->setColumns(12)

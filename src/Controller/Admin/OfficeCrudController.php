@@ -23,10 +23,9 @@ class OfficeCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id')->onlyOnIndex();
-        
         yield FormField::addTab('General')->setIcon('info');
             yield AssociationField::new('company')->setColumns(4);
+            yield IdField::new('id')->onlyOnIndex();
 
             yield CollectionField::new('translations')
             ->useEntryCrudForm()

@@ -47,12 +47,12 @@ class ProductCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id')->onlyOnIndex();
+        
         
         yield FormField::addTab('General')->setIcon('cog');
+            yield IdField::new('id')->onlyOnIndex();
             yield FormField::addRow();
             yield Field::new('code')->setColumns(12);
-            
             yield CollectionField::new('translations')
                 ->useEntryCrudForm()
                 ->setColumns(12)
@@ -62,11 +62,8 @@ class ProductCrudController extends AbstractCrudController
                     $num_translations = $row?->getTranslations()->count();
                     return sprintf('%s - %s translation(s)', $name, $num_translations);
             });
-
             yield NumberField::new('weightGrammage')->onlyOnIndex();
-
             yield AssociationField::new('category')->onlyOnIndex();
-
             yield FormField::addRow();
             yield BooleanField::new('isNew')->onlyOnForms()->setColumns(3);
             yield BooleanField::new('isBestSeller')->onlyOnForms()->setColumns(3);

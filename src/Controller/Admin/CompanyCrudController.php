@@ -30,10 +30,8 @@ class CompanyCrudController extends AbstractCrudController
 
     public function configureFields(string $pageName): iterable
     {
-        yield IdField::new('id')
-            ->onlyOnIndex();
-
         yield FormField::addTab('General')->setIcon('info');
+            yield IdField::new('id')->onlyOnIndex();
             yield Field::new('name')->setColumns(6);
             yield Field::new('legalName')->hideOnIndex()->setColumns(6);
             
